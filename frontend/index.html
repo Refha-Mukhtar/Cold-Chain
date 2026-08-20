@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRA-COLD AI • Live Command Studio & Digital Twin</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ADDED: Leaflet + Socket.IO - needed for the real live-tracking map -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+        integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+        integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"
+        integrity="sha512-8ExARjWWkIllMlNzVg7JKq9RKWPlJABQUNq6YvAjE/HobctjH/NA+bSiDMDvouBVjp4Wwnf1VP1OEv7Zgjtuxw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+/* ==========================================================================
+   ASTRA-COLD AI • ORIGINAL DARK OBSIDIAN THEME & GLASS STYLING
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap');
+/* ==========================================================================
+   ASTRA-X CYBER VECTOR BADGE (GUARANTEED VISIBILITY & HIGH GLOW)
+   ========================================================================== */
+.splash-svg-badge {
+  width: 145px;
+  height: 145px;
+  display: block;
+  filter: drop-shadow(0 0 35px rgba(0, 229, 255, 0.65));
+  animation: splashLogoPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.nav-svg-logo {
+  width: 38px;
+  height: 38px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.4));
+}
+:root, body.theme-dark {
+  --anim-duration: 16s;
+  --bg-base: #06040b;
+  --bg-card: rgba(18, 12, 32, 0.32);
+  --bg-card-hover: rgba(28, 18, 50, 0.42);
+  --bg-input: rgba(12, 8, 22, 0.4);
+  --bg-box: rgba(18, 11, 34, 0.3);
+  --bg-modal: rgba(16, 11, 29, 0.88);
+
+  --accent-purple: #a855f7;
+  --accent-purple-light: #c084fc;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+
+  --btn-gradient: linear-gradient(90deg, #a855f7 0%, #f43f5e 100%);
+  --btn-glow: rgba(244, 63, 94, 0.45);
+  --purple-glow: rgba(168, 85, 247, 0.4);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-purple: rgba(168, 85, 247, 0.35);
+  --border-card: rgba(168, 85, 247, 0.28);
+
+  --text-pure: #ffffff;
+  --text-body: #cbd5e1;
+  --text-muted: #8e889e;
+
+  --sky-gradient: radial-gradient(circle at 50% 25%, #1b0e33 0%, #0c0717 55%, #050308 100%);
+  --dim-overlay: rgba(6, 4, 11, 0.65);
+  --road-color: #080510;
+  --road-border: #a855f7;
+
+  --truck-trailer-bg: linear-gradient(135deg, #152238 0%, #091322 100%);
+  --truck-trailer-border: #00e5ff;
+  --truck-cabin-bg: linear-gradient(135deg, #1e3a5f 0%, #0f2038 100%);
+  --truck-windshield: rgba(0, 229, 255, 0.45);
+  --truck-wheel-rim: #00e5ff;
+  --truck-brand-color: #ffffff;
+
+  --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  --callout-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.14) 0%, rgba(244, 63, 94, 0.1) 100%);
+}
+
+body.theme-light {
+  --bg-base: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.38);
+  --bg-card-hover: rgba(255, 255, 255, 0.52);
+  --bg-input: rgba(248, 250, 252, 0.5);
+  --bg-box: rgba(241, 245, 249, 0.35);
+  --bg-modal: rgba(255, 255, 255, 0.92);
+
+  --accent-purple: #7c3aed;
+  --accent-purple-light: #6d28d9;
+  --accent-rose: #e11d48;
+  --accent-amber: #d97706;
+
+  --btn-gradient: linear-gradient(90deg, #7c3aed 0%, #e11d48 100%);
+  --btn-glow: rgba(225, 29, 72, 0.28);
+  --purple-glow: rgba(124, 58, 237, 0.25);
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-purple: rgba(124, 58, 237, 0.25);
+  --border-card: rgba(124, 58, 237, 0.18);
+
+  --text-pure: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+
+  --sky-gradient: linear-gradient(180deg, #38bdf8 0%, #bae6fd 50%, #e2e8f0 100%);
+  --dim-overlay: rgba(241, 245, 249, 0.35);
+  --road-color: #334155;
+  --road-border: #0284c7;
+
+  --truck-trailer-bg: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  --truck-trailer-border: #0284c7;
+  --truck-cabin-bg: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --truck-windshield: rgba(224, 242, 254, 0.85);
+  --truck-wheel-rim: #0284c7;
+  --truck-brand-color: #0f172a;
+
+  --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  --callout-bg: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(225, 29, 72, 0.06) 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+body { background-color: var(--bg-base); color: var(--text-pure); min-height: 100vh; overflow-x: hidden; position: relative; }
+
+/* 1. SCENERY BACKGROUND (AstraX Animated Depot Scene) */
+#bgScene { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden; background: linear-gradient(180deg, #0ea5e9 0%, #38bdf8 40%, #bae6fd 75%, #e6f2ff 100%); transition: background 1s ease; }
+#bgScene.bg-evening { background: linear-gradient(180deg, #7c2d12 0%, #ea580c 40%, #fdba74 75%, #fde68a 100%); }
+#bgScene.bg-night { background: linear-gradient(180deg, #030712 0%, #071126 40%, #16233a 75%, #101c2e 100%); }
+.wallpaper-dim-overlay { position: absolute; inset: 0; background: var(--dim-overlay); backdrop-filter: blur(1.5px); z-index: 15; }
+
+.bg-datetime-widget {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 30;
+  background: rgba(6, 4, 11, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 6px 12px;
+  text-align: left;
+  pointer-events: none;
+}
+.bg-datetime-widget .dt-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  line-height: 1.2;
+}
+.bg-datetime-widget .dt-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  line-height: 1.2;
+}
+@media (max-width: 768px) {
+  .bg-datetime-widget { top: 8px; left: 8px; padding: 5px 10px; }
+}
+
+.bg-sun { position: absolute; top: 50px; left: 12%; width: 78px; height: 78px; background: radial-gradient(circle, #ffffff 15%, #ffd93d 50%, rgba(255,217,61,0) 100%); border-radius: 50%; box-shadow: 0 0 50px rgba(255, 217, 61, 0.55); transition: all 0.8s ease; }
+#bgScene.bg-evening .bg-sun { top: 170px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle, #fff7ed 10%, #f97316 60%, rgba(249,115,22,0) 100%); box-shadow: 0 0 60px rgba(249, 115, 22, 0.7); }
+#bgScene.bg-night .bg-sun { opacity: 0; transform: translateY(-100px); }
+
+.bg-moon { position: absolute; top: 40px; right: 60px; width: 60px; height: 60px; background: radial-gradient(circle, #fff9c4 20%, #f4d35e 80%); border-radius: 50%; box-shadow: 0 0 40px rgba(244, 211, 94, 0.8); opacity: 0; transform: translateY(60px); transition: all 0.8s ease; }
+#bgScene.bg-night .bg-moon { opacity: 1; transform: translateY(0); }
+
+.bg-bird-flock { position: absolute; top: 85px; left: -100px; width: 120px; height: 40px; animation: bgFlockFly 24s linear infinite; }
+.bg-mini-bird { position: absolute; width: 14px; height: 6px; border-top: 2.5px solid rgba(255,255,255,0.75); border-radius: 50% 50% 0 0; animation: bgWingBeat 0.4s ease-in-out infinite alternate; }
+.bg-mini-bird.b1 { top: 0; left: 0; } .bg-mini-bird.b2 { top: 14px; left: 30px; animation-delay: 0.1s; } .bg-mini-bird.b3 { top: 8px; left: 60px; animation-delay: 0.2s; }
+@keyframes bgWingBeat { from { transform: scaleY(1); } to { transform: scaleY(-0.4); } }
+@keyframes bgFlockFly { from { transform: translateX(-150px); } to { transform: translateX(110vw); } }
+#bgScene.bg-night .bg-bird-flock { opacity: 0; }
+
+.bg-city-skyline { position: absolute; bottom: 130px; width: 100%; height: 110px; display: flex; align-items: flex-end; gap: 12px; padding-left: 20px; opacity: 0.3; }
+.bg-building { background: #1e293b; border-radius: 3px 3px 0 0; position: relative; }
+.bg-win { position: absolute; width: 4px; height: 6px; background: #f1c40f; opacity: 0; box-shadow: 0 0 6px #f1c40f; }
+#bgScene.bg-night .bg-win { opacity: 0.8; }
+#bgScene.bg-evening .bg-win { opacity: 0.35; }
+
+.bg-grass { position: absolute; bottom: 100px; width: 100%; height: 30px; background: linear-gradient(to bottom, #1dd1a1 0%, #0e7057 100%); border-top: 3px solid #2ecc71; transition: background 0.8s ease; }
+#bgScene.bg-night .bg-grass { background: linear-gradient(to bottom, #0d5341 0%, #06291f 100%); }
+
+.bg-road { position: absolute; bottom: 0; width: 100%; height: 110px; background: linear-gradient(to bottom, #1e272e 0%, #080c10 100%); border-top: 4px solid #485460; box-shadow: inset 0 12px 25px rgba(0, 0, 0, 0.75); z-index: 4; }
+.bg-curb { position: absolute; top: 0; width: 100%; height: 6px; background: repeating-linear-gradient(90deg, #00d2d3 0px, #00d2d3 30px, #ffffff 30px, #ffffff 60px); }
+.bg-lane-stripes { position: absolute; top: 55%; width: 100%; height: 6px; background: repeating-linear-gradient(90deg, #54a0ff 0px, #54a0ff 40px, transparent 40px, transparent 80px); }
+
+/* Farmer delivering produce */
+.bg-person { position: absolute; bottom: 24px; left: 22vw; width: 60px; height: 118px; z-index: 6; animation: bgPersonWalk var(--anim-duration) ease-in-out infinite; }
+@keyframes bgPersonWalk { 0%, 26% { transform: translateX(0); } 30%, 53% { transform: translateX(76px); } 60%, 100% { transform: translateX(0); } }
+.bg-person-shadow { position: absolute; bottom: 0; left: 10px; width: 38px; height: 7px; background: radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%); }
+.bg-char-body { position: relative; width: 100%; height: 100%; transform-origin: bottom center; animation: bgCharBend var(--anim-duration) ease-in-out infinite; }
+@keyframes bgCharBend { 0%, 41% { transform: rotate(0deg); } 45%, 50% { transform: rotate(8deg); } 55%, 100% { transform: rotate(0deg); } }
+.bg-head { position: absolute; top: 3px; left: 18px; width: 20px; height: 22px; background: #f8c291; border-radius: 50%; }
+.bg-cap { position: absolute; top: -3px; left: -2px; width: 24px; height: 11px; background: #2ecc71; border-radius: 10px 10px 0 0; }
+.bg-torso { position: absolute; top: 25px; left: 15px; width: 27px; height: 39px; background: linear-gradient(to right, #16a085, #0e6655); border-radius: 5px; }
+.bg-stripe { position: absolute; top: 15px; width: 100%; height: 5px; background: #00d2d3; }
+.bg-legs { position: absolute; top: 63px; left: 17px; width: 24px; height: 52px; display: flex; justify-content: space-between; }
+.bg-leg { width: 10px; height: 50px; background: linear-gradient(to bottom, #2f3640 0%, #1e272e 85%); border-radius: 3px; transform-origin: top center; position: relative; }
+.bg-shoe { position: absolute; bottom: 0; right: -3px; width: 15px; height: 8px; background: #111; border-radius: 3px 5px 2px 2px; border-bottom: 2px solid #00d2d3; }
+.bg-leg.l { animation: bgWalkL var(--anim-duration) ease-in-out infinite; }
+.bg-leg.r { animation: bgWalkR var(--anim-duration) ease-in-out infinite; }
+@keyframes bgWalkL { 0%,26%{transform:rotate(0);} 28%{transform:rotate(18deg);} 30%{transform:rotate(-18deg);} 31%,52%{transform:rotate(0);} 56%{transform:rotate(-18deg);} 58%{transform:rotate(18deg);} 61%,100%{transform:rotate(0);} }
+@keyframes bgWalkR { 0%,26%{transform:rotate(0);} 28%{transform:rotate(-18deg);} 30%{transform:rotate(18deg);} 31%,52%{transform:rotate(0);} 56%{transform:rotate(18deg);} 58%{transform:rotate(-18deg);} 61%,100%{transform:rotate(0);} }
+.bg-parcel { position: absolute; top: 28px; right: -20px; width: 32px; height: 28px; z-index: 8; animation: bgParcelMove var(--anim-duration) ease-in-out infinite; display: flex; flex-wrap: wrap; gap: 2px; align-content: flex-start; background: rgba(197,131,65,0.55); border: 2px solid #7c4c1c; border-radius: 4px; padding: 2px; }
+@keyframes bgParcelMove { 0%,43%{transform:translate(0,0); opacity:1;} 46%,48%{transform:translate(18px,3px); opacity:1;} 49%,94%{opacity:0;} 95%,100%{opacity:1; transform:translate(0,0);} }
+.bg-produce { box-shadow: inset -1px -1px 2px rgba(0,0,0,0.4); }
+.bg-produce.apple { width: 7px; height: 7px; border-radius: 50%; background: #e74c3c; }
+.bg-produce.orange { width: 7px; height: 7px; border-radius: 50%; background: #f39c12; }
+.bg-produce.green { width: 7px; height: 6px; border-radius: 45%; background: #2ecc71; }
+.bg-produce.berry { width: 4px; height: 4px; border-radius: 50%; background: #8e44ad; }
+
+/* AstraX Truck */
+.bg-truck-container { position: absolute; bottom: 20px; left: 0; width: 420px; height: 185px; z-index: 5; animation: bgTruckDrive var(--anim-duration) cubic-bezier(0.35,0,0.25,1) infinite; }
+@keyframes bgTruckDrive { 0% { transform: translateX(-460px); } 20% { transform: translateX(calc(22vw + 140px)); } 75% { transform: translateX(calc(22vw + 140px)); } 93% { transform: translateX(115vw); } 100% { transform: translateX(115vw); } }
+.bg-truck-shadow { position: absolute; bottom: 0; left: 12px; width: 395px; height: 12px; background: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, transparent 70%); }
+.bg-cargo-body { position: absolute; left: 0; bottom: 35px; width: 280px; height: 142px; background: radial-gradient(circle at 60% 50%, #0d2238 0%, #06111c 100%); border-radius: 6px 0 0 0; border: 3px solid #00d2d3; box-shadow: 0 0 15px rgba(0,210,211,0.25); overflow: hidden; }
+.bg-truck-branding { position: absolute; top: 4px; left: 65px; width: 205px; height: 122px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 3; }
+.bg-truck-brand-title { font-size: 17px; font-weight: 900; color: #fff; letter-spacing: 1.2px; text-transform: uppercase; font-family: 'Plus Jakarta Sans', sans-serif; }
+.bg-truck-brand-title span { color: #00d2d3; }
+.bg-truck-tagline { font-size: 6px; font-weight: 700; letter-spacing: 1.6px; color: #00d2d3; text-transform: uppercase; border-top: 1px solid #00d2d3; border-bottom: 1px solid #00d2d3; padding: 2px 4px; margin-top: 3px; }
+
+.bg-cargo-doors-frame { position: absolute; left: 0; top: 0; width: 62px; height: 100%; perspective: 240px; z-index: 4; }
+.bg-cargo-interior { position: absolute; inset: 0; background: linear-gradient(160deg, #16324a 0%, #081522 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 3px; gap: 2px; }
+.bg-shelf { display: flex; align-items: flex-end; justify-content: center; flex-wrap: wrap; gap: 2px; height: 22%; background: linear-gradient(to top, rgba(124,76,28,0.5), transparent); border-bottom: 2px solid #7c4c1c; }
+.bg-door-l, .bg-door-r { position: absolute; top: 0; width: 31px; height: 100%; transform-style: preserve-3d; }
+.bg-door-l { left: 0; transform-origin: left center; animation: bgDoorLeftSwing var(--anim-duration) ease-in-out infinite; }
+.bg-door-r { left: 31px; transform-origin: right center; animation: bgDoorRightSwing var(--anim-duration) ease-in-out infinite; }
+@keyframes bgDoorLeftSwing { 0%,19%{transform:rotateY(0);} 25%,68%{transform:rotateY(-125deg);} 74%,100%{transform:rotateY(0);} }
+@keyframes bgDoorRightSwing { 0%,19%{transform:rotateY(0);} 25%,68%{transform:rotateY(125deg);} 74%,100%{transform:rotateY(0);} }
+.bg-door-seg { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, #718093 0px, #718093 8px, #2f3640 8px, #2f3640 10px); border: 1px solid #576574; backface-visibility: hidden; }
+
+.bg-cabin { position: absolute; left: 280px; bottom: 35px; width: 118px; height: 115px; background: linear-gradient(135deg, #0984e3 0%, #0a3d62 100%); border-radius: 0 24px 4px 0; border: 3px solid #00d2d3; border-left: none; }
+.bg-windshield { position: absolute; top: 12px; right: 9px; width: 60px; height: 42px; background: linear-gradient(135deg, rgba(223,249,251,0.55) 0%, rgba(0,210,211,0.4) 100%); border: 3px solid #08283d; border-radius: 0 16px 2px 2px; overflow: hidden; }
+.bg-driver-head { position: absolute; bottom: 22px; right: 22px; width: 14px; height: 14px; background: #f8c291; border-radius: 50%; }
+.bg-driver-body { position: absolute; bottom: 0; right: 16px; width: 21px; height: 18px; background: #0984e3; border-radius: 4px 4px 0 0; }
+.bg-headlight { position: absolute; bottom: 10px; right: -2px; width: 12px; height: 19px; background: #fff; border-radius: 4px; box-shadow: 0 0 16px #00d2d3, 8px 0 26px #54a0ff; opacity: 0.35; transition: all 0.8s ease; }
+#bgScene.bg-morning .bg-headlight { opacity: 0; box-shadow: none; }
+#bgScene.bg-evening .bg-headlight { opacity: 0.7; box-shadow: 0 0 12px #ffd28a, 6px 0 18px #ffb347; }
+#bgScene.bg-night .bg-headlight { opacity: 1; box-shadow: 0 0 20px #fff, 10px 0 32px #cfeaff; }
+.bg-tail-light { position: absolute; bottom: 7px; left: -3px; width: 5px; height: 17px; background: #e74c3c; border-radius: 2px; animation: bgBrakeGlow var(--anim-duration) infinite; }
+@keyframes bgBrakeGlow { 0%,17%{box-shadow:none; opacity:0.4;} 20%,25%{box-shadow:-8px 0 18px #ff1744; opacity:1;} 26%,100%{box-shadow:none; opacity:0.4;} }
+.bg-indicator { position: absolute; bottom: 12px; right: 2px; width: 5px; height: 10px; background: #e67e22; border-radius: 2px; animation: bgIndicatorBlink var(--anim-duration) infinite; }
+@keyframes bgIndicatorBlink { 0%,16%{opacity:0;} 17%,24%{opacity:1; box-shadow:0 0 8px #f39c12;} 25%,74%{opacity:0;} 75%,85%{opacity:1; box-shadow:0 0 8px #f39c12;} 86%,100%{opacity:0;} }
+
+.bg-wheel { position: absolute; bottom: -5px; width: 52px; height: 52px; background: #1c2024; border: 6px solid #2f3640; border-radius: 50%; box-shadow: inset 0 0 8px #000; display: flex; align-items: center; justify-content: center; animation: bgSpinWheels var(--anim-duration) cubic-bezier(0.35,0,0.25,1) infinite; }
+.bg-wheel.back { left: 35px; } .bg-wheel.front { left: 305px; }
+.bg-rim { width: 22px; height: 22px; background: radial-gradient(circle, #00d2d3 20%, #2f3542 90%); border-radius: 50%; border: 3px dashed #1e272e; }
+@keyframes bgSpinWheels { 0%{transform:rotate(0);} 20%{transform:rotate(1080deg);} 75%{transform:rotate(1080deg);} 93%{transform:rotate(2520deg);} 100%{transform:rotate(2520deg);} }
+
+.bg-exhaust-smoke { position: absolute; bottom: 22px; left: -12px; width: 16px; height: 16px; background: rgba(220,220,220,0.8); border-radius: 50%; opacity: 0; animation: bgEmitSmoke var(--anim-duration) infinite; }
+@keyframes bgEmitSmoke { 75%{opacity:0; transform:scale(0.3);} 79%{opacity:0.8; transform:translate(-26px,-13px) scale(1.8);} 85%{opacity:0.85; transform:translate(-60px,-26px) scale(3);} 92%,100%{opacity:0; transform:translate(-105px,-40px) scale(4.5);} }
+
+/* 2. SPLASH SCREEN */
+#splash-screen {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  background: var(--bg-base);
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  padding: 60px 20px 40px 20px; z-index: 999999;
+  opacity: 1; visibility: visible;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#splash-screen.fade-out { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+.splash-center { display: flex; flex-direction: column; align-items: center; margin-top: auto; transform: translateY(20px); }
+.logo-glow-ring {
+  width: 140px; height: 140px; display: flex; align-items: center; justify-content: center;
+  border-radius: 28px; animation: splashLogoPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.splash-img-logo { width: 100%; height: 100%; object-fit: contain; border-radius: 20px; filter: drop-shadow(0 0 30px var(--purple-glow)); }
+@keyframes splashLogoPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.splash-loader { width: 130px; height: 3px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; margin-top: 28px; }
+.splash-loader-bar { width: 0%; height: 100%; background: var(--btn-gradient); box-shadow: 0 0 12px var(--accent-purple); border-radius: 4px; animation: loadTrack 2.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes loadTrack { 0% { width: 0%; } 45% { width: 60%; } 85% { width: 88%; } 100% { width: 100%; } }
+.splash-footer { display: flex; flex-direction: column; align-items: center; margin-top: auto; animation: footerFade 1s ease 0.3s forwards; opacity: 0; }
+@keyframes footerFade { to { opacity: 1; } }
+.footer-from { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 2px; }
+.footer-team { font-size: 22px; font-weight: 900; letter-spacing: 0.5px; color: var(--text-pure); }
+.footer-team span { color: var(--accent-rose); text-shadow: 0 0 15px var(--btn-glow); }
+.footer-motto { font-size: 9px; font-weight: 700; letter-spacing: 1.8px; color: var(--accent-purple-light); margin-top: 2px; }
+
+/* 3. FOREGROUND APP CONTENT */
+.app-viewport { position: relative; z-index: 20; min-height: 100vh; display: flex; flex-direction: column; }
+.app-container { max-width: 1240px; margin: 20px auto; padding: 0 20px; width: 100%; }
+.view { display: none; }
+.view.active { display: block; animation: viewIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes viewIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* TICKER & NAVBAR */
+.live-ticker-strip { background: var(--bg-card); border-bottom: 1px solid var(--border-purple); padding: 8px 24px; display: flex; align-items: center; gap: 16px; backdrop-filter: blur(16px); }
+.ticker-badge { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple-light); border: 1px solid var(--border-purple); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; font-family: var(--font-mono); display: flex; align-items: center; gap: 6px; }
+.ticker-track { flex: 1; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 20px, black 95%, transparent); }
+.ticker-content { display: inline-flex; gap: 36px; white-space: nowrap; animation: tickerSlide 25s linear infinite; font-size: 11px; font-family: var(--font-mono); color: var(--text-body); }
+@keyframes tickerSlide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.t-item { display: flex; align-items: center; gap: 6px; }
+.t-dot { width: 6px; height: 6px; border-radius: 50%; }
+.t-dot.cyan { background: var(--accent-purple-light); box-shadow: 0 0 6px var(--accent-purple-light); }
+.t-dot.ice { background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
+.t-dot.amber { background: var(--accent-rose); box-shadow: 0 0 6px var(--accent-rose); }
+
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; background: var(--bg-card); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-logo { width: 42px; height: 42px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-rose)); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--purple-glow); overflow: hidden; }
+.nav-logo-img { width: 100%; height: 100%; object-fit: contain; }
+.brand-text h1 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+.brand-text h1 span { color: var(--accent-rose); }
+.brand-text p { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.live-badge { display: flex; align-items: center; gap: 8px; background: rgba(168, 85, 247, 0.1); border: 1px solid var(--border-purple); padding: 6px 14px; border-radius: 30px; font-size: 11px; font-weight: 700; color: var(--accent-purple-light); font-family: var(--font-mono); }
+.live-dot { width: 8px; height: 8px; background: var(--accent-purple); border-radius: 50%; box-shadow: 0 0 10px var(--accent-purple); }
+.btn-glass { background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-pure); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.btn-glass:hover { border-color: var(--accent-purple); transform: translateY(-2px); box-shadow: 0 4px 15px var(--purple-glow); }
+
+/* 4. GLASS PANEL & FORMS */
+.glass-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  backdrop-filter: blur(28px);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: var(--card-shadow);
+}
+.form-title-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.form-title-bar h2 { font-size: 22px; font-weight: 800; color: var(--text-pure); display: flex; align-items: center; gap: 10px; }
+.form-title-bar h2 i { color: var(--accent-purple-light); }
+
+.micro-badge {
+  background: rgba(168, 85, 247, 0.12);
+  color: var(--accent-purple-light);
+  border: 1px solid var(--border-purple);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-back-link { background: var(--bg-card); border: 1px solid var(--border-purple); color: #ffffff; font-size: 13px; font-weight: 800; cursor: pointer; margin-bottom: 18px; margin-left: -20px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 10px; box-shadow: var(--card-shadow); backdrop-filter: blur(20px); }
+.btn-back-link:hover { color: var(--accent-purple-light); border-color: var(--accent-purple-light); transform: translateX(-4px); background: var(--bg-card-hover); }
+
+.form-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin-bottom: 18px; }
+.form-field { display: flex; flex-direction: column; }
+.form-field label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.form-field input, .form-field select {
+  background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 12px;
+  padding: 14px 16px; color: var(--text-pure); font-size: 13.5px; font-weight: 600; outline: none;
+}
+.form-field input:focus, .form-field select:focus { border-color: var(--accent-purple); box-shadow: 0 0 16px var(--purple-glow); }
+
+.ethylene-validator-card {
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid var(--border-purple);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.eth-icon { font-size: 24px; color: var(--accent-purple-light); }
+.eth-content h5 { font-size: 13px; font-weight: 800; margin-bottom: 3px; color: var(--text-pure); }
+.eth-content p { font-size: 12px; color: var(--text-body); line-height: 1.45; }
+
+.btn-primary-gradient {
+  width: 100%;
+  background: var(--btn-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 12px 30px var(--btn-glow);
+}
+.btn-primary-gradient:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 16px 36px var(--btn-glow); }
+.btn-primary-gradient.amber-btn { background: linear-gradient(90deg, #f59e0b, #d97706); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35); }
+
+/* 5. EXACT DISPATCH ALERT MODAL */
+.sms-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(16px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+}
+.sms-modal-overlay.active {
+  display: flex !important;
+  animation: viewIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sms-modal-card {
+  background: var(--bg-modal);
+  border: 1px solid var(--border-purple);
+  border-radius: 26px;
+  padding: 38px 32px;
+  max-width: 490px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 35px rgba(168, 85, 247, 0.25);
+  position: relative;
+}
+
+.sms-icon-wrap {
+  width: 64px;
+  height: 64px;
+  background: rgba(168, 85, 247, 0.14);
+  border: 1px solid var(--border-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: var(--accent-purple-light);
+  margin: 0 auto 18px auto;
+  box-shadow: 0 0 20px var(--purple-glow);
+}
+
+.sms-modal-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-pure);
+  margin-bottom: 6px;
+}
+
+.sms-modal-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.sms-preview-bubble {
+  background: #090513;
+  border: 1px solid var(--border-purple);
+  border-left: 4px solid var(--accent-purple);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: left;
+  margin-bottom: 26px;
+}
+
+.sms-sender {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--accent-purple-light);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.sms-text {
+  font-size: 13.5px;
+  color: var(--text-pure);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.sms-time {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  text-align: right;
+}
+
+/* BENTO CARDS & OTHERS */
+.bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; margin-bottom: 28px; }
+.bento-card {
+  background: var(--bg-card); border: 1px solid var(--border-card); backdrop-filter: blur(28px);
+  border-radius: 22px; padding: 32px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--card-shadow);
+}
+.bento-card:hover { transform: translateY(-8px); background: var(--bg-card-hover); border-color: var(--accent-purple); box-shadow: 0 20px 50px var(--purple-glow); }
+.card-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.card-icon-box { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: rgba(168, 85, 247, 0.12); color: var(--accent-purple-light); border: 1px solid var(--border-purple); }
+.card-micro-status { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 6px; background: rgba(168, 85, 247, 0.12); color: var(--accent-purple-light); border: 1px solid var(--border-purple); }
+.tag-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.8px; margin-bottom: 6px; display: block; }
+.bento-card h3 { font-size: 21px; font-weight: 800; margin-bottom: 10px; color: var(--text-pure); }
+.bento-card p { font-size: 13px; color: var(--text-body); line-height: 1.5; margin-bottom: 20px; }
+.card-feature-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.card-feature-pills span { background: var(--bg-box); border: 1px solid var(--border-subtle); padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--text-pure); display: flex; align-items: center; gap: 6px; }
+.action-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 18px; font-size: 13px; font-weight: 700; color: var(--accent-purple-light); }
+.action-btn-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-box); display: flex; align-items: center; justify-content: center; }
+.bento-card:hover .action-btn-circle { background: var(--accent-purple); color: #ffffff; transform: translateX(4px); }
+
+/* STATS & CAPABILITIES */
+.hero-wrapper { text-align: center; margin-bottom: 24px; }
+.hero-top-badges { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; }
+.hero-pill { background: rgba(168, 85, 247, 0.1); border: 1px solid var(--border-purple); color: var(--accent-purple-light); padding: 5px 14px; border-radius: 30px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.hero-pill-secondary { background: rgba(244, 63, 94, 0.1); border: 1px solid var(--border-purple); color: var(--accent-rose); padding: 5px 14px; border-radius: 30px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.hero-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+.hero-subtitle { font-size: 13.5px; color: var(--text-body); max-width: 720px; margin: 0 auto; line-height: 1.6; }
+
+.system-capabilities-bar { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 16px 24px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 16px; }
+.cap-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--text-pure); }
+
+/* STEPPERS & KPIS */
+.stepper-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+.stepper-box { background: var(--bg-box); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px 12px; text-align: center; }
+.stepper-box.done { border-color: var(--accent-purple); background: rgba(168, 85, 247, 0.08); }
+.stepper-box.active { border-color: var(--accent-rose); background: rgba(244, 63, 94, 0.12); box-shadow: 0 0 25px var(--btn-glow); transform: scale(1.02); }
+.step-number { font-family: var(--font-mono); font-size: 11px; font-weight: 800; margin-bottom: 4px; display: block; color: var(--accent-purple-light); }
+.step-title { font-size: 12px; font-weight: 700; color: var(--text-pure); }
+
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin: 24px 0; }
+.kpi-card { background: var(--bg-box); border: 1px solid var(--border-card); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between; }
+.kpi-num { font-family: var(--font-mono); font-size: 22px; font-weight: 800; margin: 6px 0; color: var(--accent-purple-light); }
+.kpi-title { font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-sub { font-size: 10px; color: var(--text-muted); }
+.temp-badge { font-size: 11px; background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); padding: 2px 6px; border-radius: 4px; vertical-align: middle; }
+
+/* EMERGENCY & CALLOUT */
+.btn-emergency-breakdown { background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.5); color: var(--accent-rose); padding: 9px 18px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+/* ADDED: driver trip controls (Start / Pause / End) — ported from script.js's tripState machine */
+.trip-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.trip-actions button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+#dash_trip_status { font-weight: 800; }
+.callout-glass { background: var(--callout-bg); border: 1px solid var(--border-purple); border-radius: 14px; padding: 22px 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; backdrop-filter: blur(28px); }
+.callout-icon { font-size: 32px; color: var(--accent-purple-light); }
+.callout-glass h4 { font-size: 15px; font-weight: 800; color: var(--accent-purple-light); margin-bottom: 4px; }
+.callout-glass p { font-size: 13px; color: var(--text-body); line-height: 1.5; }
+
+/* CHARTS & TABLES */
+.dash-top-bar { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
+.telemetry-meta { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); display: block; margin-top: 4px; }
+.dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.chart-box { background: var(--bg-box); border: 1px solid var(--border-card); border-radius: 14px; padding: 20px; height: 270px; }
+.canvas-wrap { height: 210px; position: relative; margin-top: 10px; }
+
+.table-wrap { overflow-x: auto; margin-top: 14px; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.data-table th { background: var(--bg-box); padding: 14px; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); }
+.data-table td { padding: 14px; border-bottom: 1px solid var(--border-subtle); }
+
+.badge-tag { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; font-family: var(--font-mono); }
+.badge-tag.cyan { background: rgba(168, 85, 247, 0.14); color: var(--accent-purple-light); border: 1px solid var(--border-purple); }
+.badge-tag.amber { background: rgba(244, 63, 94, 0.14); color: var(--accent-rose); border: 1px solid var(--border-rose); }
+
+/* UTILITIES */
+.text-cyan { color: var(--accent-purple-light); }
+.text-white { color: var(--text-pure); }
+.text-amber { color: var(--accent-rose); }
+
+@media (max-width: 900px) { .network-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .network-stats-grid, .dual-grid, .stepper-container, .form-grid-3, .bento-grid { grid-template-columns: 1fr; }
+  .navbar { flex-direction: column; gap: 12px; }
+  .callout-glass, .dash-top-bar { flex-direction: column; text-align: center; }
+}
+    </style>
+</head>
+<body class="theme-dark">
+
+    <!-- ========================================================= -->
+    <!-- 1. LIVE ANIMATED BACKGROUND SCENERY                       -->
+    <!-- ========================================================= -->
+    <div class="wallpaper-background" id="bgScene">
+        <div class="bg-datetime-widget" id="bgDateTimeWidget">
+            <div class="dt-time" id="dt_time">09:18 AM</div>
+            <div class="dt-date" id="dt_date">18.8.2026</div>
+        </div>
+        <div class="bg-sun"></div>
+        <div class="bg-moon"></div>
+
+        <div class="bg-bird-flock">
+            <div class="bg-mini-bird b1"></div>
+            <div class="bg-mini-bird b2"></div>
+            <div class="bg-mini-bird b3"></div>
+        </div>
+
+        <div class="bg-city-skyline">
+            <div class="bg-building" style="width: 45px; height: 95px;"><div class="bg-win" style="top:20px;left:10px;"></div></div>
+            <div class="bg-building" style="width: 60px; height: 70px;"><div class="bg-win" style="top:15px;left:22px;"></div></div>
+            <div class="bg-building" style="width: 50px; height: 120px;"><div class="bg-win" style="top:35px;left:14px;"></div></div>
+            <div class="bg-building" style="width: 70px; height: 85px;"><div class="bg-win" style="top:22px;left:28px;"></div></div>
+            <div class="bg-building" style="width: 55px; height: 110px;"><div class="bg-win" style="top:28px;left:18px;"></div></div>
+        </div>
+
+        <div class="bg-grass"></div>
+
+        <div class="bg-road">
+            <div class="bg-curb"></div>
+            <div class="bg-lane-stripes"></div>
+        </div>
+
+        <!-- Farmer delivering produce -->
+        <div class="bg-person">
+            <div class="bg-person-shadow"></div>
+            <div class="bg-parcel">
+                <div class="bg-produce apple"></div>
+                <div class="bg-produce orange"></div>
+                <div class="bg-produce green"></div>
+                <div class="bg-produce berry"></div>
+            </div>
+            <div class="bg-char-body">
+                <div class="bg-head"><div class="bg-cap"></div></div>
+                <div class="bg-torso"><div class="bg-stripe"></div></div>
+                <div class="bg-legs">
+                    <div class="bg-leg l"><div class="bg-shoe"></div></div>
+                    <div class="bg-leg r"><div class="bg-shoe"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AstraX Logistics Truck -->
+        <div class="bg-truck-container">
+            <div class="bg-truck-shadow"></div>
+            <div class="bg-cargo-body">
+                <div class="bg-truck-branding">
+                    <div class="bg-truck-brand-title">Astra<span>X</span></div>
+                    <div class="bg-truck-tagline">TECHNOLOGY WITH PRECISION</div>
+                </div>
+                <div class="bg-cargo-doors-frame">
+                    <div class="bg-cargo-interior">
+                        <div class="bg-shelf">
+                            <div class="bg-produce apple"></div>
+                            <div class="bg-produce orange"></div>
+                        </div>
+                        <div class="bg-shelf">
+                            <div class="bg-produce green"></div>
+                            <div class="bg-produce berry"></div>
+                        </div>
+                    </div>
+                    <div class="bg-door-l"><div class="bg-door-seg"></div></div>
+                    <div class="bg-door-r"><div class="bg-door-seg"></div></div>
+                </div>
+            </div>
+            <div class="bg-cabin">
+                <div class="bg-windshield">
+                    <div class="bg-driver-head"></div>
+                    <div class="bg-driver-body"></div>
+                </div>
+                <div class="bg-headlight"></div>
+                <div class="bg-tail-light"></div>
+                <div class="bg-indicator"></div>
+            </div>
+            <div class="bg-wheel back"><div class="bg-rim"></div></div>
+            <div class="bg-wheel front"><div class="bg-rim"></div></div>
+            <div class="bg-exhaust-smoke"></div>
+        </div>
+
+        <div class="wallpaper-dim-overlay"></div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- 2. INSTAGRAM-STYLE SPLASH SCREEN (WITH CUSTOM LOGO)       -->
+    <!-- ========================================================= -->
+    <div id="splash-screen">
+        <div class="splash-center">
+            <div class="logo-glow-ring">
+                <!-- EXACT FILENAME UPDATED HERE TO .jpeg -->
+                <img src="AstraX.jpeg" alt="AstraX Logo" class="splash-svg-badge" style="border-radius: 36px; object-fit: cover;">
+            </div>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+        <div class="splash-footer">
+            <span class="footer-from">POWERED BY</span>
+            <h3 class="footer-team">Astra<span>X</span></h3>
+            <p class="footer-motto">TECHNOLOGY WITH PRECISION</p>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- 3. FOREGROUND MASTER APP VIEWPORT                         -->
+    <!-- ========================================================= -->
+    <div class="app-viewport">
+
+        <!-- LIVE TELEMETRY TICKER -->
+        <div class="live-ticker-strip">
+            <div class="ticker-badge"><i class="fa-solid fa-satellite"></i> LIVE MESH FEED</div>
+            <div class="ticker-track">
+                <div class="ticker-content">
+                    <span class="t-item"><span class="t-dot cyan"></span> Nashik Cold Hub: <strong>3.2°C (Optimal)</strong></span>
+                    <span class="t-item"><span class="t-dot ice"></span> Kisan Rail #01147: <strong>En-route (ETA 06:30 AM)</strong></span>
+                    <span class="t-item"><span class="t-dot cyan"></span> Azadpur Mandi Inbound: <strong>84% Storage Space Available</strong></span>
+                    <span class="t-item"><span class="t-dot amber"></span> Reefer MH-15-4412: <strong>Defrost Cycle Nominal</strong></span>
+                    <span class="t-item"><span class="t-dot cyan"></span> MoFPI Subsidy Gateway: <strong>e-NAM DBT Active</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVBAR WITH CUSTOM LOGO -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-logo" style="background: transparent; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);">
+                    <img src="AstraX.jpeg" alt="AstraX Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                </div>
+                <div class="brand-text">
+                    <h1>ASTRA-COLD <span>AI</span></h1>
+                    <p>Team AstraX • Autonomous Cold-Chain Control Tower</p>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    <span>IOT MESH (148 NODES)</span>
+                </div>
+                <button class="btn-glass" id="theme_toggle_btn" onclick="toggleTheme()">
+                    <i class="fa-solid fa-sun" id="theme_icon"></i> 
+                    <span id="lbl_theme">Light</span>
+                </button>
+                <button class="btn-glass" onclick="toggleLanguage()">
+                    <i class="fa-solid fa-language"></i> 
+                    <span id="lbl_lang">हिंदी / ENG</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW CONTAINER -->
+        <main class="app-container">
+
+            <!-- VIEW 1: ROLE SELECTION -->
+            <section id="view_roles" class="view active">
+                <div class="hero-wrapper">
+                    <div class="hero-top-badges">
+                        <span class="hero-pill"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="badge_mofpi">MoFPI & Smart Logistics Grid</span></span>
+                        <span class="hero-pill-secondary"><i class="fa-solid fa-train"></i> <span data-i18n="badge_kisan_rail">Kisan Rail Subsidized Portal</span></span>
+                    </div>
+                    <h2 class="hero-title" data-i18n="hero_title">Intelligent Perishable Cold-Chain Command</h2>
+                    <p class="hero-subtitle" data-i18n="hero_sub">Select an operational node to compute kinetic Arrhenius spoilage decay, aggregate multimodal reefer capacity, or stream live IoT cargo telemetry.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card" onclick="showView('view_farmer_choice')">
+                        <div>
+                            <div class="card-top-row">
+                                <div class="card-icon-box"><i class="fa-solid fa-seedling"></i></div>
+                                <span class="card-micro-status"><i class="fa-solid fa-circle-check"></i> <span data-i18n="badge_subsidies_ready">Subsidies Ready</span></span>
+                            </div>
+                            <span class="tag-label" data-i18n="tag_farmer_gateway">Farmer & FPO Gateway</span>
+                            <h3 data-i18n="role1_title">1. Business Owner / Farmer</h3>
+                            <p data-i18n="role1_desc">Book produce consignments, verify ethylene gas safety, and claim 50% Kisan Rail freight subsidy.</p>
+                            <div class="card-feature-pills">
+                                <span><i class="fa-solid fa-flask"></i> <span data-i18n="pill_ethylene_lock">Ethylene Safe-Lock</span></span>
+                                <span><i class="fa-solid fa-percent"></i> <span data-i18n="pill_rail_subsidy">50% Rail Subsidy</span></span>
+                            </div>
+                        </div>
+                        <div class="action-row"><span data-i18n="action_launch_farmer">Launch Farmer Node</span><div class="action-btn-circle"><i class="fa-solid fa-arrow-right"></i></div></div>
+                    </div>
+
+                    <div class="bento-card" onclick="showView('view_fleet_choice')">
+                        <div>
+                            <div class="card-top-row">
+                                <div class="card-icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+                                <span class="card-micro-status"><i class="fa-solid fa-route"></i> <span data-i18n="badge_corridors">24 Corridors</span></span>
+                            </div>
+                            <span class="tag-label" data-i18n="tag_fleet_network">Transporter & Fleet Network</span>
+                            <h3 data-i18n="role2_title">2. Fleet & Rail Transporter</h3>
+                            <p data-i18n="role2_desc">Declare available reefer payload capacity, optimize return loads, and aggregate nearby farm produce.</p>
+                            <div class="card-feature-pills">
+                                <span><i class="fa-solid fa-cubes"></i> <span data-i18n="pill_space_consolidation">Space Consolidation</span></span>
+                                <span><i class="fa-solid fa-train"></i> <span data-i18n="pill_kisan_rake">Kisan Rake Link</span></span>
+                            </div>
+                        </div>
+                        <div class="action-row"><span data-i18n="action_fleet_console">Access Fleet Console</span><div class="action-btn-circle"><i class="fa-solid fa-arrow-right"></i></div></div>
+                    </div>
+                </div>
+
+                <div class="system-capabilities-bar">
+                    <div class="cap-item"><i class="fa-solid fa-microchip text-cyan"></i> <span data-i18n="cap_arrhenius">Arrhenius Spoilage Engine</span></div>
+                    <div class="cap-item"><i class="fa-solid fa-flask-vial text-white"></i> <span data-i18n="cap_ethylene">Bio-Rules Ethylene Validation</span></div>
+                    <div class="cap-item"><i class="fa-solid fa-train text-cyan"></i> <span data-i18n="cap_kisan_rail">Multimodal Kisan Rail Routing</span></div>
+                    <div class="cap-item"><i class="fa-solid fa-brain text-amber"></i> <span data-i18n="cap_xai">Explainable AI (XAI) Logic</span></div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: FARMER CHOICE -->
+            <section id="view_farmer_choice" class="view">
+                <button class="btn-back-link" onclick="showView('view_roles')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="return_main_grid">Return to Main Grid</span></button>
+                <div class="hero-wrapper">
+                    <h2 class="hero-title" data-i18n="farmer_ops_title">Farmer Dispatch Operations</h2>
+                    <p class="hero-subtitle" data-i18n="farmer_ops_sub">Choose operational mode for post-harvest shipment routing</p>
+                </div>
+                <div class="bento-grid" style="max-width: 860px; margin: auto;">
+                    <div class="bento-card" onclick="showView('view_farmer_form')">
+                        <div class="card-icon-box"><i class="fa-solid fa-file-invoice"></i></div>
+                        <h3 data-i18n="new_consignment_title">New Consignment Order</h3>
+                        <p data-i18n="new_consignment_desc">Enter crop volume, thermal sensitivity, origin hub, and calculate multimodal savings.</p>
+                        <div class="action-row"><span data-i18n="open_booking_form">Open Booking Form</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                    <div class="bento-card" onclick="showView('view_tracking_lookup')">
+                        <div class="card-icon-box"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3 data-i18n="live_telemetry_title">Live Consignment Telemetry</h3>
+                        <p data-i18n="live_telemetry_desc">Inspect real-time Arrhenius degradation curves, ambient heat exposure, and route ETA.</p>
+                        <div class="action-row"><span data-i18n="view_active_telemetry">View Active Telemetry</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- VIEW 3: CONSIGNMENT BOOKING FORM -->
+            <section id="view_farmer_form" class="view">
+                <button class="btn-back-link" onclick="showView('view_farmer_choice')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Back</span></button>
+                <div class="glass-panel" style="max-width: 960px; margin: auto;">
+                    <div class="form-title-bar">
+                        <h2><i class="fa-solid fa-wheat-awn"></i> <span data-i18n="booking_form_title">Consignment Booking Form</span></h2>
+                        <span class="micro-badge"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="ethylene_bio_lock">Ethylene Bio-Lock</span></span>
+                    </div>
+                    
+                    <form id="farmer_booking_form" onsubmit="handleFarmerSubmit(event)">
+                        <div class="form-grid-3">
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-user"></i> <span data-i18n="label_producer_name">Producer / FPO Name</span></label>
+                                <input type="text" id="f_name" value="Kishor Shinde (Sahyadri FPO)" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-phone"></i> <span data-i18n="label_mobile">Mobile Phone</span></label>
+                                <input type="tel" id="f_phone" value="+91 98220 11456" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-apple-whole"></i> <span data-i18n="label_commodity">Produce Commodity</span></label>
+                                <select id="f_crop" onchange="updateEthyleneMatrix()">
+                                    <option value="Strawberry">Strawberry (Cold-Sensitive | 1-4°C)</option>
+                                    <option value="Tomato">Tomato (Ethylene Producer | 12-15°C)</option>
+                                    <option value="Milk">Fresh Dairy Milk (0-2°C)</option>
+                                    <option value="Banana">Banana (Chilling Sensitive | 14°C)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="ethylene_alert_box" class="ethylene-validator-card">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div class="eth-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                                <div class="eth-content">
+                                    <h5 id="eth_title">Ethylene Safety Matrix: Strawberry</h5>
+                                    <p id="eth_desc">🍓 <strong>Extremely Gas-Sensitive:</strong> Must NOT be consolidated in the same chamber as Ethylene Producers (Tomato, Banana). Requires dedicated 1-4°C active reefer bay.</p>
+                                </div>
+                            </div>
+                            <span id="eth_status_badge" class="badge-tag cyan">Safe Isolation</span>
+                        </div>
+
+                        <div class="form-grid-3">
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-weight-hanging"></i> <span data-i18n="label_weight">Consignment Weight (kg)</span></label>
+                                <input type="number" id="f_qty" value="1200" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-location-dot"></i> <span data-i18n="label_origin_hub">Origin Hub</span></label>
+                                <input type="text" id="f_origin" value="Nashik Mega Food Park" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-map-pin"></i> <span data-i18n="label_dest_mandi">Destination Mandi</span></label>
+                                <input type="text" id="f_dest" value="Azadpur Mandi, Delhi" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-3">
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-credit-card"></i> <span data-i18n="label_escrow">Payment Escrow</span></label>
+                                <select id="f_escrow">
+                                    <option>e-NAM Mandi Escrow</option>
+                                    <option>Direct DBT Fast-Pay</option>
+                                    <option>Kisan Credit Ledger</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-indian-rupee-sign"></i> <span data-i18n="label_floor_price">Target Floor Price (₹/kg)</span></label>
+                                <input type="number" id="f_price" value="48" required>
+                            </div>
+                            <div class="form-field">
+                                <label><i class="fa-solid fa-calendar-days"></i> <span data-i18n="label_sla">Target Delivery SLA</span></label>
+                                <input type="text" id="f_sla" value="20-08-2026" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary-gradient" style="margin-top: 14px;">
+                            <i class="fa-solid fa-bolt"></i> <span data-i18n="submit_booking">Run Spoilage Optimization & Book Multimodal Route</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- VIEW 4: FLEET CHOICE -->
+            <section id="view_fleet_choice" class="view">
+                <button class="btn-back-link" onclick="showView('view_roles')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="return_main_grid">Return to Main Grid</span></button>
+                <div class="hero-wrapper">
+                    <h2 class="hero-title" data-i18n="fleet_ops_title">Fleet & Transporter Operations</h2>
+                    <p class="hero-subtitle" data-i18n="fleet_ops_sub">Register reefer capacity or review multi-vehicle logistics manifest</p>
+                </div>
+                <div class="bento-grid" style="max-width: 860px; margin: auto;">
+                    <div class="bento-card" onclick="showView('view_fleet_form')">
+                        <div class="card-icon-box"><i class="fa-solid fa-truck"></i></div>
+                        <h3 data-i18n="register_vehicle_title">Register Vehicle Payload</h3>
+                        <p data-i18n="register_vehicle_desc">Declare spare container space and transit corridors for freight pooling.</p>
+                        <div class="action-row"><span data-i18n="register_reefer_space">Register Reefer Space</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                    <div class="bento-card" onclick="showView('view_fleet_dashboard')">
+                        <div class="card-icon-box"><i class="fa-solid fa-table-columns"></i></div>
+                        <h3 data-i18n="fleet_manifest_title">Fleet Admin Live Manifest</h3>
+                        <p data-i18n="fleet_manifest_desc">Monitor running vehicles, temperature deviations, and corridor ETA schedules.</p>
+                        <div class="action-row"><span data-i18n="open_manifest">Open Manifest</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: FLEET FORM -->
+            <section id="view_fleet_form" class="view">
+                <button class="btn-back-link" onclick="showView('view_fleet_choice')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Back</span></button>
+                <div class="glass-panel" style="max-width: 920px; margin: auto;">
+                    <h2 style="font-size: 22px; margin-bottom: 20px;"><i class="fa-solid fa-truck-fast text-cyan"></i> <span data-i18n="vehicle_reg_title">Vehicle Capacity Registration</span></h2>
+                    <form onsubmit="handleFleetSubmit(event)">
+                        <div class="form-grid-3">
+                            <div class="form-field"><label data-i18n="label_transit_mode">Transit Mode</label><select><option>Road (Dedicated Reefer)</option><option>Rail (Kisan Rail Special)</option></select></div>
+                            <div class="form-field"><label data-i18n="label_vehicle_no">Vehicle / Rake Number</label><input type="text" id="v_no" value="MH-15-EG-4412" required></div>
+                            <div class="form-field"><label data-i18n="label_driver_mobile">Driver Mobile</label><input type="tel" value="+91 94222 78910" required></div>
+                        </div>
+                        <div class="form-grid-3">
+                            <div class="form-field"><label data-i18n="label_thermal_spec">Thermal Specification</label><select><option>Active Compressor (0-4°C)</option><option>Chilled Chamber (8-12°C)</option></select></div>
+                            <div class="form-field"><label data-i18n="label_vehicle_size">Vehicle Size</label><select><option>Small (14-ft / 3.5T)</option><option>Medium (20-ft / 7T)</option><option>Large (32-ft / 15T)</option></select></div>
+                            <div class="form-field"><label data-i18n="label_gross_payload">Total Gross Payload (kg)</label><input type="number" value="3500" required></div>
+                        </div>
+                        <div class="form-grid-3">
+                            <div class="form-field"><label data-i18n="label_utilized_load">Current Utilized Load (kg)</label><input type="number" value="1200" required></div>
+                            <div class="form-field"><label data-i18n="label_corridor_route">Corridor Route</label><input type="text" value="Nashik Hub - Delhi NCR" required></div>
+                            <div class="form-field"><label data-i18n="label_tariff_rate">Tariff Rate (₹/kg)</label><input type="text" value="3.8" required></div>
+                        </div>
+                        <button type="submit" class="btn-primary-gradient amber-btn" style="margin-top: 14px;">
+                            <i class="fa-solid fa-plus-circle"></i> <span data-i18n="register_vehicle_submit">Register Vehicle to Freight Network</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- VIEW 6: FLEET MANIFEST TABLE -->
+            <section id="view_fleet_dashboard" class="view">
+                <button class="btn-back-link" onclick="showView('view_fleet_choice')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Back</span></button>
+                <div class="glass-panel">
+                    <div class="form-title-bar">
+                        <h2><i class="fa-solid fa-tower-broadcast text-cyan"></i> <span data-i18n="fleet_manifest_heading">Active Fleet Telemetry Manifest</span></h2>
+                        <span class="micro-badge"><i class="fa-solid fa-circle-nodes"></i> <span data-i18n="assets_active">2 Assets Active</span></span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_vehicle">Vehicle / Rake</th>
+                                    <th data-i18n="th_cargo">Assigned Cargo</th>
+                                    <th data-i18n="th_corridor">Active Corridor</th>
+                                    <th data-i18n="th_gps">GPS Location</th>
+                                    <th data-i18n="th_temp">Chamber Temp</th>
+                                    <th data-i18n="th_consolidation">Consolidation</th>
+                                    <th data-i18n="th_action">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong><i class="fa-solid fa-truck text-cyan"></i> MH-15-EG-4412</strong></td>
+                                    <td>Strawberry (Grade A)</td>
+                                    <td>Nashik ➔ Delhi</td>
+                                    <td>Gwalior Bypass (NH-44)</td>
+                                    <td><span class="badge-tag cyan">3.4°C Optimal</span></td>
+                                    <td><span class="badge-tag amber">2,300 kg Spare</span></td>
+                                    <td><button class="btn-glass" onclick="loadFarmerDashboard('ORD-2026-67105')" data-i18n="track_btn">Track</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong><i class="fa-solid fa-train text-white"></i> KR-RAIL-0941</strong></td>
+                                    <td>Tomato (Fresh)</td>
+                                    <td>Anantapur ➔ Kolkata</td>
+                                    <td>Bhubaneswar Yard</td>
+                                    <td><span class="badge-tag cyan">12.5°C Optimal</span></td>
+                                    <td><span class="badge-tag rose">100% Full</span></td>
+                                    <td><button class="btn-glass" onclick="loadFarmerDashboard('ORD-2026-67105')" data-i18n="track_btn">Track</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="margin-top: 20px;">
+                    <div class="form-title-bar">
+                        <h2><i class="fa-solid fa-location-crosshairs text-cyan"></i> Accept Order &amp; Share Live Location</h2>
+                    </div>
+                    <div class="form-grid-3">
+                        <div class="form-field">
+                            <label><i class="fa-solid fa-hashtag"></i> Order ID</label>
+                            <input type="text" id="driver_order_id_input" placeholder="e.g. ORD-12345678">
+                        </div>
+                    </div>
+                    <button class="btn-primary-gradient" onclick="handleDriverAcceptOrder()">
+                        <i class="fa-solid fa-satellite-dish"></i> Accept Order &amp; Start Sharing My Location
+                    </button>
+                    <p id="driver_share_status" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); line-height: 1.6;"></p>
+
+                    <div class="trip-actions" id="driver_trip_actions" style="display: none; margin-top: 16px;">
+                        <button id="btn_start_trip" class="btn-primary-gradient" style="width: auto; padding: 10px 20px;" onclick="startTrip()">
+                            <i class="fa-solid fa-truck-fast"></i> Start Trip
+                        </button>
+                        <button id="btn_pause_trip" class="btn-glass" onclick="pauseOrResumeTrip()" disabled>
+                            <i class="fa-solid fa-pause"></i> Pause Trip
+                        </button>
+                        <button id="btn_end_trip" class="btn-emergency-breakdown" onclick="endTrip()" disabled>
+                            <i class="fa-solid fa-flag-checkered"></i> End Trip
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 7: DIRECT LOOKUP -->
+            <section id="view_tracking_lookup" class="view">
+                <button class="btn-back-link" onclick="showView('view_farmer_choice')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Back</span></button>
+                <div class="glass-panel" style="max-width: 480px; margin: 40px auto; text-align: center;">
+                    <div class="card-icon-box cyan" style="margin: 0 auto 16px auto;"><i class="fa-solid fa-satellite"></i></div>
+                    <h2 style="font-size: 22px; margin-bottom: 6px;" data-i18n="track_stream_title">Consignment Telemetry Stream</h2>
+                    <p style="font-size: 13px; color: var(--text-body); margin-bottom: 20px;" data-i18n="track_stream_sub">Enter Order ID or Farmer Contact Number</p>
+                    <div class="form-field" style="margin-bottom: 16px;">
+                        <input type="text" id="track_id_input" value="ORD-2026-67105" style="text-align: center; font-size: 16px; font-family: var(--font-mono); letter-spacing: 1px;">
+                    </div>
+                    <button class="btn-primary-gradient" onclick="handleDirectLookup()"><i class="fa-solid fa-satellite-dish"></i> <span data-i18n="connect_telemetry">Connect Telemetry</span></button>
+                </div>
+            </section>
+
+            <!-- VIEW 8: LIVE TELEMETRY DASHBOARD -->
+            <section id="view_farmer_dashboard" class="view">
+                <div class="dash-top-bar">
+                    <div>
+                        <button class="btn-back-link" onclick="showView('view_roles')" style="margin-bottom: 4px;"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="hub">Hub</span></button>
+                        <h2 id="dash_title" style="font-size: 24px; font-weight: 800;">Consignment: Strawberry (Kishor Shinde (Sahyadri FPO))</h2>
+                        <span class="telemetry-meta"><span data-i18n="dash_consignment_label">Consignment</span>: <strong id="dash_order_id" class="text-cyan">ORD-2026-67105</strong> • <span data-i18n="dash_sensor_label">Sensor Mesh</span>: <strong>ESP32-TH-991</strong> • <span data-i18n="dash_lastping_label">Last Ping</span>: <span id="dash_last_ping">12:45 PM</span> • <span id="dash_trip_status">⚪ Trip Not Started</span></span>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="btn_sim_breakdown" class="btn-emergency-breakdown" onclick="toggleBreakdownSimulation()">
+                            <i class="fa-solid fa-temperature-arrow-up"></i> <span data-i18n="sim_breakdown_btn">Simulate Compressor Failure</span>
+                        </button>
+                        <button class="btn-glass" onclick="simulateDataUpdate()"><i class="fa-solid fa-arrows-rotate"></i> <span data-i18n="sync_telemetry_btn">Sync Telemetry</span></button>
+                    </div>
+                </div>
+
+                <div class="stepper-container">
+                    <div class="stepper-box done"><span class="step-number">STEP 01</span><span class="step-title" data-i18n="step_loaded">Loaded at Origin</span></div>
+                    <div class="stepper-box active"><span class="step-number">STEP 02</span><span class="step-title" data-i18n="step_transit">In Multimodal Transit</span></div>
+                    <div class="stepper-box"><span class="step-number">STEP 03</span><span class="step-title" data-i18n="step_buffer">Cold Buffer Locker</span></div>
+                    <div class="stepper-box"><span class="step-number">STEP 04</span><span class="step-title" data-i18n="step_delivered">Delivered at Mandi</span></div>
+                </div>
+
+                <div class="kpi-row">
+                    <div class="kpi-card" id="card_spoilage">
+                        <span class="kpi-title" data-i18n="kpi_spoilage_title">Arrhenius Spoilage Risk</span>
+                        <div class="kpi-num text-cyan" id="kpi_spoilage">3.8%</div>
+                        <span class="kpi-sub" id="kpi_spoilage_sub" data-i18n="kpi_spoilage_sub_default">Kinetic loss rate: Nominal</span>
+                    </div>
+                    <div class="kpi-card" id="card_shelflife">
+                        <span class="kpi-title" data-i18n="kpi_shelflife_title">Residual Shelf Life</span>
+                        <div class="kpi-num text-white" id="kpi_shelflife">36.4 Hrs</div>
+                        <span class="kpi-sub" data-i18n="kpi_shelflife_sub">Floor: 12.0 Hrs</span>
+                    </div>
+                    <div class="kpi-card" id="card_temp">
+                        <span class="kpi-title" data-i18n="kpi_temp_title">Core Pulp Temp</span>
+                        <div class="kpi-num" id="kpi_temp">3.4°C <span class="temp-badge">38°C Amb</span></div>
+                        <span class="kpi-sub" id="kpi_temp_sub" data-i18n="kpi_temp_sub_default">Target: 1.0 - 4.0°C</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title" data-i18n="kpi_humidity_title">Chamber Humidity</span>
+                        <div class="kpi-num text-cyan" id="kpi_humidity">88% RH</div>
+                        <span class="kpi-sub" data-i18n="kpi_humidity_sub">Defrost nominal</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title" data-i18n="kpi_distance_title">Distance Left</span>
+                        <div class="kpi-num text-amber" id="kpi_distance">245 km</div>
+                        <span class="kpi-sub" id="kpi_distance_eta" data-i18n="kpi_distance_sub">ETA: 4h 15m</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title" data-i18n="kpi_tariff_title">Dispatch Tariff</span>
+                        <div class="kpi-num text-cyan" id="kpi_cost">₹42,800</div>
+                        <span class="kpi-sub" data-i18n="kpi_tariff_sub">50% Subsidy Locked</span>
+                    </div>
+                    <div class="kpi-card">
+                        <span class="kpi-title" data-i18n="kpi_esg_title">ESG Carbon Avoided</span>
+                        <div class="kpi-num text-cyan">142 kg</div>
+                        <span class="kpi-sub" data-i18n="kpi_esg_sub">72% Green Rail Shift</span>
+                    </div>
+                </div>
+
+                <div id="recommendation_callout" class="callout-glass">
+                    <div class="callout-icon" id="rec_icon"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h4 id="rec_title" data-i18n="rec_title_default">Autonomous Optimization Directive • Multimodal Rail Shift</h4>
+                        <p id="rec_desc" data-i18n="rec_desc_default">Consignment transfer recommended at <strong>Bhusawal Junction to Central Railway Kisan Special #01147</strong>. Spoilage risk drops by <strong>62%</strong> with <strong>50% MoFPI freight subsidy saving of ₹63,960</strong>.</p>
+                    </div>
+                    <button id="rec_action_btn" class="btn-primary-gradient" style="width: auto; padding: 10px 22px;" onclick="handleDirectiveClick()" data-i18n="acknowledge_btn">Acknowledge</button>
+                </div>
+
+                <div class="glass-panel" style="margin-bottom: 20px;">
+                    <div class="form-title-bar" style="margin-bottom: 12px;">
+                        <h3 style="font-size: 15px;"><i class="fa-solid fa-map-location-dot text-cyan"></i> <span data-i18n="corridor_track_title">Dynamic Corridor Telemetry Track</span></h3>
+                        <div style="display: flex; gap: 14px; font-size: 11px; font-weight: 600;">
+                            <span><span class="dot-ind cyan"></span> <span data-i18n="legend_subsidized_rail">Subsidized Rail</span></span>
+                            <span><span class="dot-ind amber"></span> <span data-i18n="legend_road_track">Active Road Track</span></span>
+                            <span id="legend_reroute" style="display: none;"><span class="dot-ind red"></span> 🚨 <span data-i18n="legend_emergency_locker">Emergency Buffer Locker</span></span>
+                        </div>
+                    </div>
+                    <div id="leafletMap" style="height: 330px; border-radius: 14px;"></div>
+                </div>
+
+                <div class="dual-grid">
+                    <div class="chart-box">
+                        <span class="kpi-title" data-i18n="chart_spoilage_title">Arrhenius Spoilage Decay Curve (%)</span>
+                        <div class="canvas-wrap"><canvas id="spoilageChart"></canvas></div>
+                    </div>
+                    <div class="chart-box">
+                        <span class="kpi-title" data-i18n="chart_temp_title">Core Pulp vs Outside Ambient Temp (°C)</span>
+                        <div class="canvas-wrap"><canvas id="tempChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <!-- ========================================================= -->
+    <!-- 4. EXACT DISPATCH ALERT MODAL                             -->
+    <!-- ========================================================= -->
+    <div id="smsModal" class="sms-modal-overlay">
+        <div class="sms-modal-card">
+            <div class="sms-icon-wrap">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <h3 class="sms-modal-title">Dispatch Alert Broadcasted</h3>
+            <p class="sms-modal-subtitle">Real-time SMS & WhatsApp notification sent to registered farmer device.</p>
+            
+            <div class="sms-preview-bubble">
+                <div class="sms-sender">ASTRA-COLD DISPATCH GATEWAY</div>
+                <div class="sms-text" id="sms_preview_text">
+                    "Namaste Kishor Shinde (Sahyadri FPO), your consignment (Strawberry 1200kg) has been confirmed on Central Kisan Special #01147. Live sensor tracking & 50% subsidy link: https://astrax.io/track/ORD-2026-67105"
+                </div>
+                <div class="sms-time">Just Now • Delivered via e-NAM Gateway</div>
+            </div>
+
+            <button type="button" class="btn-primary-gradient" onclick="closeSmsModalAndProceed()">
+                <i class="fa-solid fa-satellite-dish"></i> Open Live Telemetry Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+// ==========================================================================
+// ASTRA-COLD AI • TELEMETRY CONTROLLER (ALARM ONLY ON COMPRESSOR FAILURE)
+// ==========================================================================
+
+let spoilageChartInstance = null;
+let tempChartInstance = null;
+let activeLanguage = 'en';
+let activeTheme = 'dark';
+
+let isBreakdownActive = false;
+let emergencyAlarmInterval = null;
+let audioCtx = null;
+
+// ==========================================================================
+// LIVE ORDER TRACKING (map integration)
+//
+// This is the whole map contribution. It doesn't touch spoilage/temperature
+// prediction, pricing, or ethylene logic - only: which order is being
+// viewed, where its pickup/destination are, and where the driver's phone
+// currently is.
+//
+// FARMER: handleFarmerSubmit() below calls registerOrderAsFarmer() once a
+// consignment is booked - it geocodes Origin Hub / Destination Mandi and
+// joins that order's tracking room. loadFarmerDashboard() (used by "View
+// Active Telemetry", the Fleet manifest's Track button, and direct Order ID
+// lookup) joins the same room for an existing order.
+//
+// DRIVER: the new "Accept Order & Share Live Location" panel in the Fleet
+// console calls acceptOrderAsDriver() with an Order ID, which joins that
+// room as "driver" and starts broadcasting this phone's GPS under it.
+//
+// Requires an app.js exactly like the one already covering join-order /
+// register-order-route / send-driver-location / receive-driver-location /
+// driver-trip-status. If you've since changed that file, these event names
+// need to match whatever you changed them to.
+// ==========================================================================
+
+const trackingSocket = io();
+
+let currentOrder = null;   // { orderId, role, pickup, destination, farmerPhone }
+let trackingMap = null;    // the real Leaflet map, replacing the old SVG corridor diagram
+let driverMarker = null;
+let routeLine = null;
+let emergencyMarker = null;
+let emergencyLine = null;
+let liveTrackingActive = false;
+let lastEtaFetch = 0;
+const ETA_INTERVAL_MS = 5000;
+
+async function geocodePlace(place) {
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}&limit=1`);
+    const data = await res.json();
+    if (!data.length) return null;
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+  } catch (err) {
+    console.error('Geocoding failed for', place, err);
+    return null;
+  }
+}
+
+// FARMER: called from handleFarmerSubmit() once a consignment is booked
+async function registerOrderAsFarmer(orderId, originText, destText, farmerPhone) {
+  const pickup = await geocodePlace(originText);
+  const destination = await geocodePlace(destText);
+
+  if (!pickup || !destination) {
+    console.warn('Could not geocode pickup/destination for', orderId, '- map will stay empty until this is fixed.');
+    return;
+  }
+
+  currentOrder = { orderId, role: 'farmer', pickup, destination, farmerPhone };
+  trackingSocket.emit('join-order', { orderId, role: 'farmer' });
+  trackingSocket.emit('register-order-route', { orderId, pickup, destination, farmerPhone });
+}
+
+// FARMER: called from loadFarmerDashboard() for an order that may already
+// have a route registered (typed Order ID, Fleet "Track" button, revisit)
+function joinOrderAsFarmer(orderId) {
+  currentOrder = { orderId, role: 'farmer', pickup: null, destination: null, farmerPhone: null };
+  trackingSocket.emit('join-order', { orderId, role: 'farmer' });
+}
+
+// DRIVER: called from the Fleet console's "Accept Order" panel
+function acceptOrderAsDriver(orderId) {
+  currentOrder = { orderId, role: 'driver', pickup: null, destination: null, farmerPhone: null };
+  trackingSocket.emit('join-order', { orderId, role: 'driver' });
+
+  if (!navigator.geolocation) {
+    console.warn('Geolocation not available on this device.');
+    return;
+  }
+
+  navigator.geolocation.watchPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      trackingSocket.emit('send-driver-location', { orderId, latitude, longitude });
+    },
+    (err) => console.error('Geolocation error:', err),
+    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+  );
+}
+
+function handleDriverAcceptOrder() {
+  const input = document.getElementById('driver_order_id_input');
+  const orderId = input ? input.value.trim() : '';
+
+  if (!orderId) {
+    alert('Enter the Order ID you accepted.');
+    return;
+  }
+
+  acceptOrderAsDriver(orderId);
+
+  const status = document.getElementById('driver_share_status');
+  if (status) status.innerText = `📡 Sharing live location for ${orderId}...`;
+
+  // ADDED: reveal this driver's trip controls now that an order is joined
+  tripState = 'not_started';
+  const actions = document.getElementById('driver_trip_actions');
+  if (actions) actions.style.display = 'flex';
+  updateDriverTripUI();
+}
+
+// ==========================================================================
+// ADDED: driver trip state machine — ported from script.js
+// "not_started" | "ongoing" | "paused" | "ended"
+// ==========================================================================
+let tripState = 'not_started';
+
+function updateDriverTripUI() {
+  const startBtn = document.getElementById('btn_start_trip');
+  const pauseBtn = document.getElementById('btn_pause_trip');
+  const endBtn = document.getElementById('btn_end_trip');
+  if (!startBtn || !pauseBtn || !endBtn) return;
+
+  if (tripState === 'not_started' || tripState === 'ended') {
+    startBtn.disabled = false;
+    startBtn.innerHTML = '<i class="fa-solid fa-truck-fast"></i> Start Trip';
+    pauseBtn.disabled = true;
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Trip';
+    endBtn.disabled = true;
+  } else if (tripState === 'ongoing') {
+    startBtn.disabled = true;
+    startBtn.innerHTML = '<i class="fa-solid fa-truck-fast"></i> Trip Started';
+    pauseBtn.disabled = false;
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Trip';
+    endBtn.disabled = false;
+  } else if (tripState === 'paused') {
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i> Resume Trip';
+    endBtn.disabled = false;
+  }
+}
+
+function emitTripStatus() {
+  if (!currentOrder || !currentOrder.orderId) return;
+  trackingSocket.emit('driver-trip-status', { orderId: currentOrder.orderId, status: tripState });
+}
+
+function startTrip() {
+  if (!currentOrder) { alert('Accept an order first.'); return; }
+  tripState = 'ongoing';
+  liveTrackingActive = true;
+  emitTripStatus();
+  updateDriverTripUI();
+}
+
+function pauseOrResumeTrip() {
+  if (tripState === 'ongoing') {
+    tripState = 'paused';
+    liveTrackingActive = false;
+  } else if (tripState === 'paused') {
+    tripState = 'ongoing';
+    liveTrackingActive = true;
+  }
+  emitTripStatus();
+  updateDriverTripUI();
+}
+
+function endTrip() {
+  tripState = 'ended';
+  liveTrackingActive = false;
+  emitTripStatus();
+  updateDriverTripUI();
+}
+
+// Creates the real map once (view_farmer_dashboard's #leafletMap div),
+// reuses it on subsequent visits, and draws the planned route if known
+function initLiveTrackingMap() {
+  const mapElement = document.getElementById('leafletMap');
+  if (!mapElement) return;
+
+  if (!trackingMap) {
+    trackingMap = L.map('leafletMap').setView([20.5937, 78.9629], 5);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19
+    }).addTo(trackingMap);
+  } else {
+    trackingMap.invalidateSize();
+  }
+
+  if (currentOrder && currentOrder.pickup && currentOrder.destination) {
+    drawPlannedRoute(currentOrder.pickup, currentOrder.destination);
+  }
+}
+
+async function drawPlannedRoute(pickup, destination) {
+  if (!trackingMap) return;
+
+  try {
+    const res = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${pickup.lon},${pickup.lat};${destination.lon},${destination.lat}?overview=full&geometries=geojson`
+    );
+    const data = await res.json();
+    if (!data.routes || !data.routes.length) return;
+
+    if (routeLine) trackingMap.removeLayer(routeLine);
+
+    routeLine = L.geoJSON(data.routes[0].geometry, {
+      style: { color: '#a855f7', weight: 4 }
+    }).addTo(trackingMap);
+
+    trackingMap.fitBounds(routeLine.getBounds());
+
+  } catch (err) {
+    console.error('Unable to draw planned route:', err);
+  }
+}
+
+// Fires for BOTH farmer and driver tabs once an order's pickup/destination
+// are known - either right after registerOrderAsFarmer(), or immediately
+// on join if the order was already registered (see app.js's join-order handler)
+trackingSocket.on('order-route-ready', (data) => {
+  if (!currentOrder || data.orderId !== currentOrder.orderId) return;
+
+  currentOrder.pickup = data.pickup || currentOrder.pickup;
+  currentOrder.destination = data.destination || currentOrder.destination;
+  currentOrder.farmerPhone = data.farmerPhone || currentOrder.farmerPhone;
+
+  if (trackingMap) drawPlannedRoute(currentOrder.pickup, currentOrder.destination);
+
+  // Driver's "Accept Order" panel shows the farmer's pickup + contact once known
+  if (currentOrder.role === 'driver') {
+    const status = document.getElementById('driver_share_status');
+    if (status) {
+      status.innerHTML = `📡 Sharing live location for ${data.orderId}<br>` +
+        `📍 Pickup: ${data.pickup ? data.pickup.lat.toFixed(4) + ', ' + data.pickup.lon.toFixed(4) : '—'}<br>` +
+        `🏁 Drop-off: ${data.destination ? data.destination.lat.toFixed(4) + ', ' + data.destination.lon.toFixed(4) : '—'}` +
+        (data.farmerPhone ? `<br>📞 Farmer contact: ${data.farmerPhone}` : '');
+    }
+  }
+});
+
+trackingSocket.on('trip-status-changed', (data) => {
+  if (!currentOrder || data.orderId !== currentOrder.orderId) return;
+  liveTrackingActive = data.status === 'ongoing';
+
+  // ADDED: keep this tab's tripState + buttons/badge in sync too, not just
+  // the tab that clicked Start/Pause/End (mirrors script.js's behaviour)
+  tripState = data.status;
+  updateDriverTripUI();
+
+  const badge = document.getElementById('dash_trip_status');
+  if (badge) {
+    if (data.status === 'ongoing') badge.innerText = '🟢 Trip Ongoing';
+    else if (data.status === 'paused') badge.innerText = '🟡 Trip Paused';
+    else if (data.status === 'ended') badge.innerText = '🔴 Trip Ended';
+    else badge.innerText = '⚪ Trip Not Started';
+  }
+});
+
+// The core of it: driver's GPS arrives here, moves the marker, updates
+// distance/ETA and Last Ping on the farmer's dashboard
+trackingSocket.on('receive-driver-location', (data) => {
+  if (!currentOrder || data.orderId !== currentOrder.orderId || !trackingMap) return;
+
+  const { latitude, longitude } = data;
+
+  if (driverMarker) {
+    driverMarker.setLatLng([latitude, longitude]);
+  } else {
+    driverMarker = L.marker([latitude, longitude]).addTo(trackingMap).bindPopup('🚚 Live Truck Location').openPopup();
+  }
+
+  trackingMap.panTo([latitude, longitude]);
+
+  const pingElem = document.getElementById('dash_last_ping');
+  if (pingElem) pingElem.innerText = new Date().toLocaleTimeString();
+
+  const now = Date.now();
+  if (now - lastEtaFetch >= ETA_INTERVAL_MS) {
+    lastEtaFetch = now;
+    updateLiveDistanceAndEta(latitude, longitude);
+  }
+});
+
+async function updateLiveDistanceAndEta(latitude, longitude) {
+  if (!currentOrder || !currentOrder.destination) return;
+
+  try {
+    const res = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${currentOrder.destination.lon},${currentOrder.destination.lat}?overview=false`
+    );
+    const data = await res.json();
+    if (!data.routes || !data.routes.length) return;
+
+    const km = (data.routes[0].distance / 1000).toFixed(0);
+    const hrs = data.routes[0].duration / 3600;
+    const h = Math.floor(hrs);
+    const m = Math.round((hrs - h) * 60);
+
+    const distElem = document.getElementById('kpi_distance');
+    const etaElem = document.getElementById('kpi_distance_eta');
+    if (distElem) distElem.innerText = `${km} km`;
+    if (etaElem) etaElem.innerText = `ETA: ${h}h ${m}m`;
+
+  } catch (err) {
+    console.error('Unable to update live distance/ETA:', err);
+  }
+}
+
+// 1. SPLASH SCREEN DISMISSAL (2.4s)
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+      splash.classList.add('fade-out');
+      setTimeout(() => splash.remove(), 600);
+    }
+  }, 2400);
+});
+
+// 1b. BACKGROUND SCENE DAY/NIGHT AUTO-SYNC (system clock driven)
+function updateBgSceneTheme() {
+  const bgScene = document.getElementById('bgScene');
+  if (!bgScene) return;
+  const hour = new Date().getHours();
+  bgScene.classList.remove('bg-morning', 'bg-evening', 'bg-night');
+  if (hour >= 6 && hour < 17) {
+    bgScene.classList.add('bg-morning');
+  } else if (hour >= 17 && hour < 20) {
+    bgScene.classList.add('bg-evening');
+  } else {
+    bgScene.classList.add('bg-night');
+  }
+}
+updateBgSceneTheme();
+setInterval(updateBgSceneTheme, 30000);
+
+// 1c. LIVE DATE/TIME WIDGET (top-left corner)
+function updateDateTimeWidget() {
+  const timeElem = document.getElementById('dt_time');
+  const dateElem = document.getElementById('dt_date');
+  if (!timeElem || !dateElem) return;
+
+  const now = new Date();
+
+  let hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  const hoursStr = hours.toString().padStart(2, '0');
+  timeElem.innerText = `${hoursStr}:${minutes} ${ampm}`;
+
+  const day = now.getDate();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+  dateElem.innerText = `${day}.${month}.${year}`;
+}
+updateDateTimeWidget();
+setInterval(updateDateTimeWidget, 1000);
+
+// 2. EMERGENCY AUDIO ENGINE (ONLY ACTIVE ON COMPRESSOR FAILURE)
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContextClass();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playEmergencyBeep(freq = 880, duration = 0.28) {
+  try {
+    const ctx = getAudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.6, ctx.currentTime + duration);
+
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch (err) {
+    console.warn("Audio Context blocked:", err);
+  }
+}
+
+function startEmergencyAlarm() {
+  stopEmergencyAlarm();
+  let toggleTone = false;
+  playEmergencyBeep(900, 0.25);
+  emergencyAlarmInterval = setInterval(() => {
+    toggleTone = !toggleTone;
+    playEmergencyBeep(toggleTone ? 950 : 650, 0.25);
+  }, 450);
+}
+
+function stopEmergencyAlarm() {
+  if (emergencyAlarmInterval) {
+    clearInterval(emergencyAlarmInterval);
+    emergencyAlarmInterval = null;
+  }
+}
+
+// 3. DYNAMIC LIGHT / DARK THEME TOGGLE (SILENT)
+function toggleTheme() {
+  const body = document.body;
+  const themeLabel = document.getElementById('lbl_theme');
+  const themeIcon = document.getElementById('theme_icon');
+
+  if (activeTheme === 'dark') {
+    activeTheme = 'light';
+    body.classList.remove('theme-dark');
+    body.classList.add('theme-light');
+    if (themeLabel) themeLabel.innerText = 'Dark';
+    if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+  } else {
+    activeTheme = 'dark';
+    body.classList.remove('theme-light');
+    body.classList.add('theme-dark');
+    if (themeLabel) themeLabel.innerText = 'Light';
+    if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+  }
+
+  if (spoilageChartInstance && tempChartInstance) {
+    updateChartsTheme();
+  }
+}
+
+function updateChartsTheme() {
+  const isLight = activeTheme === 'light';
+  const gridColor = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.04)';
+  const tickColor = isLight ? '#475569' : '#8e889e';
+
+  [spoilageChartInstance, tempChartInstance].forEach(chart => {
+    if (chart) {
+      chart.options.scales.x.grid.color = gridColor;
+      chart.options.scales.x.ticks.color = tickColor;
+      chart.options.scales.y.grid.color = gridColor;
+      chart.options.scales.y.ticks.color = tickColor;
+      chart.update();
+    }
+  });
+}
+
+// 4. VERNACULAR TRANSLATIONS (SILENT)
+function toggleLanguage() {
+  activeLanguage = activeLanguage === 'en' ? 'hi' : 'en';
+  const langLabel = document.getElementById('lbl_lang');
+  if (langLabel) langLabel.innerText = activeLanguage === 'en' ? 'हिंदी / ENG' : 'ENG / हिंदी';
+
+  applyTranslations();
+}
+
+const i18nDict = {
+  en: {
+    hero_title: "Intelligent Perishable Cold-Chain Command",
+    hero_sub: "Select an operational node to compute kinetic Arrhenius spoilage decay, aggregate multimodal reefer capacity, or stream live IoT cargo telemetry.",
+    role1_title: "1. Business Owner / Farmer",
+    role1_desc: "Book produce consignments, verify ethylene gas safety, and claim 50% Kisan Rail freight subsidy.",
+    role2_title: "2. Fleet & Rail Transporter",
+    role2_desc: "Declare available reefer payload capacity, optimize return loads, and aggregate nearby farm produce.",
+    badge_mofpi: "MoFPI & Smart Logistics Grid",
+    badge_kisan_rail: "Kisan Rail Subsidized Portal",
+    badge_subsidies_ready: "Subsidies Ready",
+    tag_farmer_gateway: "Farmer & FPO Gateway",
+    pill_ethylene_lock: "Ethylene Safe-Lock",
+    pill_rail_subsidy: "50% Rail Subsidy",
+    action_launch_farmer: "Launch Farmer Node",
+    badge_corridors: "24 Corridors",
+    tag_fleet_network: "Transporter & Fleet Network",
+    pill_space_consolidation: "Space Consolidation",
+    pill_kisan_rake: "Kisan Rake Link",
+    action_fleet_console: "Access Fleet Console",
+    cap_arrhenius: "Arrhenius Spoilage Engine",
+    cap_ethylene: "Bio-Rules Ethylene Validation",
+    cap_kisan_rail: "Multimodal Kisan Rail Routing",
+    cap_xai: "Explainable AI (XAI) Logic",
+    return_main_grid: "Return to Main Grid",
+    farmer_ops_title: "Farmer Dispatch Operations",
+    farmer_ops_sub: "Choose operational mode for post-harvest shipment routing",
+    new_consignment_title: "New Consignment Order",
+    new_consignment_desc: "Enter crop volume, thermal sensitivity, origin hub, and calculate multimodal savings.",
+    open_booking_form: "Open Booking Form",
+    live_telemetry_title: "Live Consignment Telemetry",
+    live_telemetry_desc: "Inspect real-time Arrhenius degradation curves, ambient heat exposure, and route ETA.",
+    view_active_telemetry: "View Active Telemetry",
+    back: "Back",
+    booking_form_title: "Consignment Booking Form",
+    ethylene_bio_lock: "Ethylene Bio-Lock",
+    label_producer_name: "Producer / FPO Name",
+    label_mobile: "Mobile Phone",
+    label_commodity: "Produce Commodity",
+    label_weight: "Consignment Weight (kg)",
+    label_origin_hub: "Origin Hub",
+    label_dest_mandi: "Destination Mandi",
+    label_escrow: "Payment Escrow",
+    label_floor_price: "Target Floor Price (₹/kg)",
+    label_sla: "Target Delivery SLA",
+    submit_booking: "Run Spoilage Optimization & Book Multimodal Route",
+    fleet_ops_title: "Fleet & Transporter Operations",
+    fleet_ops_sub: "Register reefer capacity or review multi-vehicle logistics manifest",
+    register_vehicle_title: "Register Vehicle Payload",
+    register_vehicle_desc: "Declare spare container space and transit corridors for freight pooling.",
+    register_reefer_space: "Register Reefer Space",
+    fleet_manifest_title: "Fleet Admin Live Manifest",
+    fleet_manifest_desc: "Monitor running vehicles, temperature deviations, and corridor ETA schedules.",
+    open_manifest: "Open Manifest",
+    vehicle_reg_title: "Vehicle Capacity Registration",
+    label_transit_mode: "Transit Mode",
+    label_vehicle_no: "Vehicle / Rake Number",
+    label_driver_mobile: "Driver Mobile",
+    label_thermal_spec: "Thermal Specification",
+    label_vehicle_size: "Vehicle Size",
+    label_gross_payload: "Total Gross Payload (kg)",
+    label_utilized_load: "Current Utilized Load (kg)",
+    label_corridor_route: "Corridor Route",
+    label_tariff_rate: "Tariff Rate (₹/kg)",
+    register_vehicle_submit: "Register Vehicle to Freight Network",
+    fleet_manifest_heading: "Active Fleet Telemetry Manifest",
+    assets_active: "2 Assets Active",
+    th_vehicle: "Vehicle / Rake",
+    th_cargo: "Assigned Cargo",
+    th_corridor: "Active Corridor",
+    th_gps: "GPS Location",
+    th_temp: "Chamber Temp",
+    th_consolidation: "Consolidation",
+    th_action: "Action",
+    track_btn: "Track",
+    track_stream_title: "Consignment Telemetry Stream",
+    track_stream_sub: "Enter Order ID or Farmer Contact Number",
+    connect_telemetry: "Connect Telemetry",
+    hub: "Hub",
+    dash_consignment_label: "Consignment",
+    dash_sensor_label: "Sensor Mesh",
+    dash_lastping_label: "Last Ping",
+    sim_breakdown_btn: "Simulate Compressor Failure",
+    sync_telemetry_btn: "Sync Telemetry",
+    step_loaded: "Loaded at Origin",
+    step_transit: "In Multimodal Transit",
+    step_buffer: "Cold Buffer Locker",
+    step_delivered: "Delivered at Mandi",
+    kpi_spoilage_title: "Arrhenius Spoilage Risk",
+    kpi_spoilage_sub_default: "Kinetic loss rate: Nominal",
+    kpi_shelflife_title: "Residual Shelf Life",
+    kpi_shelflife_sub: "Floor: 12.0 Hrs",
+    kpi_temp_title: "Core Pulp Temp",
+    kpi_temp_sub_default: "Target: 1.0 - 4.0°C",
+    kpi_humidity_title: "Chamber Humidity",
+    kpi_humidity_sub: "Defrost nominal",
+    kpi_distance_title: "Distance Left",
+    kpi_distance_sub: "ETA: 4h 15m",
+    kpi_tariff_title: "Dispatch Tariff",
+    kpi_tariff_sub: "50% Subsidy Locked",
+    kpi_esg_title: "ESG Carbon Avoided",
+    kpi_esg_sub: "72% Green Rail Shift",
+    rec_title_default: "Autonomous Optimization Directive • Multimodal Rail Shift",
+    rec_desc_default: "Consignment transfer recommended at <strong>Bhusawal Junction to Central Railway Kisan Special #01147</strong>. Spoilage risk drops by <strong>62%</strong> with <strong>50% MoFPI freight subsidy saving of ₹63,960</strong>.",
+    acknowledge_btn: "Acknowledge",
+    corridor_track_title: "Dynamic Corridor Telemetry Track",
+    legend_subsidized_rail: "Subsidized Rail",
+    legend_road_track: "Active Road Track",
+    legend_emergency_locker: "Emergency Buffer Locker",
+    chart_spoilage_title: "Arrhenius Spoilage Decay Curve (%)",
+    chart_temp_title: "Core Pulp vs Outside Ambient Temp (°C)"
+  },
+  hi: {
+    hero_title: "स्मार्ट पेरिशेबल कोल्ड-चेन कमांड टॉवर",
+    hero_sub: "तापमान रिस्क (Arrhenius Decay), किसान रेल ५०% सब्सिडी और लाइव IoT सेंसर ट्रैकिंग के लिए अपना पोर्टल चुनें।",
+    role1_title: "१. किसान एवं एफपीओ (Farmer)",
+    role1_desc: "फसल बुकिंग करें, एथिलीन गैस कम्पैटिबिलिटी चेक करें और ५०% किसान रेल सब्सिडी प्राप्त करें।",
+    role2_title: "२. फ्लीट एवं ट्रांसपोर्टर (Fleet)",
+    role2_desc: "खाली रीफर स्पेस रजिस्टर करें, बैकहॉल लोड सुरक्षित करें और किसान ऑर्डर्स से कनेक्ट हों।",
+    badge_mofpi: "MoFPI एवं स्मार्ट लॉजिस्टिक्स ग्रिड",
+    badge_kisan_rail: "किसान रेल सब्सिडाइज़्ड पोर्टल",
+    badge_subsidies_ready: "सब्सिडी तैयार",
+    tag_farmer_gateway: "किसान एवं एफपीओ गेटवे",
+    pill_ethylene_lock: "एथिलीन सेफ़-लॉक",
+    pill_rail_subsidy: "५०% रेल सब्सिडी",
+    action_launch_farmer: "किसान नोड शुरू करें",
+    badge_corridors: "२४ कॉरिडोर",
+    tag_fleet_network: "ट्रांसपोर्टर एवं फ्लीट नेटवर्क",
+    pill_space_consolidation: "स्पेस कंसोलिडेशन",
+    pill_kisan_rake: "किसान रेक लिंक",
+    action_fleet_console: "फ्लीट कंसोल खोलें",
+    cap_arrhenius: "Arrhenius स्पॉइलेज इंजन",
+    cap_ethylene: "बायो-रूल्स एथिलीन वेरिफिकेशन",
+    cap_kisan_rail: "मल्टीमोडल किसान रेल रूटिंग",
+    cap_xai: "एक्सप्लेनेबल एआई (XAI) लॉजिक",
+    return_main_grid: "मुख्य ग्रिड पर वापस जाएँ",
+    farmer_ops_title: "किसान डिस्पैच संचालन",
+    farmer_ops_sub: "फसल भेजने के लिए संचालन मोड चुनें",
+    new_consignment_title: "नई खेप ऑर्डर करें",
+    new_consignment_desc: "फसल की मात्रा, तापमान संवेदनशीलता, मूल हब दर्ज करें और मल्टीमोडल बचत की गणना करें।",
+    open_booking_form: "बुकिंग फॉर्म खोलें",
+    live_telemetry_title: "लाइव खेप टेलीमेट्री",
+    live_telemetry_desc: "रियल-टाइम Arrhenius डिग्रेडेशन कर्व, तापमान एक्सपोज़र और रूट ईटीए देखें।",
+    view_active_telemetry: "सक्रिय टेलीमेट्री देखें",
+    back: "वापस",
+    booking_form_title: "खेप बुकिंग फॉर्म",
+    ethylene_bio_lock: "एथिलीन बायो-लॉक",
+    label_producer_name: "उत्पादक / एफपीओ का नाम",
+    label_mobile: "मोबाइल फ़ोन",
+    label_commodity: "उपज का प्रकार",
+    label_weight: "खेप वज़न (किलोग्राम)",
+    label_origin_hub: "मूल हब",
+    label_dest_mandi: "गंतव्य मंडी",
+    label_escrow: "भुगतान एस्क्रो",
+    label_floor_price: "लक्ष्य न्यूनतम मूल्य (₹/किलो)",
+    label_sla: "लक्ष्य डिलीवरी तिथि",
+    submit_booking: "स्पॉइलेज ऑप्टिमाइज़ेशन चलाएँ एवं मल्टीमोडल रूट बुक करें",
+    fleet_ops_title: "फ्लीट एवं ट्रांसपोर्टर संचालन",
+    fleet_ops_sub: "रीफर क्षमता रजिस्टर करें या मल्टी-वाहन मैनिफेस्ट देखें",
+    register_vehicle_title: "वाहन पेलोड रजिस्टर करें",
+    register_vehicle_desc: "फ्रेट पूलिंग के लिए खाली कंटेनर स्पेस और ट्रांज़िट कॉरिडोर दर्ज करें।",
+    register_reefer_space: "रीफर स्पेस रजिस्टर करें",
+    fleet_manifest_title: "फ्लीट एडमिन लाइव मैनिफेस्ट",
+    fleet_manifest_desc: "चल रहे वाहनों, तापमान बदलाव और कॉरिडोर ईटीए शेड्यूल की निगरानी करें।",
+    open_manifest: "मैनिफेस्ट खोलें",
+    vehicle_reg_title: "वाहन क्षमता पंजीकरण",
+    label_transit_mode: "ट्रांज़िट मोड",
+    label_vehicle_no: "वाहन / रेक नंबर",
+    label_driver_mobile: "ड्राइवर मोबाइल",
+    label_thermal_spec: "थर्मल स्पेसिफिकेशन",
+    label_vehicle_size: "वाहन का आकार",
+    label_gross_payload: "कुल सकल पेलोड (किलोग्राम)",
+    label_utilized_load: "वर्तमान उपयोग किया गया लोड (किलोग्राम)",
+    label_corridor_route: "कॉरिडोर रूट",
+    label_tariff_rate: "टैरिफ दर (₹/किलो)",
+    register_vehicle_submit: "फ्रेट नेटवर्क में वाहन रजिस्टर करें",
+    fleet_manifest_heading: "सक्रिय फ्लीट टेलीमेट्री मैनिफेस्ट",
+    assets_active: "२ एसेट्स सक्रिय",
+    th_vehicle: "वाहन / रेक",
+    th_cargo: "आवंटित कार्गो",
+    th_corridor: "सक्रिय कॉरिडोर",
+    th_gps: "जीपीएस लोकेशन",
+    th_temp: "चैंबर तापमान",
+    th_consolidation: "कंसोलिडेशन",
+    th_action: "कार्रवाई",
+    track_btn: "ट्रैक करें",
+    track_stream_title: "खेप टेलीमेट्री स्ट्रीम",
+    track_stream_sub: "ऑर्डर आईडी या किसान संपर्क नंबर दर्ज करें",
+    connect_telemetry: "टेलीमेट्री कनेक्ट करें",
+    hub: "हब",
+    dash_consignment_label: "खेप",
+    dash_sensor_label: "सेंसर मेश",
+    dash_lastping_label: "अंतिम पिंग",
+    sim_breakdown_btn: "कंप्रेसर फेलियर सिमुलेट करें",
+    sync_telemetry_btn: "टेलीमेट्री सिंक करें",
+    step_loaded: "मूल स्थान पर लोड हुआ",
+    step_transit: "मल्टीमोडल ट्रांज़िट में",
+    step_buffer: "कोल्ड बफर लॉकर",
+    step_delivered: "मंडी में डिलीवर हुआ",
+    kpi_spoilage_title: "Arrhenius स्पॉइलेज रिस्क",
+    kpi_spoilage_sub_default: "काइनेटिक लॉस दर: सामान्य",
+    kpi_shelflife_title: "शेष शेल्फ लाइफ",
+    kpi_shelflife_sub: "न्यूनतम सीमा: १२.० घंटे",
+    kpi_temp_title: "कोर पल्प तापमान",
+    kpi_temp_sub_default: "लक्ष्य: १.० - ४.०°C",
+    kpi_humidity_title: "चैंबर आर्द्रता",
+    kpi_humidity_sub: "डीफ्रॉस्ट सामान्य",
+    kpi_distance_title: "शेष दूरी",
+    kpi_distance_sub: "ईटीए: ४घं १५मि",
+    kpi_tariff_title: "डिस्पैच टैरिफ",
+    kpi_tariff_sub: "५०% सब्सिडी लॉक्ड",
+    kpi_esg_title: "ईएसजी कार्बन बचत",
+    kpi_esg_sub: "७२% ग्रीन रेल शिफ्ट",
+    rec_title_default: "स्वायत्त अनुकूलन निर्देश • मल्टीमोडल रेल शिफ्ट",
+    rec_desc_default: "खेप को <strong>भुसावल जंक्शन से सेंट्रल रेलवे किसान स्पेशल #०११४७</strong> में स्थानांतरित करने की सिफ़ारिश। स्पॉइलेज रिस्क में <strong>६२%</strong> की कमी और <strong>५०% MoFPI फ्रेट सब्सिडी से ₹६३,९६० की बचत</strong>।",
+    acknowledge_btn: "स्वीकार करें",
+    corridor_track_title: "डायनामिक कॉरिडोर टेलीमेट्री ट्रैक",
+    legend_subsidized_rail: "सब्सिडाइज़्ड रेल",
+    legend_road_track: "सक्रिय रोड ट्रैक",
+    legend_emergency_locker: "आपातकालीन बफर लॉकर",
+    chart_spoilage_title: "Arrhenius स्पॉइलेज डिके कर्व (%)",
+    chart_temp_title: "कोर पल्प बनाम बाहरी तापमान (°C)"
+  }
+};
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach((elem) => {
+    const key = elem.getAttribute('data-i18n');
+    if (i18nDict[activeLanguage] && i18nDict[activeLanguage][key]) {
+      elem.innerHTML = i18nDict[activeLanguage][key];
+    }
+  });
+}
+
+// 5. VIEW ROUTER (SILENT)
+function showView(viewId) {
+  document.querySelectorAll('.view').forEach((v) => v.classList.remove('active'));
+  const target = document.getElementById(viewId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  if (viewId === 'view_farmer_dashboard') {
+    setTimeout(() => {
+      initLeafletMap();
+      initCharts();
+    }, 120);
+  }
+}
+
+// 6. ETHYLENE SAFETY MATRIX
+const ethyleneMatrixText = {
+  Strawberry: {
+    en: { title: 'Ethylene Safety Matrix: Strawberry', desc: '🍓 <strong>Extremely Gas-Sensitive:</strong> Must NOT be consolidated in the same chamber as Ethylene Producers (Tomato, Banana). Requires dedicated 1-4°C active reefer bay.', badgeClass: 'cyan', badge: 'Safe Isolation' },
+    hi: { title: 'एथिलीन सुरक्षा मैट्रिक्स: स्ट्रॉबेरी', desc: '🍓 <strong>अत्यंत गैस-संवेदनशील:</strong> इसे एथिलीन उत्पादकों (टमाटर, केला) के साथ एक ही चैंबर में नहीं रखा जा सकता। समर्पित १-४°C सक्रिय रीफर बे आवश्यक है।', badgeClass: 'cyan', badge: 'सुरक्षित पृथक्करण' }
+  },
+  Tomato: {
+    en: { title: 'Ethylene Safety Matrix: Tomato (Climacteric)', desc: '🍅 <strong>High Gas Producer (C₂H₄):</strong> Emits high ethylene gas. Incompatible with leafy produce and dairy. Exhaust ventilation must run.', badgeClass: 'amber', badge: 'Incompatible Load Warning' },
+    hi: { title: 'एथिलीन सुरक्षा मैट्रिक्स: टमाटर (क्लाइमेक्टेरिक)', desc: '🍅 <strong>उच्च गैस उत्पादक (C₂H₄):</strong> उच्च एथिलीन गैस उत्सर्जित करता है। पत्तेदार उपज और डेयरी के साथ असंगत। एग्ज़ॉस्ट वेंटिलेशन आवश्यक है।', badgeClass: 'amber', badge: 'असंगत लोड चेतावनी' }
+  },
+  Milk: {
+    en: { title: 'Ethylene Safety Matrix: Fresh Dairy Milk', desc: '🥛 <strong>Inert / Odour Sensitive:</strong> Ethylene neutral but absorbs foreign flavours. Dedicated closed isothermal tanker required (0-2°C).', badgeClass: 'cyan', badge: 'Dedicated Reefer' },
+    hi: { title: 'एथिलीन सुरक्षा मैट्रिक्स: ताज़ा डेयरी दूध', desc: '🥛 <strong>निष्क्रिय / गंध संवेदनशील:</strong> एथिलीन के प्रति तटस्थ लेकिन बाहरी गंध सोखता है। समर्पित बंद आइसोथर्मल टैंकर आवश्यक (०-२°C)।', badgeClass: 'cyan', badge: 'समर्पित रीफर' }
+  },
+  Banana: {
+    en: { title: 'Ethylene Safety Matrix: Banana', desc: '🍌 <strong>Chilling Sensitive & Gas Emitter:</strong> Do NOT store below 13°C. Emits ethylene during active transit.', badgeClass: 'amber', badge: 'Thermal Lock (13°C)' },
+    hi: { title: 'एथिलीन सुरक्षा मैट्रिक्स: केला', desc: '🍌 <strong>ठंड-संवेदनशील एवं गैस उत्सर्जक:</strong> १३°C से कम पर संग्रहीत न करें। सक्रिय परिवहन के दौरान एथिलीन उत्सर्जित करता है।', badgeClass: 'amber', badge: 'थर्मल लॉक (१३°C)' }
+  }
+};
+
+function updateEthyleneMatrix() {
+  const cropSelect = document.getElementById('f_crop');
+  if (!cropSelect) return;
+
+  const crop = cropSelect.value;
+  const box = document.getElementById('ethylene_alert_box');
+  const title = document.getElementById('eth_title');
+  const desc = document.getElementById('eth_desc');
+  const badge = document.getElementById('eth_status_badge');
+  const entry = ethyleneMatrixText[crop];
+  if (!entry) return;
+  const t = entry[activeLanguage] || entry.en;
+
+  if (box) box.className = 'ethylene-validator-card';
+  if (title) title.innerText = t.title;
+  if (desc) desc.innerHTML = t.desc;
+  if (badge) { badge.className = 'badge-tag ' + t.badgeClass; badge.innerText = t.badge; }
+}
+
+// 7. CONSIGNMENT BOOKING -> OPENS WHATSAPP MODAL POPUP
+function handleFarmerSubmit(e) {
+  if (e) e.preventDefault();
+  
+  const crop = document.getElementById('f_crop')?.value || 'Strawberry';
+  const name = document.getElementById('f_name')?.value || 'Kishor Shinde (Sahyadri FPO)';
+  const qty = document.getElementById('f_qty')?.value || '1200';
+  const phone = document.getElementById('f_phone')?.value || '';
+  const origin = document.getElementById('f_origin')?.value || 'Nashik Mega Food Park';
+  const destination = document.getElementById('f_dest')?.value || 'Azadpur Mandi, Delhi';
+
+  // CHANGED: a real, unique order ID instead of the same hardcoded demo one
+  const orderId = 'ORD-' + Date.now().toString().slice(-8);
+
+  const dashTitle = document.getElementById('dash_title');
+  const dashOrderId = document.getElementById('dash_order_id');
+  const smsText = document.getElementById('sms_preview_text');
+
+  if (dashTitle) dashTitle.innerText = `Consignment: ${crop} (${name})`;
+  if (dashOrderId) dashOrderId.innerText = orderId;
+  if (smsText) {
+    smsText.innerText = `"Namaste ${name}, your consignment (${crop} ${qty}kg) has been confirmed on Central Kisan Special #01147. Live sensor tracking & 50% subsidy link: https://astrax.io/track/${orderId}"`;
+  }
+
+  // ADDED: this is the map integration hook - geocodes Origin Hub /
+  // Destination Mandi and registers this order for live tracking, so it's
+  // ready the moment the farmer clicks "Open Live Telemetry Dashboard"
+  registerOrderAsFarmer(orderId, origin, destination, phone);
+
+  const modal = document.getElementById('smsModal');
+  if (modal) {
+    modal.classList.add('active');
+  }
+}
+
+function closeSmsModalAndProceed() {
+  const modal = document.getElementById('smsModal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+  showView('view_farmer_dashboard');
+}
+
+// DIRECTIVE CLICK (SYSTEM ALERT)
+function handleDirectiveClick() {
+  if (isBreakdownActive) {
+    alert('Directive dispatched to driver telematics controller!');
+  } else {
+    alert('Directive confirmed!');
+  }
+}
+
+function handleFleetSubmit(e) {
+  if (e) e.preventDefault();
+  const vno = document.getElementById('v_no')?.value || 'MH-15-EG-4412';
+  alert(`Vehicle ${vno} successfully indexed into AstraX Consolidation Grid!`);
+  showView('view_fleet_dashboard');
+}
+
+function handleDirectLookup() {
+  const idInput = document.getElementById('track_id_input');
+  loadFarmerDashboard(idInput ? idInput.value : 'ORD-2026-67105');
+}
+
+function loadFarmerDashboard(id) {
+  const orderId = id || 'ORD-2026-67105';
+
+  const orderElem = document.getElementById('dash_order_id');
+  if (orderElem) orderElem.innerText = orderId;
+
+  // ADDED: join this order's tracking room as farmer so the live map works
+  // even when arriving by typed Order ID or the Fleet "Track" button rather
+  // than a fresh booking. If the route was already registered (by the
+  // original booking, or by a driver who accepted it), it arrives via
+  // order-route-ready right away - see app.js's join-order handler.
+  joinOrderAsFarmer(orderId);
+
+  showView('view_farmer_dashboard');
+}
+
+function simulateDataUpdate() {
+  if (isBreakdownActive) return;
+  const randomTemp = (3.2 + Math.random() * 0.3).toFixed(1);
+  const randomRisk = (3.5 + Math.random() * 0.4).toFixed(1);
+
+  const kpiTemp = document.getElementById('kpi_temp');
+  const kpiSpoilage = document.getElementById('kpi_spoilage');
+  const lastPing = document.getElementById('dash_last_ping');
+
+  if (kpiTemp) kpiTemp.innerHTML = `${randomTemp}°C <span class="temp-badge">38°C Amb</span>`;
+  if (kpiSpoilage) kpiSpoilage.innerText = `${randomRisk}%`;
+  if (lastPing) lastPing.innerText = new Date().toLocaleTimeString();
+}
+// 8. EMERGENCY BREAKDOWN SIMULATION (ONLY EVENT WITH SOUND)
+function toggleBreakdownSimulation() {
+  isBreakdownActive = !isBreakdownActive;
+  const btn = document.getElementById('btn_sim_breakdown');
+  const cardSpoilage = document.getElementById('card_spoilage');
+  const cardTemp = document.getElementById('card_temp');
+  const callout = document.getElementById('recommendation_callout');
+  const legendReroute = document.getElementById('legend_reroute');
+  const recTitle = document.getElementById('rec_title');
+  const recDesc = document.getElementById('rec_desc');
+  const recBtn = document.getElementById('rec_action_btn');
+
+  if (isBreakdownActive) {
+    if (btn) {
+      btn.innerHTML = `<i class="fa-solid fa-rotate-left"></i> Reset Emergency Simulation`;
+      btn.style.background = '#f43f5e';
+      btn.style.color = '#fff';
+    }
+
+    if (cardSpoilage) cardSpoilage.style.borderColor = '#f43f5e';
+    if (cardTemp) cardTemp.style.borderColor = '#f43f5e';
+    if (legendReroute) legendReroute.style.display = 'inline-block';
+
+    const kpiSpoilage = document.getElementById('kpi_spoilage');
+    const kpiSpoilageSub = document.getElementById('kpi_spoilage_sub');
+    const kpiTemp = document.getElementById('kpi_temp');
+    const kpiTempSub = document.getElementById('kpi_temp_sub');
+    const kpiShelf = document.getElementById('kpi_shelflife');
+
+    if (kpiSpoilage) kpiSpoilage.innerText = '24.8%';
+    if (kpiSpoilageSub) kpiSpoilageSub.innerText = 'CRITICAL: Thermal abuse decay active';
+    if (kpiTemp) kpiTemp.innerHTML = `18.4°C <span class="temp-badge" style="background:#f43f5e;color:#fff;">CRITICAL</span>`;
+    if (kpiTempSub) kpiTempSub.innerText = 'Compressor Offline: +15°C delta';
+    if (kpiShelf) kpiShelf.innerText = '8.2 Hrs';
+
+    if (recTitle) recTitle.innerHTML = `🚨 CRITICAL THERMAL EMERGENCY • AUTONOMOUS CORRIDOR REROUTE`;
+    if (recDesc) recDesc.innerHTML = `Chamber compressor failure detected along active GPS corridor. Spoilage velocity spiking by <strong>+18%/hr</strong>. Dispatch engine has automatically recalculated trajectory to <strong>Nearest Dynamic Cold Storage: Apex Buffer Locker (14.2 km away)</strong>.`;
+    if (recBtn) recBtn.innerText = 'Confirm Emergency Gate Entry';
+
+    startEmergencyAlarm();
+
+    renderCorridorMap(true);
+
+    if (spoilageChartInstance) {
+      spoilageChartInstance.data.datasets[0].data = [0.2, 0.7, 1.3, 2.0, 3.8, 14.5, 24.8];
+      spoilageChartInstance.data.datasets[0].borderColor = '#f43f5e';
+      spoilageChartInstance.update();
+    }
+
+  } else {
+    stopEmergencyAlarm();
+
+    if (btn) {
+      btn.innerHTML = `<i class="fa-solid fa-temperature-arrow-up"></i> Simulate Compressor Failure`;
+      btn.style.background = '';
+      btn.style.color = '';
+    }
+
+    if (cardSpoilage) cardSpoilage.style.borderColor = '';
+    if (cardTemp) cardTemp.style.borderColor = '';
+    if (legendReroute) legendReroute.style.display = 'none';
+
+    const kpiSpoilage = document.getElementById('kpi_spoilage');
+    const kpiSpoilageSub = document.getElementById('kpi_spoilage_sub');
+    const kpiTemp = document.getElementById('kpi_temp');
+    const kpiTempSub = document.getElementById('kpi_temp_sub');
+    const kpiShelf = document.getElementById('kpi_shelflife');
+
+    if (kpiSpoilage) kpiSpoilage.innerText = '3.8%';
+    if (kpiSpoilageSub) kpiSpoilageSub.innerText = 'Kinetic loss rate: Nominal';
+    if (kpiTemp) kpiTemp.innerHTML = `3.4°C <span class="temp-badge">38°C Amb</span>`;
+    if (kpiTempSub) kpiTempSub.innerText = 'Target: 1.0 - 4.0°C';
+    if (kpiShelf) kpiShelf.innerText = '36.4 Hrs';
+
+    if (recTitle) recTitle.innerText = `Autonomous Optimization Directive • Multimodal Rail Shift`;
+    if (recDesc) recDesc.innerHTML = `Consignment transfer recommended at <strong>Bhusawal Junction to Central Railway Kisan Special #01147</strong>. Spoilage risk drops by <strong>62%</strong> with <strong>50% MoFPI freight subsidy saving of ₹63,960</strong>.`;
+    if (recBtn) recBtn.innerText = 'Acknowledge';
+
+    renderCorridorMap(false);
+
+    if (spoilageChartInstance) {
+      spoilageChartInstance.data.datasets[0].data = [0.2, 0.7, 1.3, 2.0, 2.8, 3.8, 4.2];
+      spoilageChartInstance.data.datasets[0].borderColor = '#a855f7';
+      spoilageChartInstance.update();
+    }
+  }
+}
+
+// 9. MAP INITIALIZATION
+// CHANGED: this used to draw a fixed, decorative SVG diagram with
+// hardcoded waypoints. It's now the real Leaflet map from the live-tracking
+// module above - initLiveTrackingMap() creates it, receive-driver-location
+// moves the truck marker on it. renderCorridorMap() is kept (same name,
+// same call sites below) so the emergency-reroute visual still works, just
+// drawn on the real map instead of a static SVG.
+function renderCorridorMap(emergency) {
+  if (!trackingMap) return; // dashboard hasn't been opened yet
+
+  if (emergency) {
+    const from = driverMarker
+      ? driverMarker.getLatLng()
+      : (currentOrder && currentOrder.pickup ? L.latLng(currentOrder.pickup.lat, currentOrder.pickup.lon) : null);
+
+    if (!from) return;
+
+    // Simulated nearest cold-storage point for the demo - a real version
+    // would come from the cold-storage lookup, not a fixed offset
+    const lockerPoint = L.latLng(from.lat + 0.15, from.lng + 0.1);
+
+    if (emergencyMarker) trackingMap.removeLayer(emergencyMarker);
+    if (emergencyLine) trackingMap.removeLayer(emergencyLine);
+
+    emergencyMarker = L.marker(lockerPoint, {
+      icon: L.divIcon({
+        className: 'emergency-icon',
+        html: `<div style="background:#f43f5e;color:#fff;padding:6px;border-radius:50%;border:2px solid #fff;font-size:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 25px #f43f5e;">🏥</div>`,
+        iconSize: [32, 32]
+      })
+    }).addTo(trackingMap).bindPopup('Emergency Cold Hub (Nearest Active Locker)').openPopup();
+
+    emergencyLine = L.polyline([from, lockerPoint], {
+      color: '#f43f5e', weight: 4, dashArray: '6,8'
+    }).addTo(trackingMap);
+
+    trackingMap.setView(lockerPoint, 10);
+
+  } else {
+    if (emergencyMarker) { trackingMap.removeLayer(emergencyMarker); emergencyMarker = null; }
+    if (emergencyLine) { trackingMap.removeLayer(emergencyLine); emergencyLine = null; }
+
+    if (currentOrder && currentOrder.pickup && currentOrder.destination) {
+      drawPlannedRoute(currentOrder.pickup, currentOrder.destination);
+    }
+  }
+}
+
+function initLeafletMap() {
+  initLiveTrackingMap();
+  if (isBreakdownActive) renderCorridorMap(true);
+}
+
+// 10. CHARTS INITIALIZATION
+function initCharts() {
+  if (spoilageChartInstance && tempChartInstance) return;
+  if (typeof Chart === 'undefined') {
+    console.warn('Chart.js failed to load — skipping chart rendering.');
+    return;
+  }
+
+  try {
+    const isLight = activeTheme === 'light';
+    const gridColor = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.04)';
+    const tickColor = isLight ? '#475569' : '#8e889e';
+
+    const chartElem1 = document.getElementById('spoilageChart');
+    if (chartElem1) {
+      const ctx1 = chartElem1.getContext('2d');
+      spoilageChartInstance = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: ['0h', '6h', '12h', '18h', '24h', '30h', '36h'],
+          datasets: [{
+            label: 'Spoilage %',
+            data: [0.2, 0.7, 1.3, 2.0, 2.8, 3.8, 4.2],
+            borderColor: '#a855f7',
+            backgroundColor: 'rgba(168, 85, 247, 0.12)',
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } },
+            y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    const chartElem2 = document.getElementById('tempChart');
+    if (chartElem2) {
+      const ctx2 = chartElem2.getContext('2d');
+      tempChartInstance = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: ['0h', '6h', '12h', '18h', '24h', '30h', '36h'],
+          datasets: [
+            { label: 'Ambient Outside (°C)', data: [32, 36, 40, 38, 36, 39, 38], borderColor: '#f59e0b', borderWidth: 2, tension: 0.3 },
+            { label: 'Core Pulp Temp (°C)', data: [3.1, 3.3, 3.4, 3.5, 3.4, 3.3, 3.4], borderColor: '#f43f5e', borderWidth: 2.5, tension: 0.3 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: tickColor, font: { size: 10 } } } },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } },
+            y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } }
+          }
+        }
+      });
+    }
+  } catch (err) {
+    console.warn('Chart initialization failed:', err);
+  }
+}
+    </script>
+</body>
+</html>
