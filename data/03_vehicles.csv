@@ -1,0 +1,11 @@
+vehicle_id,mode,size_class,refrigerated,weight_capacity_kg,volume_capacity_m3,temp_control_min_C,temp_control_max_C,price_per_kg_INR,fixed_cost_INR,avg_speed_kmph
+V01,Road,Small,N,1000,6,,,2.5,800,40
+V02,Road,Small,Y,800,5,0.0,8.0,4.2,1200,38
+V03,Road,Large,N,9000,40,,,1.6,3500,45
+V04,Road,Large,Y,7000,32,-2.0,10.0,2.8,5000,42
+V05,Road,Medium,N,3500,18,,,2.0,1800,42
+V06,Road,Medium,Y,3000,15,0.0,8.0,3.4,2600,40
+V07,Rail,Wagon-Small,N,20000,80,,,0.9,12000,55
+V08,Rail,Wagon-Small,Y,16000,65,-5.0,10.0,1.6,18000,50
+V09,Rail,Wagon-Large,N,55000,200,,,0.6,30000,55
+V10,Rail,Wagon-Large,Y,42000,160,-5.0,10.0,1.1,42000,50

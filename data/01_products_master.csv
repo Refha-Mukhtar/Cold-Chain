@@ -1,0 +1,23 @@
+product_id,product,category,min_temp_C,max_temp_C,humidity_min_pct,humidity_max_pct,produces_ethylene,shelf_life_hours
+P01,Banana,Fruit,13,15,90,95,Y,336
+P02,Mango,Fruit,10,13,85,90,Y,288
+P03,Apple,Fruit,0,4,90,95,Y,2160
+P04,Papaya,Fruit,10,13,85,90,Y,240
+P05,Guava,Fruit,5,10,85,90,Y,336
+P06,Grapes,Fruit,-1,0,90,95,N,720
+P07,Orange,Fruit,3,8,85,90,N,720
+P08,Pomegranate,Fruit,5,8,90,95,N,1440
+P09,Watermelon,Fruit,10,15,90,95,N,504
+P10,Sapota,Fruit,15,18,85,90,Y,192
+P11,Tomato,Vegetable,10,13,85,90,Y,240
+P12,Onion,Vegetable,0,4,65,70,N,2160
+P13,Potato,Vegetable,4,7,90,95,N,1440
+P14,Leafy Greens,Vegetable,0,2,95,98,N,120
+P15,Cabbage,Vegetable,0,2,95,98,N,720
+P16,Carrot,Vegetable,0,2,95,98,N,720
+P17,Cauliflower,Vegetable,0,2,90,95,N,336
+P18,Brinjal,Vegetable,10,12,90,95,N,240
+P19,Rice,Grain,15,25,55,65,N,8760
+P20,Wheat,Grain,15,25,55,65,N,8760
+P21,Fabric,Textile,10,30,40,60,N,87600
+P22,Dairy Products,Dairy,2,5,80,85,N,120
