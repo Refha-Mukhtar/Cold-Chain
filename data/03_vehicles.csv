@@ -1,0 +1,16 @@
+vehicle_no,mode,size_class,refrigerated,weight_capacity_kg,volume_capacity_m3,temp_control_min_C,temp_control_max_C,price_per_kg_INR,fixed_cost_INR,avg_speed_kmph
+OD-01-G-4321,Road,Small,N,1000,6,,,2.5,800,40
+OD-02-CB-8765,Road,Small,Y,800,5,0,8,4.2,1200,38
+OD-04-AT-5432,Road,Large,N,9000,40,,,1.6,3500,45
+OD-05-M-7654,Road,Large,Y,7000,32,-2,10,2.8,5000,42
+OD-09-E-2111,Road,Medium,N,3500,18,,,2,1800,42
+OD-11-F-1020,Road,Medium,Y,3000,15,0,8,3.4,2600,40
+12074,Rail,Wagon-Small,N,20000,80,,,0.9,12000,55
+12281,Rail,Wagon-Small,Y,16000,65,-5,10,1.6,18000,50
+18447,Rail,Wagon-Large,N,55000,200,,,0.6,30000,55
+22811,Rail,Wagon-Large,Y,42000,160,-5,10,1.1,42000,50
+OD-34-K-3456,Road,Small,Y,2000,10,0,8,2.5,1200,38
+OD-05-A-2134,Road,small,N,2000,7,,,3,1300,40
+OD-02-A-2026,Road,Medium,Y,5000,20,0,8,5,3000,45
+OD-72-S-8555,Road,small,Y,1000.0,6.0,0.0,7,5.0,1300.0,40.0
+17566,Rail,wagon-smal,N,20000.0,80.0,,,0.9,12000.0,55.0
