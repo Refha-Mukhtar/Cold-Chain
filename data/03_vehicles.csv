@@ -1,0 +1,26 @@
+vehicle_no,mode,size_class,refrigerated,weight_capacity_kg,volume_capacity_m3,temp_control_min_C,temp_control_max_C,price_per_kg_INR,fixed_cost_INR,avg_speed_kmph,driver_name,driver_contact,remaining_capacity_kg,current_location
+OD-01-S-1001,Road,Small,N,1000,6,,,2.5,900,40,Ramesh Behera,9812345671,1000,Bhubaneswar
+OD-02-S-1002,Road,Small,N,1500,8,,,2.2,1100,42,Suresh Behera,9812345672,1300,Cuttack
+OD-03-S-1003,Road,Small,Y,900,5,0.0,8.0,4.0,1300,38,Anil Nayak,9812345673,725,Puri
+OD-04-S-1004,Road,Small,Y,1200,6,-2.0,8.0,3.8,1400,39,Bikash Sahoo,9812345674,1125,Balasore
+OD-05-M-2001,Road,Medium,N,3500,18,,,2.0,1800,42,Gopal Das,9812345675,3260,Berhampur
+OD-06-M-2002,Road,Medium,N,4000,20,,,1.9,2000,43,Manoj Patra,9812345676,4000,Sambalpur
+OD-07-M-2003,Road,Medium,N,3000,16,,,2.1,1700,41,Debi Prasad,9812345677,3000,Rourkela
+OD-08-M-2004,Road,Medium,Y,3200,17,0.0,8.0,3.2,2600,40,Krishna Rout,9812345678,3200,Angul
+OD-09-M-2005,Road,Medium,Y,3800,19,-2.0,8.0,3.0,2800,41,Ashok Jena,9812345679,3288,Bhubaneswar
+OD-10-L-3001,Road,Large,N,9000,40,,,1.6,3500,45,Kumar Sahu,9812345680,2904,Cuttack
+OD-11-L-3002,Road,Large,N,8000,36,,,1.7,3300,44,Pradeep Nayak,9812345681,7680,Puri
+OD-12-L-3003,Road,Large,N,7500,33,,,1.8,3100,43,Bijay Mishra,9812345682,7420,Balasore
+OD-13-L-3004,Road,Large,Y,7000,32,-2.0,10.0,2.8,5000,42,Sujal Kumar,9517126359,7000,Berhampur
+OD-14-L-3005,Road,Large,Y,8500,38,-3.0,10.0,2.6,5300,43,Rajesh Panda,9812345683,8400,Sambalpur
+OD-15-XL-4001,Road,X-Large,N,20000,80,,,1.1,6000,45,Chandra Sekhar,9812345684,20000,Rourkela
+OD-16-XL-4002,Road,X-Large,N,18000,70,,,1.2,5800,44,Niranjan Behera,9812345685,18000,Angul
+OD-17-XL-4003,Road,X-Large,Y,16000,65,-5.0,10.0,1.9,7000,42,Satya Prakash,9812345686,7410,Bhubaneswar
+30011,Rail,Wagon-Small,N,20000,80,,,0.9,12000,55,Hemant Sahoo,8367623907,20000,Cuttack
+30012,Rail,Wagon-Small,N,18000,75,,,1.0,13000,54,Somnath Rana,8389018932,18000,Puri
+30013,Rail,Wagon-Small,Y,16000,65,-5.0,10.0,1.6,18000,50,Navin Kumar,7242870937,16000,Balasore
+30014,Rail,Wagon-Small,Y,17000,68,-5.0,10.0,1.5,17500,51,Deepak Rout,9812345687,17000,Berhampur
+30021,Rail,Wagon-Large,N,55000,200,,,0.6,30000,55,Mohan Lal,8237829103,13500,Sambalpur
+30022,Rail,Wagon-Large,N,48000,185,,,0.7,28000,56,Prakash Jena,9812345688,48000,Rourkela
+30023,Rail,Wagon-Large,Y,42000,160,-5.0,10.0,1.1,42000,50,Ram Singh,9324623123,42000,Angul
+30024,Rail,Wagon-Large,Y,45000,170,-5.0,10.0,1.05,40000,51,Biswajit Nayak,9812345689,45000,Bhubaneswar
