@@ -1,0 +1,13 @@
+product,category,min_temp_C,max_temp_C,humidity_min_pct,humidity_max_pct,shelf_life_hours,produces_ethylene,ethylene_sensitive,odour_risk,odour_sensitive,fragility,packaging_type
+Strawberry,Fruit,1,4,90,95,48,N,Y,Low,N,High,Cold/Perishable
+Tomato,Vegetable,12,15,85,90,240,Y,N,Low,N,Low,Crate/Ventilated
+Milk,Dairy,0,2,0,100,48,N,N,Low,Y,Low,Sealed/Liquid
+Banana,Fruit,13,15,85,90,168,Y,N,Low,N,High,Crate/Ventilated
+Onion,Vegetable,5,30,65,70,720,N,N,High,N,Low,Dry/Rigid Sack
+Potato,Vegetable,7,30,85,95,2160,N,Y,Low,N,Low,Dry/Rigid Sack
+Mango,Fruit,10,13,85,90,192,Y,N,Low,N,High,Crate/Ventilated
+Brinjal,Vegetable,10,12,90,95,168,N,Y,Low,N,High,Crate/Ventilated
+Spinach,Vegetable,0,4,90,95,72,N,Y,Low,N,High,Crate/Ventilated
+Fish,Seafood,-2,2,90,100,48,N,N,High,N,Low,Insulated/Ice-Pack
+Prawns,Seafood,-18,-12,0,100,4320,N,N,High,N,Low,Sealed/Frozen
+Cashew,Nut,10,30,50,65,4320,N,N,Low,Y,Low,Dry/Rigid Sack

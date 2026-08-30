@@ -1,0 +1,5 @@
+farmer_name,phone,product,origin,destination,weight_kg,expected_delivery_date
+Kishor Shinde,+91 98220 11456,Strawberry,Bhubaneswar,Delhi,1200,2026-09-05
+Manguli Pradhan,+91 94550 22331,Fish,Puri,Kolkata,800,2026-09-03
+Bijoy Sethi,+91 94551 33442,Onion,Balasore,Delhi,5000,2026-09-10
+Anita Dash,+91 94552 44553,Mango,Berhampur,Kolkata,1500,2026-09-04
