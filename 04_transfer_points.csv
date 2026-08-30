@@ -1,0 +1,11 @@
+city,latitude,longitude,supports_road,supports_rail,avg_handling_time_hr
+Bhubaneswar,20.2961,85.8245,Y,Y,1.0
+Cuttack,20.4625,85.8828,Y,Y,1.0
+Puri,19.8135,85.8312,Y,N,1.5
+Balasore,21.4942,86.9317,Y,Y,1.0
+Berhampur,19.3149,84.7941,Y,Y,1.0
+Sambalpur,21.4669,83.9812,Y,Y,1.2
+Rourkela,22.2604,84.8536,Y,Y,1.2
+Angul,20.8400,85.1013,Y,N,1.5
+Kolkata,22.5726,88.3639,Y,Y,2.0
+Delhi,28.7041,77.1025,Y,Y,2.5

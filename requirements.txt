@@ -1,0 +1,5 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-socketio>=5.11
+pandas>=2.0
+networkx>=3.0
