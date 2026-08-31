@@ -4201,10 +4201,25 @@
 
     async function fetchShipmentPlan(orderId, shipment) {
       try {
+        // Build one shipment entry per product so the backend's consolidation
+        // engine sees each product individually (compatibility, routing, etc.)
+        const shipments = (shipment.products && shipment.products.length > 0)
+          ? shipment.products.map((p, idx) => ({
+              order_id: shipment.products.length === 1 ? orderId : `${orderId}-P${idx + 1}`,
+              farmer_name: shipment.farmer_name,
+              phone: shipment.phone,
+              product: p.product,
+              origin: shipment.origin,
+              destination: shipment.destination,
+              weight_kg: p.weight_kg,
+              expected_delivery_date: shipment.expected_delivery_date,
+            }))
+          : [{ order_id: orderId, ...shipment }];
+
         const res = await fetch('/api/shipments/plan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ shipments: [{ order_id: orderId, ...shipment }] }),
+          body: JSON.stringify({ shipments }),
         });
         const body = await res.json();
         if (!res.ok) throw new Error(body.detail || `Planning request failed (${res.status})`);
