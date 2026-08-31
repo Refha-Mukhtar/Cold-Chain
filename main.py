@@ -44,6 +44,7 @@ can get real cross-farmer pooling back -- see the README for the shape of
 that if you want to add it.
 """
 import json
+import os
 import sys
 import threading
 import uuid
@@ -71,6 +72,14 @@ import logistics1 as L  # noqa: E402
 STATE: dict = {}
 STATE_LOCK = threading.Lock()
 
+# Tracks the last-modified timestamps of the 6 CSV files so we can detect
+# when they change on disk and auto-reload without a server restart.
+_CSV_FILES = [
+    "01_products_master.csv", "02_compatibility_matrix.csv", "03_vehicles.csv",
+    "04_transfer_points.csv", "05_farmer_shipments.csv", "06_historical_trips_delay.csv",
+]
+_CSV_MTIMES: dict = {}
+
 # order_id -> {"plan": {...last computed shipment plan...}, "pickup": {...},
 #              "destination": {...}, "farmerPhone": str, "status": str,
 #              "last_location": {"latitude":..., "longitude":...}}
@@ -80,13 +89,41 @@ STATE_LOCK = threading.Lock()
 ORDERS: dict = {}
 
 
+def _snapshot_csv_mtimes() -> dict:
+    """Return {filename: mtime} for each CSV that exists on disk."""
+    mtimes = {}
+    for name in _CSV_FILES:
+        p = BASE_DIR / name
+        if p.exists():
+            mtimes[name] = os.path.getmtime(p)
+    return mtimes
+
+
+def _csvs_changed() -> bool:
+    """True if any CSV file's mtime differs from our last snapshot."""
+    current = _snapshot_csv_mtimes()
+    return current != _CSV_MTIMES
+
+
 def _load_state() -> None:
+    global _CSV_MTIMES
     products, compat, vehicles, nodes, _sample_shipments, trip_history = L.load_data(BASE_DIR)
     STATE["products"] = products
     STATE["compat"] = compat
     STATE["vehicles"] = L.normalize_vehicle_capacity(vehicles)
     STATE["nodes"] = nodes
     STATE["trip_history"] = trip_history
+    _CSV_MTIMES = _snapshot_csv_mtimes()
+    print(f"[ASTRA-COLD] Loaded data: {len(products)} products, {len(vehicles)} vehicles, {len(nodes)} nodes")
+
+
+def _auto_reload_if_changed() -> bool:
+    """Check if CSVs changed on disk; if so, reload everything. Returns True if reloaded."""
+    if _csvs_changed():
+        print("[ASTRA-COLD] CSV change detected — reloading datasets...")
+        _load_state()
+        return True
+    return False
 
 
 _load_state()
@@ -120,14 +157,25 @@ def serve_frontend():
 
 @api.get("/api/health")
 def health():
+    _auto_reload_if_changed()
     return {"ok": True, "products": len(STATE["products"]), "vehicles": len(STATE["vehicles"]),
             "nodes": len(STATE["nodes"]), "orders": len(ORDERS)}
+
+
+@api.post("/api/reload")
+def reload_data():
+    """Force-reload all CSV datasets from disk. Call this after editing any
+    CSV file so the running server picks up the changes without a restart."""
+    _load_state()
+    return {"ok": True, "products": len(STATE["products"]), "vehicles": len(STATE["vehicles"]),
+            "nodes": len(STATE["nodes"])}
 
 
 @api.get("/api/products")
 def get_products():
     """Real product master data -- used by the frontend to populate the
     Produce Commodity dropdown instead of 4 hardcoded options."""
+    _auto_reload_if_changed()
     return _records(STATE["products"])
 
 
@@ -229,6 +277,7 @@ def plan_shipments(req: PlanRequest):
     (cost, route, spoilage risk, compatibility tips) -- this is what
     handleFarmerSubmit() in index23.html now calls instead of only showing
     locally-fabricated KPI values."""
+    _auto_reload_if_changed()
     rows = []
     for s in req.shipments:
         order_id = (s.order_id or "").strip() or _new_order_id()

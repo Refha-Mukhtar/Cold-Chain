@@ -1,20 +1,11 @@
-vehicle_no,mode,size_class,refrigerated,weight_capacity_kg,volume_capacity_m3,temp_control_min_C,temp_control_max_C,price_per_kg_INR,fixed_cost_INR,avg_speed_kmph,driver_name,driver_contact,remaining_capacity_kg,current_location,usual_destination
-OD-02-AB-1234,Road,Medium,Y,7000.0,28.0,0.0,4.0,3.2,800.0,42.0,Ramesh Nayak,+91 94370 11223,5800.0,Bhubaneswar,Kolkata
-OD-05-CT-5678,Road,Large,Y,15000.0,55.0,0.0,4.0,2.6,1400.0,40.0,Suresh Behera,+91 94371 22334,12600.0,Cuttack,Delhi
-OD-10-PR-2020,Road,Small,Y,3500.0,14.0,-2.0,2.0,4.1,500.0,38.0,Bikash Swain,+91 94372 33445,2300.0,Puri,Bhubaneswar
-OD-07-BL-3131,Road,Medium,N,9000.0,30.0,,,1.8,700.0,45.0,Ajit Mallick,+91 94373 44556,9000.0,Balasore,Kolkata
-OD-12-BH-4242,Road,Large,N,18000.0,60.0,,,1.5,1200.0,42.0,Chittaranjan Sahoo,+91 94374 55667,18000.0,Berhampur,Bhubaneswar
-OD-15-SM-5353,Road,Medium,Y,8000.0,32.0,2.0,6.0,3.0,750.0,40.0,Debasis Pradhan,+91 94375 66778,8000.0,Sambalpur,Rourkela
-OD-17-RK-6464,Road,Small,Y,4000.0,16.0,0.0,4.0,3.8,550.0,38.0,Manoj Tirkey,+91 94376 77889,4000.0,Rourkela,Sambalpur
-OD-04-AG-7575,Road,Medium,N,10000.0,35.0,,,1.6,650.0,44.0,Prasant Naik,+91 94377 88990,8800.0,Angul,Bhubaneswar
-KRS-RAIL-01,Rail,X-Large,Y,40000.0,160.0,1.0,4.0,1.1,3000.0,55.0,Kisan Rail Control (Zonal),1800-419-0688,40000.0,Bhubaneswar,Delhi
-KRS-RAIL-02,Rail,X-Large,Y,40000.0,160.0,1.0,4.0,1.0,2800.0,58.0,Kisan Rail Control (Zonal),1800-419-0688,32800.0,Cuttack,Kolkata
-ECOR-RAIL-03,Rail,Large,N,30000.0,120.0,,,0.7,2200.0,52.0,ECoR Freight Desk,1800-345-0770,8600.0,Sambalpur,Delhi
-ECOR-RAIL-04,Rail,Large,N,28000.0,110.0,,,0.75,2100.0,50.0,ECoR Freight Desk,1800-345-0770,28000.0,Rourkela,Kolkata
-OD-09-BH-8899,Road,Large,Y,12000.0,45.0,-18.0,-12.0,3.5,1100.0,40.0,Satya Prakash Rout,+91 94378 99001,12000.0,Bhubaneswar,Kolkata
-OD-11-BL-9090,Road,Small,Y,3000.0,12.0,-2.0,2.0,4.3,480.0,36.0,Niranjan Jena,+91 94379 00112,3000.0,Balasore,Bhubaneswar
-MH-15-EG-4412,Road,Small (14-ft / 3.5T),Y,3500.0,0.0,0.0,4.0,3.8,700.0,40.0,Ramesh Nayak,+91 94222 78910,2300.0,Nashik Hub,Delhi NCR
-OD-15-EG-4412,Road,Small (14-ft / 3.5T),Y,3500.0,0.0,0.0,4.0,3.8,700.0,40.0,Ramesh Nayak,+91 94222 78910,2300.0,bhubaneswar,
-OD-15-EG-4423,Road,Small (14-ft / 3.5T),Y,3500.0,0.0,0.0,4.0,3.8,700.0,40.0,Ramesh Nayak,+91 94222 78910,2300.0,Bhubaneswar,
-OD-20-EG-4423,Road,Small (14-ft / 3.5T),Y,3500.0,0.0,0.0,4.0,3.8,700.0,40.0,Ramesh Nayak,+91 94222 78910,2300.0,Bhubaneswar,
-MH-15-EG-4440,Road,Small (14-ft / 3.5T),Y,3500.0,0.0,0.0,4.0,3.8,700.0,40.0,Ramesh Nayak,+91 94222 78910,2300.0,Bhubaneswar,
+vehicle_id,mode,size_class,refrigerated,weight_capacity_kg,volume_capacity_m3,temp_control_min_C,temp_control_max_C,price_per_kg_INR,fixed_cost_INR,avg_speed_kmph,remaining_capacity_kg,current_location
+V01,Road,Small,N,1000,6,,,2.5,800,40,1000,Bhubaneswar
+V02,Road,Small,Y,800,5,0.0,8.0,4.2,1200,38,800,Cuttack
+V03,Road,Large,N,9000,40,,,1.6,3500,45,9000,Puri
+V04,Road,Large,Y,7000,32,-2.0,10.0,2.8,5000,42,7000,Balasore
+V05,Road,Medium,N,3500,18,,,2.0,1800,42,3500,Berhampur
+V06,Road,Medium,Y,3000,15,0.0,8.0,3.4,2600,40,3000,Sambalpur
+V07,Rail,Wagon-Small,N,20000,80,,,0.9,12000,55,20000,Rourkela
+V08,Rail,Wagon-Small,Y,16000,65,-5.0,10.0,1.6,18000,50,16000,Angul
+V09,Rail,Wagon-Large,N,55000,200,,,0.6,30000,55,55000,Bhubaneswar
+V10,Rail,Wagon-Large,Y,42000,160,-5.0,10.0,1.1,42000,50,42000,Cuttack

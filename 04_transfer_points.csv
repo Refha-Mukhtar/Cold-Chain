@@ -1,11 +1,21 @@
-city,latitude,longitude,supports_road,supports_rail,avg_handling_time_hr
-Bhubaneswar,20.2961,85.8245,Y,Y,1.0
-Cuttack,20.4625,85.8828,Y,Y,1.0
-Puri,19.8135,85.8312,Y,N,1.5
-Balasore,21.4942,86.9317,Y,Y,1.0
-Berhampur,19.3149,84.7941,Y,Y,1.0
-Sambalpur,21.4669,83.9812,Y,Y,1.2
-Rourkela,22.2604,84.8536,Y,Y,1.2
-Angul,20.8400,85.1013,Y,N,1.5
-Kolkata,22.5726,88.3639,Y,Y,2.0
-Delhi,28.7041,77.1025,Y,Y,2.5
+node_id,name,city,node_type,latitude,longitude,supports_road,supports_rail,temp_controlled,avg_handling_time_hr
+T01,Bhubaneswar Goods Terminal,Bhubaneswar,road_rail_hub,20.3,85.82,Y,Y,Y,2.5
+T02,Cuttack Freight Yard,Cuttack,road_rail_hub,20.46,85.88,Y,Y,Y,2.0
+T03,Rourkela Goods Shed,Rourkela,road_rail_hub,22.22,84.86,Y,Y,N,2.0
+T04,Berhampur Rail Terminal,Berhampur,road_rail_hub,19.31,84.79,Y,Y,N,2.0
+T05,Sambalpur Goods Yard,Sambalpur,road_rail_hub,21.47,83.97,Y,Y,N,2.0
+T06,Puri Rail Terminal,Puri,road_rail_hub,19.81,85.83,Y,Y,N,1.5
+T07,Balasore Freight Terminal,Balasore,road_rail_hub,21.49,86.93,Y,Y,N,2.0
+T08,Bhadrak Goods Shed,Bhadrak,road_rail_hub,21.06,86.52,Y,Y,N,1.5
+T09,Baripada Road Hub,Baripada,road_only_hub,21.94,86.72,Y,N,N,1.0
+T10,Jharsuguda Rail Terminal,Jharsuguda,road_rail_hub,21.86,84.02,Y,Y,N,2.0
+T11,Angul Freight Yard,Angul,road_rail_hub,20.84,85.1,Y,Y,N,2.0
+T12,Dhenkanal Road Hub,Dhenkanal,road_only_hub,20.66,85.6,Y,N,N,1.0
+T13,Jajpur Goods Shed,Jajpur,road_rail_hub,20.85,86.33,Y,Y,N,1.5
+T14,Kendrapara Road Hub,Kendrapara,road_only_hub,20.5,86.42,Y,N,N,1.0
+T15,Koraput Rail Terminal,Koraput,road_rail_hub,18.81,82.71,Y,Y,N,2.5
+T16,Rayagada Goods Yard,Rayagada,road_rail_hub,19.17,83.42,Y,Y,N,2.0
+T17,Balangir Road Hub,Balangir,road_only_hub,20.71,83.49,Y,N,N,1.0
+T18,Bhawanipatna Road Hub,Bhawanipatna,road_only_hub,19.91,83.16,Y,N,N,1.0
+T19,Jeypore Road Hub,Jeypore,road_only_hub,18.86,82.57,Y,N,N,1.0
+T20,Paradip Port & Rail Terminal,Paradip,road_rail_hub,20.32,86.61,Y,Y,Y,3.0
