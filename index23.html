@@ -2761,7 +2761,7 @@
               <div class="form-field">
                 <label><i class="fa-solid fa-calendar-days"></i> <span data-i18n="label_sla">Target Delivery
                     SLA</span></label>
-                <input type="text" id="f_sla" value="20-08-2026" required>
+                <input type="date" id="f_sla" required>
               </div>
             </div>
             <!-- ADDED: populated from GET /api/network/cities so typed
@@ -3033,16 +3033,7 @@
           </div>
         </div>
 
-        <div class="stepper-container">
-          <div class="stepper-box done"><span class="step-number">STEP 01</span><span class="step-title"
-              data-i18n="step_loaded">Loaded at Origin</span></div>
-          <div class="stepper-box active"><span class="step-number">STEP 02</span><span class="step-title"
-              data-i18n="step_transit">In Multimodal Transit</span></div>
-          <div class="stepper-box"><span class="step-number">STEP 03</span><span class="step-title"
-              data-i18n="step_buffer">Cold Buffer Locker</span></div>
-          <div class="stepper-box"><span class="step-number">STEP 04</span><span class="step-title"
-              data-i18n="step_delivered">Delivered at Mandi</span></div>
-        </div>
+
 
         <div class="kpi-row">
           <div class="kpi-card" id="card_spoilage">
@@ -3099,16 +3090,7 @@
           <div id="leafletMap" style="height: 330px; border-radius: 14px;"></div>
         </div>
 
-        <div class="dual-grid">
-          <div class="chart-box">
-            <span class="kpi-title" data-i18n="chart_spoilage_title">Arrhenius Spoilage Decay Curve (%)</span>
-            <div class="canvas-wrap"><canvas id="spoilageChart"></canvas></div>
-          </div>
-          <div class="chart-box">
-            <span class="kpi-title" data-i18n="chart_temp_title">Core Pulp vs Outside Ambient Temp (°C)</span>
-            <div class="canvas-wrap"><canvas id="tempChart"></canvas></div>
-          </div>
-        </div>
+
       </section>
 
       <!-- VIEW: SHIPMENT RESULTS (per-product cards) -->
@@ -3134,11 +3116,9 @@
   <!-- ========================================================= -->
   <div id="smsModal" class="sms-modal-overlay">
     <div class="sms-modal-card">
-      <div class="sms-icon-wrap">
-        <i class="fa-brands fa-whatsapp"></i>
-      </div>
+
       <h3 class="sms-modal-title">Dispatch Alert Broadcasted</h3>
-      <p class="sms-modal-subtitle">Real-time SMS & WhatsApp notification sent to registered farmer device.</p>
+
 
       <div class="sms-preview-bubble">
         <div class="sms-sender">ASTRA-COLD DISPATCH GATEWAY</div>
@@ -3694,6 +3674,16 @@
     // the backend isn't running this just leaves the original hardcoded 4-crop
     // dropdown and empty datalist in place - nothing breaks, it just falls back
     // to demo mode.
+    // Set min date on SLA date picker to today (prevents past date selection)
+    window.addEventListener('DOMContentLoaded', () => {
+      const slaInput = document.getElementById('f_sla');
+      if (slaInput) {
+        const today = new Date().toISOString().split('T')[0];
+        slaInput.min = today;
+        slaInput.value = today;
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', loadBackendCatalogs);
 
     async function loadBackendCatalogs() {
