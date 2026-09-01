@@ -39,7 +39,7 @@ from pathlib import Path
 import pandas as pd
 import networkx as nx
 
-DATA_DIR = Path(__file__).resolve().parent
+DATA_DIR = Path(__file__).resolve().parent / "data"
 AMBIENT_TEMP_C = 25.0
 RISK_PENALTY_WEIGHT = 1.0
 COMPATIBILITY_SCORE_THRESHOLD = 75.0  # scores at/above this are considered safely poolable
@@ -59,12 +59,12 @@ def load_data(data_dir: Path = DATA_DIR):
         trip_history = pd.read_csv(data_dir / "06_historical_trips_delay.csv")
         return products, compat, vehicles, nodes, sample_shipments, trip_history
     except FileNotFoundError:
-        products = pd.read_csv("01_products_master.csv")
-        compat = pd.read_csv("02_compatibility_matrix.csv")
-        vehicles = pd.read_csv("03_vehicles.csv")
-        nodes = pd.read_csv("04_transfer_points.csv") if Path("04_transfer_points.csv").exists() else pd.DataFrame()
-        sample_shipments = pd.read_csv("05_farmer_shipments.csv") if Path("05_farmer_shipments.csv").exists() else pd.DataFrame()
-        trip_history = pd.read_csv("06_historical_trips_delay.csv") if Path("06_historical_trips_delay.csv").exists() else pd.DataFrame()
+        products = pd.read_csv("data/01_products_master.csv")
+        compat = pd.read_csv("data/02_compatibility_matrix.csv")
+        vehicles = pd.read_csv("data/03_vehicles.csv")
+        nodes = pd.read_csv("data/04_transfer_points.csv") if Path("data/04_transfer_points.csv").exists() else pd.DataFrame()
+        sample_shipments = pd.read_csv("data/05_farmer_shipments.csv") if Path("data/05_farmer_shipments.csv").exists() else pd.DataFrame()
+        trip_history = pd.read_csv("data/06_historical_trips_delay.csv") if Path("data/06_historical_trips_delay.csv").exists() else pd.DataFrame()
         return products, compat, vehicles, nodes, sample_shipments, trip_history
 
 def normalize_vehicle_capacity(vehicles_df: pd.DataFrame) -> pd.DataFrame:
@@ -692,6 +692,24 @@ def process_farmer_shipments(shipments_df: pd.DataFrame, products_df: pd.DataFra
                     )
                 alt_summary = "\n".join(alt_summary_list)
 
+                # Prepare structured candidate routes
+                candidate_routes = []
+                for c in result["all_candidates"]:
+                    candidate_routes.append({
+                        "strategy": c["strategy"],
+                        "modes_used": c["modes_used"],
+                        "total_distance_km": c["total_distance_km"],
+                        "total_cost_INR": round(c["total_cost_INR"], 2),
+                        "gross_cost_INR": round(c["gross_cost_INR"], 2),
+                        "kisan_rail_subsidy_INR": round(c["kisan_rail_subsidy_INR"], 2),
+                        "planned_time_hr": round(c["planned_time_hr"], 2),
+                        "expected_delay_hr": round(c["expected_delay_hr"], 2),
+                        "total_expected_time_hr": round(c["total_expected_time_hr"], 2),
+                        "risk_pct": round(c["risk_pct"], 1),
+                        "risk_level": c["risk_level"],
+                        "legs": c["legs"],
+                    })
+
                 for _, shp in group_shipments.iterrows():
                     weight_ratio = shp["weight_kg"] / total_group_weight
                     allocated_net_cost = round(best["total_cost_INR"] * weight_ratio, 2)
@@ -724,6 +742,7 @@ def process_farmer_shipments(shipments_df: pd.DataFrame, products_df: pd.DataFra
                         "legs_for_display": best["legs"],
                         "is_multimodal": best["is_multimodal"],
                         "modes_used": ", ".join(best["modes_used"]),
+                        "total_distance_km": best["total_distance_km"],
                         "total_cost_INR": allocated_net_cost,
                         "gross_transport_cost_INR": allocated_gross_cost,
                         "kisan_rail_subsidy_INR": allocated_subsidy,
@@ -742,7 +761,8 @@ def process_farmer_shipments(shipments_df: pd.DataFrame, products_df: pd.DataFra
                         "route_selection_explanation": f"Selected {best['modes_used'][0] if len(best['modes_used'])==1 else 'Multimodal'} because its risk-adjusted cost was lowest. "
                                                         f"Gross cost INR {allocated_gross_cost:.2f}; Kisan Rail subsidy INR {allocated_subsidy:.2f}; "
                                                         f"net cost INR {allocated_net_cost:.2f}; expected transit {best['total_expected_time_hr']:.2f} hr.",
-                        "all_candidate_routes": alt_summary
+                        "all_candidate_routes": alt_summary,
+                        "candidate_routes": candidate_routes
                     })
 
     return pd.DataFrame(individual_results)
