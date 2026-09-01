@@ -2377,6 +2377,103 @@
       .sr-detail-grid { grid-template-columns: 1fr; }
       .sr-card-header { flex-direction: column; }
     }
+
+    /* ===== PERFORMANCE METRICS MODAL ===== */
+    .perf-metrics-btn {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: 1px solid rgba(139,92,246,0.4);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .perf-metrics-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(99,102,241,0.5);
+    }
+    .perf-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      overflow-y: auto;
+      padding: 40px 20px;
+    }
+    .perf-modal-overlay.active { display: block; }
+    .perf-modal-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .perf-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .perf-modal-header h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .perf-modal-close {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .perf-modal-close:hover { background: rgba(255,255,255,0.18); }
+    .perf-chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .perf-chart-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .perf-chart-card .chart-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .perf-chart-canvas-wrap {
+      position: relative;
+      width: 100%;
+      max-height: 320px;
+    }
+    .perf-no-data {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -2781,7 +2878,8 @@
                 </select>
               </div>
               <div class="form-field">
-                <!-- spacer / empty to maintain grid alignment -->
+                <label><i class="fa-solid fa-key"></i> <span data-i18n="label_unique_code">Unique Code</span></label>
+                <input type="text" id="f_unique_code" maxlength="4" placeholder="e.g. 1234" required pattern="\d{4}">
               </div>
             </div>
 
@@ -2980,9 +3078,15 @@
             <button id="btn_pause_trip" class="btn-glass" onclick="pauseOrResumeTrip()" disabled>
               <i class="fa-solid fa-pause"></i> Pause Trip
             </button>
-            <button id="btn_end_trip" class="btn-emergency-breakdown" onclick="endTrip()" disabled>
-              <i class="fa-solid fa-flag-checkered"></i> End Trip
-            </button>
+            <div style="display: flex; gap: 10px; margin-left: auto;">
+              <div style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--border-card); padding: 4px 12px; border-radius: 8px; background: rgba(0,0,0,0.2);">
+                <label for="driver_pod_input" style="font-size: 12px; color: var(--text-muted); font-weight: 600;">POD</label>
+                <input type="text" id="driver_pod_input" maxlength="4" placeholder="Code" oninput="validatePodCode()" style="width: 50px; background: transparent; border: none; border-bottom: 1px solid var(--border-subtle); color: #fff; font-size: 14px; text-align: center; outline: none; padding: 2px;">
+              </div>
+              <button id="btn_end_trip" class="btn-emergency-breakdown" onclick="endTrip()" disabled>
+                <i class="fa-solid fa-flag-checkered"></i> End Trip
+              </button>
+            </div>
           </div>
 
           <!-- ADDED: Live map for the driver to track their accepted order -->
@@ -3030,6 +3134,7 @@
             </button>
             <button class="btn-glass" onclick="simulateDataUpdate()"><i class="fa-solid fa-arrows-rotate"></i> <span
                 data-i18n="sync_telemetry_btn">Sync Telemetry</span></button>
+            <button class="perf-metrics-btn" onclick="openPerformanceMetrics()"><i class="fa-solid fa-chart-column"></i> Performance Metrics</button>
           </div>
         </div>
 
@@ -3363,6 +3468,22 @@
     // ==========================================================================
     let tripState = 'not_started';
 
+    function validatePodCode() {
+      const endBtn = document.getElementById('btn_end_trip');
+      const podInput = document.getElementById('driver_pod_input');
+      if (!endBtn || !podInput) return;
+      if (tripState === 'ongoing' || tripState === 'paused') {
+        const requiredCode = window.currentUniqueCode || '';
+        if (requiredCode && podInput.value === requiredCode) {
+          endBtn.disabled = false;
+        } else {
+          endBtn.disabled = true;
+        }
+      } else {
+        endBtn.disabled = true;
+      }
+    }
+
     function updateDriverTripUI() {
       const startBtn = document.getElementById('btn_start_trip');
       const pauseBtn = document.getElementById('btn_pause_trip');
@@ -3380,12 +3501,12 @@
         startBtn.innerHTML = '<i class="fa-solid fa-truck-fast"></i> Trip Started';
         pauseBtn.disabled = false;
         pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Trip';
-        endBtn.disabled = false;
+        validatePodCode();
       } else if (tripState === 'paused') {
         startBtn.disabled = true;
         pauseBtn.disabled = false;
         pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i> Resume Trip';
-        endBtn.disabled = false;
+        validatePodCode();
       }
     }
 
@@ -4289,6 +4410,7 @@
       const origin = document.getElementById('f_origin')?.value || 'Nashik Mega Food Park';
       const destination = document.getElementById('f_dest')?.value || 'Azadpur Mandi, Delhi';
       const sla = document.getElementById('f_sla')?.value || '';
+      window.currentUniqueCode = document.getElementById('f_unique_code')?.value || '';
 
       // CHANGED: a real, unique order ID instead of the same hardcoded demo one
       const orderId = 'ORD-' + Date.now().toString().slice(-8);
@@ -5225,7 +5347,324 @@
         console.warn('Chart initialization failed:', err);
       }
     }
+    // ========================================================================
+    // PERFORMANCE METRICS MODAL — 3 charts from lastShipmentResults
+    // ========================================================================
+    let perfChartInstances = {};
+
+    function openPerformanceMetrics() {
+      const overlay = document.getElementById('perfMetricsOverlay');
+      if (!overlay) return;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => renderPerformanceCharts(), 100);
+    }
+
+    function closePerformanceMetrics() {
+      const overlay = document.getElementById('perfMetricsOverlay');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      Object.values(perfChartInstances).forEach(c => { if (c) c.destroy(); });
+      perfChartInstances = {};
+    }
+
+    function renderPerformanceCharts() {
+      const plan = (lastShipmentResults && lastShipmentResults.length > 0) ? lastShipmentResults[0] : null;
+      const noDataEl = document.getElementById('perfNoData');
+      const chartsEl = document.getElementById('perfChartsArea');
+
+      if (!plan || plan.error) {
+        if (noDataEl) noDataEl.style.display = 'block';
+        if (chartsEl) chartsEl.style.display = 'none';
+        return;
+      }
+      if (noDataEl) noDataEl.style.display = 'none';
+      if (chartsEl) chartsEl.style.display = 'block';
+
+      // Destroy existing charts
+      Object.values(perfChartInstances).forEach(c => { if (c) c.destroy(); });
+      perfChartInstances = {};
+
+      renderDecisionMatrix(plan);
+      renderCostWaterfall(plan);
+      renderCO2Chart(plan);
+    }
+
+    // CHART 1: Decision Matrix — Candidate Routes Comparison
+    function renderDecisionMatrix(plan) {
+      const ctx = document.getElementById('chartDecisionMatrix');
+      if (!ctx) return;
+      const candidates = plan.candidate_routes || [];
+      if (candidates.length === 0) return;
+
+      const labels = candidates.map(c => c.strategy || 'Unknown');
+      const costs = candidates.map(c => Number(c.total_cost_INR) || 0);
+      const times = candidates.map(c => Number(c.total_expected_time_hr) || 0);
+      const risks = candidates.map(c => Number(c.risk_pct) || 0);
+
+      // Find the best (selected) route
+      const selectedStrategy = plan.modes_used || '';
+      const bgColors = labels.map(l => {
+        if (selectedStrategy.includes('Road') && selectedStrategy.includes('Rail') && l.includes('Road+Rail')) return 'rgba(34,197,94,0.85)';
+        if (l.includes('Road') && !l.includes('Rail') && plan.modes_used === 'Road') return 'rgba(34,197,94,0.85)';
+        if (l.includes('Rail') && !l.includes('Road') && plan.modes_used === 'Rail') return 'rgba(34,197,94,0.85)';
+        return 'rgba(148,163,184,0.5)';
+      });
+
+      perfChartInstances.decision = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Net Cost (₹)',
+              data: costs,
+              backgroundColor: 'rgba(99,102,241,0.8)',
+              borderColor: 'rgba(99,102,241,1)',
+              borderWidth: 1,
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Transit Time (Hrs)',
+              data: times,
+              backgroundColor: 'rgba(245,158,11,0.8)',
+              borderColor: 'rgba(245,158,11,1)',
+              borderWidth: 1,
+              borderRadius: 6,
+              yAxisID: 'y1'
+            },
+            {
+              label: 'Spoilage Risk (%)',
+              data: risks,
+              backgroundColor: 'rgba(244,63,94,0.8)',
+              borderColor: 'rgba(244,63,94,1)',
+              borderWidth: 1,
+              borderRadius: 6,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#cbd5e1', font: { size: 11 } } },
+            tooltip: {
+              callbacks: {
+                afterBody: function(tooltipItems) {
+                  const idx = tooltipItems[0].dataIndex;
+                  const c = candidates[idx];
+                  const isBest = (idx === costs.indexOf(Math.min(...costs)));
+                  return isBest ? '\n✅ AI Selected Route' : '';
+                }
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { color: '#94a3b8', font: { weight: '700' } }, grid: { color: 'rgba(148,163,184,0.1)' } },
+            y: {
+              type: 'linear', position: 'left',
+              title: { display: true, text: 'Cost (₹)', color: '#818cf8' },
+              ticks: { color: '#818cf8', callback: v => '₹' + v.toLocaleString('en-IN') },
+              grid: { color: 'rgba(148,163,184,0.08)' }
+            },
+            y1: {
+              type: 'linear', position: 'right',
+              title: { display: true, text: 'Hours / %', color: '#f59e0b' },
+              ticks: { color: '#f59e0b' },
+              grid: { drawOnChartArea: false }
+            }
+          }
+        }
+      });
+    }
+
+    // CHART 2: Cost & Subsidy Waterfall
+    function renderCostWaterfall(plan) {
+      const ctx = document.getElementById('chartCostWaterfall');
+      if (!ctx) return;
+
+      const gross = Number(plan.gross_transport_cost_INR) || 0;
+      const subsidy = Number(plan.kisan_rail_subsidy_INR) || 0;
+      const net = Number(plan.total_cost_INR) || 0;
+
+      perfChartInstances.waterfall = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Gross Transport Cost', '50% Kisan Rail Subsidy', 'Net Farmer Payable'],
+          datasets: [{
+            label: 'Amount (₹)',
+            data: [gross, -subsidy, net],
+            backgroundColor: [
+              'rgba(99,102,241,0.85)',
+              'rgba(34,197,94,0.85)',
+              'rgba(245,158,11,0.85)'
+            ],
+            borderColor: [
+              'rgba(99,102,241,1)',
+              'rgba(34,197,94,1)',
+              'rgba(245,158,11,1)'
+            ],
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const v = ctx.raw;
+                  if (v < 0) return 'Subsidy: -₹' + Math.abs(v).toLocaleString('en-IN');
+                  return '₹' + v.toLocaleString('en-IN');
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#94a3b8', callback: v => v < 0 ? '-₹' + Math.abs(v).toLocaleString('en-IN') : '₹' + v.toLocaleString('en-IN') },
+              grid: { color: 'rgba(148,163,184,0.08)' }
+            },
+            y: {
+              ticks: { color: '#e2e8f0', font: { weight: '700', size: 12 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // CHART 3: CO₂ Emissions Comparison
+    function renderCO2Chart(plan) {
+      const ctx = document.getElementById('chartCO2Emissions');
+      if (!ctx) return;
+
+      const distanceKm = Number(plan.total_distance_km) || 0;
+      const weightTon = (Number(plan.weight_kg) || 0) / 1000;
+
+      // Industry emission factors (g CO₂ per ton-km)
+      const ROAD_EMISSION = 95;  // diesel reefer truck
+      const RAIL_EMISSION = 28;  // electric freight rail
+
+      const roadCO2 = (distanceKm * weightTon * ROAD_EMISSION) / 1000; // kg
+      const modesUsed = plan.modes_used || '';
+      let actualCO2 = roadCO2;
+
+      if (modesUsed.includes('Rail') && !modesUsed.includes('Road')) {
+        actualCO2 = (distanceKm * weightTon * RAIL_EMISSION) / 1000;
+      } else if (modesUsed.includes('Rail') && modesUsed.includes('Road')) {
+        // Multimodal: estimate based on legs
+        const legs = plan.legs_for_display || [];
+        actualCO2 = 0;
+        legs.forEach(leg => {
+          const d = Number(leg.distance_km) || 0;
+          const factor = leg.mode === 'Rail' ? RAIL_EMISSION : ROAD_EMISSION;
+          actualCO2 += (d * weightTon * factor) / 1000;
+        });
+      }
+
+      const saved = roadCO2 - actualCO2;
+      const pctReduction = roadCO2 > 0 ? ((saved / roadCO2) * 100).toFixed(1) : 0;
+
+      // Update the CO2 summary text
+      const co2Summary = document.getElementById('co2SummaryText');
+      if (co2Summary) {
+        if (saved > 0) {
+          co2Summary.innerHTML = `<span style="color:#22c55e;font-weight:700;">🌿 ${pctReduction}% Carbon Reduction</span> — Saved <strong>${saved.toFixed(1)} kg CO₂</strong> by using ${modesUsed} instead of pure diesel road transport.`;
+        } else {
+          co2Summary.innerHTML = `<span style="color:#f59e0b;font-weight:700;">Road transport selected</span> — optimal for this short distance. Carbon: ${roadCO2.toFixed(1)} kg CO₂.`;
+        }
+      }
+
+      perfChartInstances.co2 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Pure Road (Diesel Truck)', 'AI Optimized (' + modesUsed + ')'],
+          datasets: [{
+            label: 'CO₂ Emissions (kg)',
+            data: [Math.round(roadCO2 * 10) / 10, Math.round(actualCO2 * 10) / 10],
+            backgroundColor: [
+              'rgba(244,63,94,0.8)',
+              'rgba(34,197,94,0.8)'
+            ],
+            borderColor: [
+              'rgba(244,63,94,1)',
+              'rgba(34,197,94,1)'
+            ],
+            borderWidth: 2,
+            borderRadius: 8,
+            barPercentage: 0.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) { return ctx.raw + ' kg CO₂'; }
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { color: '#e2e8f0', font: { weight: '700', size: 11 } }, grid: { display: false } },
+            y: {
+              title: { display: true, text: 'kg CO₂', color: '#94a3b8' },
+              ticks: { color: '#94a3b8' },
+              grid: { color: 'rgba(148,163,184,0.08)' },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
   </script>
+
+  <!-- PERFORMANCE METRICS MODAL -->
+  <div class="perf-modal-overlay" id="perfMetricsOverlay">
+    <div class="perf-modal-container">
+      <div class="perf-modal-header">
+        <h2><i class="fa-solid fa-chart-column" style="color:#818cf8;"></i> Performance Metrics</h2>
+        <button class="perf-modal-close" onclick="closePerformanceMetrics()">&times;</button>
+      </div>
+
+      <div class="perf-no-data" id="perfNoData" style="display:none;">
+        <i class="fa-solid fa-chart-pie" style="font-size:40px;color:#475569;margin-bottom:14px;"></i>
+        <p>No shipment data available yet. Book a consignment first to see performance analytics.</p>
+      </div>
+
+      <div id="perfChartsArea">
+        <!-- Chart 1: Decision Matrix -->
+        <div class="perf-chart-card">
+          <h3><i class="fa-solid fa-scale-balanced" style="color:#818cf8;"></i> Decision Matrix — Candidate Routes Comparison</h3>
+          <p class="chart-subtitle">Why did the AI choose this route? Comparing Net Cost, Transit Time, and Spoilage Risk across all evaluated strategies.</p>
+          <div class="perf-chart-canvas-wrap" style="height:280px;"><canvas id="chartDecisionMatrix"></canvas></div>
+        </div>
+
+        <!-- Chart 2: Cost & Subsidy Waterfall -->
+        <div class="perf-chart-card">
+          <h3><i class="fa-solid fa-indian-rupee-sign" style="color:#22c55e;"></i> Cost & Subsidy Waterfall</h3>
+          <p class="chart-subtitle">Transparent breakdown: Gross transport cost → 50% MoFPI Kisan Rail subsidy deduction → Final net payable by farmer.</p>
+          <div class="perf-chart-canvas-wrap" style="height:220px;"><canvas id="chartCostWaterfall"></canvas></div>
+        </div>
+
+        <!-- Chart 3: CO₂ Emissions -->
+        <div class="perf-chart-card">
+          <h3><i class="fa-solid fa-leaf" style="color:#22c55e;"></i> CO₂ Emissions Comparison</h3>
+          <p class="chart-subtitle">Environmental impact: Pure diesel road transport vs AI-optimized multimodal (electric rail + road).</p>
+          <div class="perf-chart-canvas-wrap" style="height:250px;"><canvas id="chartCO2Emissions"></canvas></div>
+          <p id="co2SummaryText" style="margin-top:12px;font-size:13px;color:var(--text-body);"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
