@@ -272,6 +272,40 @@ def get_shipment(order_id: str):
     return order
 
 
+@api.post("/api/shipments/{order_id}/cancel")
+def cancel_shipment(order_id: str):
+    order = ORDERS.get(order_id)
+    if not order:
+        raise HTTPException(status_code=404, detail=f"No order found for '{order_id}'.")
+    
+    plan = order.get("plan", {})
+    legs = plan.get("legs_for_display", [])
+    
+    if isinstance(legs, str):
+        try:
+            import numpy as np
+            legs = eval(legs, {"np": np, "nan": np.nan, "builtins": {}})
+        except Exception as e:
+            print(f"Error parsing legs: {e}")
+            legs = []
+            
+    with STATE_LOCK:
+        vehicles_df = STATE["vehicles"]
+        for leg in legs:
+            if "vehicles" in leg:
+                for v in leg["vehicles"]:
+                    v_no = v.get("vehicle_no")
+                    w_kg = v.get("weight_kg")
+                    if v_no and w_kg:
+                        L.restore_vehicle_capacity(vehicles_df, v_no, w_kg)
+        STATE["vehicles"] = vehicles_df
+        L.save_vehicle_capacity(vehicles_df, data_dir=BASE_DIR)
+        
+    ORDERS.pop(order_id, None)
+    return {"status": "success", "message": f"Order {order_id} cancelled and capacity restored."}
+
+
+
 @api.get("/api/orders")
 def get_orders():
     # Return all orders that have a pickup and destination

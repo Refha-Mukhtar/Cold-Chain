@@ -2256,7 +2256,11 @@
     }
 
     /* ========== SHIPMENT RESULTS CARDS ========== */
-    .shipment-results-wrapper { max-width: 1100px; margin: 0 auto; }
+    .shipment-results-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
     .shipment-result-card {
       background: var(--bg-card);
       backdrop-filter: blur(18px);
@@ -2267,121 +2271,286 @@
       box-shadow: var(--card-shadow);
       transition: border-color 0.3s ease;
     }
-    .shipment-result-card:hover { border-color: var(--accent-purple); }
+
+    .shipment-result-card:hover {
+      border-color: var(--accent-purple);
+    }
+
     .sr-card-header {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
+
     .sr-card-header h3 {
-      font-size: 20px; font-weight: 800; color: var(--text-pure); margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-pure);
+      margin: 0;
     }
+
     .sr-card-header .sr-route-badge {
-      background: rgba(168,85,247,0.14); color: var(--accent-purple-light);
-      border: 1px solid var(--border-purple); padding: 5px 14px;
-      border-radius: 20px; font-size: 12px; font-weight: 700;
+      background: rgba(168, 85, 247, 0.14);
+      color: var(--accent-purple-light);
+      border: 1px solid var(--border-purple);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
     }
+
     .sr-origin-dest {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 14px; color: var(--text-body); margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-body);
+      margin-bottom: 16px;
     }
-    .sr-origin-dest .sr-arrow { color: var(--accent-purple-light); font-weight: 800; font-size: 18px; }
+
+    .sr-origin-dest .sr-arrow {
+      color: var(--accent-purple-light);
+      font-weight: 800;
+      font-size: 18px;
+    }
+
     .sr-kpi-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px; margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
     }
+
     .sr-kpi-tile {
-      background: var(--bg-box); border: 1px solid var(--border-subtle);
-      border-radius: 12px; padding: 14px 16px;
+      background: var(--bg-box);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px 16px;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    .sr-kpi-tile:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
+
+    .sr-kpi-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-purple);
+    }
+
     .sr-kpi-tile .sr-kpi-label {
-      font-size: 11px; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.05em;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
+
     .sr-kpi-tile .sr-kpi-value {
-      font-size: 22px; font-weight: 800; color: var(--text-pure); margin: 4px 0 2px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-pure);
+      margin: 4px 0 2px;
     }
+
     .sr-kpi-tile .sr-kpi-sub {
-      font-size: 11px; font-weight: 600; color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
     }
-    .sr-kpi-tile .sr-kpi-value.risk-low { color: #22c55e; }
-    .sr-kpi-tile .sr-kpi-value.risk-medium { color: #f59e0b; }
-    .sr-kpi-tile .sr-kpi-value.risk-high { color: #f43f5e; }
-    .sr-kpi-tile .sr-kpi-value.risk-critical { color: #dc2626; }
-    .sr-kpi-tile .sr-kpi-value.cost-val { color: var(--accent-purple-light); }
+
+    .sr-kpi-tile .sr-kpi-value.risk-low {
+      color: #22c55e;
+    }
+
+    .sr-kpi-tile .sr-kpi-value.risk-medium {
+      color: #f59e0b;
+    }
+
+    .sr-kpi-tile .sr-kpi-value.risk-high {
+      color: #f43f5e;
+    }
+
+    .sr-kpi-tile .sr-kpi-value.risk-critical {
+      color: #dc2626;
+    }
+
+    .sr-kpi-tile .sr-kpi-value.cost-val {
+      color: var(--accent-purple-light);
+    }
+
     .sr-section {
-      border-top: 1px solid var(--border-subtle); padding-top: 14px; margin-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      margin-top: 14px;
     }
+
     .sr-section-title {
-      font-size: 12px; font-weight: 800; color: var(--accent-purple-light);
-      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-purple-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
     }
+
     .sr-detail-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
     }
+
     .sr-detail-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding: 4px 0; font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 4px 0;
+      font-size: 13px;
     }
-    .sr-detail-row .sr-label { color: var(--text-muted); font-weight: 600; }
-    .sr-detail-row .sr-value { color: var(--text-pure); font-weight: 700; text-align: right; }
+
+    .sr-detail-row .sr-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .sr-detail-row .sr-value {
+      color: var(--text-pure);
+      font-weight: 700;
+      text-align: right;
+    }
+
     .sr-explanation {
-      font-size: 13px; color: var(--text-body); line-height: 1.6;
-      background: var(--bg-box); border-radius: 10px;
-      padding: 12px 16px; border-left: 3px solid var(--accent-purple);
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.6;
+      background: var(--bg-box);
+      border-radius: 10px;
+      padding: 12px 16px;
+      border-left: 3px solid var(--accent-purple);
     }
+
     .sr-callout {
-      display: flex; align-items: flex-start; gap: 14px;
-      background: var(--callout-bg); border: 1px solid var(--border-purple);
-      border-radius: 12px; padding: 14px 18px; margin-top: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--callout-bg);
+      border: 1px solid var(--border-purple);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-top: 12px;
     }
+
     .sr-callout-icon {
-      width: 38px; height: 38px; min-width: 38px;
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
       background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-rose) 100%);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #fff;
     }
-    .sr-callout-text h5 { font-size: 14px; font-weight: 700; color: var(--accent-purple-light); margin: 0 0 4px; }
-    .sr-callout-text p { font-size: 12px; color: var(--text-body); margin: 0; line-height: 1.5; }
+
+    .sr-callout-text h5 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-purple-light);
+      margin: 0 0 4px;
+    }
+
+    .sr-callout-text p {
+      font-size: 12px;
+      color: var(--text-body);
+      margin: 0;
+      line-height: 1.5;
+    }
+
     .sr-contact-card {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--bg-box); border: 1px solid var(--border-subtle);
-      border-radius: 10px; padding: 10px 14px; margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-box);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 6px;
     }
+
     .sr-contact-card .sr-contact-icon {
-      width: 32px; height: 32px; min-width: 32px;
-      background: rgba(168,85,247,0.18); border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: rgba(168, 85, 247, 0.18);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 14px;
     }
-    .sr-contact-card .sr-contact-info { font-size: 12px; color: var(--text-body); line-height: 1.5; }
-    .sr-contact-card .sr-contact-info strong { color: var(--text-pure); }
+
+    .sr-contact-card .sr-contact-info {
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .sr-contact-card .sr-contact-info strong {
+      color: var(--text-pure);
+    }
+
     .sr-alt-route {
-      font-size: 12px; color: var(--text-body); padding: 6px 0;
+      font-size: 12px;
+      color: var(--text-body);
+      padding: 6px 0;
       border-bottom: 1px solid var(--border-subtle);
     }
-    .sr-alt-route:last-child { border-bottom: none; }
+
+    .sr-alt-route:last-child {
+      border-bottom: none;
+    }
+
     .sr-btn-telemetry {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--btn-gradient); color: #fff; border: none;
-      padding: 10px 22px; border-radius: 10px; font-size: 13px;
-      font-weight: 700; cursor: pointer; margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--btn-gradient);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
       box-shadow: 0 4px 18px var(--btn-glow);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .sr-btn-telemetry:hover { transform: translateY(-2px); box-shadow: 0 6px 24px var(--btn-glow); }
+
+    .sr-btn-telemetry:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px var(--btn-glow);
+    }
+
     @media (max-width: 768px) {
-      .sr-kpi-row { grid-template-columns: repeat(2, 1fr); }
-      .sr-detail-grid { grid-template-columns: 1fr; }
-      .sr-card-header { flex-direction: column; }
+      .sr-kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .sr-detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sr-card-header {
+        flex-direction: column;
+      }
     }
 
     /* ===== PERFORMANCE METRICS MODAL ===== */
     .perf-metrics-btn {
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      border: 1px solid rgba(139,92,246,0.4);
+      border: 1px solid rgba(139, 92, 246, 0.4);
       color: #fff;
       padding: 8px 16px;
       border-radius: 8px;
@@ -2393,31 +2562,39 @@
       gap: 8px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .perf-metrics-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(99,102,241,0.5);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
     }
+
     .perf-modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(10px);
       overflow-y: auto;
       padding: 40px 20px;
     }
-    .perf-modal-overlay.active { display: block; }
+
+    .perf-modal-overlay.active {
+      display: block;
+    }
+
     .perf-modal-container {
       max-width: 1100px;
       margin: 0 auto;
     }
+
     .perf-modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 28px;
     }
+
     .perf-modal-header h2 {
       font-size: 22px;
       font-weight: 800;
@@ -2426,9 +2603,10 @@
       align-items: center;
       gap: 10px;
     }
+
     .perf-modal-close {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: #fff;
       width: 36px;
       height: 36px;
@@ -2440,15 +2618,20 @@
       justify-content: center;
       transition: background 0.2s;
     }
-    .perf-modal-close:hover { background: rgba(255,255,255,0.18); }
+
+    .perf-modal-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
     .perf-chart-card {
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: 16px;
       padding: 28px;
       margin-bottom: 24px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     }
+
     .perf-chart-card h3 {
       font-size: 15px;
       font-weight: 700;
@@ -2458,16 +2641,19 @@
       align-items: center;
       gap: 8px;
     }
+
     .perf-chart-card .chart-subtitle {
       font-size: 12px;
       color: var(--text-muted);
       margin-bottom: 18px;
     }
+
     .perf-chart-canvas-wrap {
       position: relative;
       width: 100%;
       max-height: 320px;
     }
+
     .perf-no-data {
       text-align: center;
       padding: 50px 20px;
@@ -2883,6 +3069,16 @@
               </div>
             </div>
 
+            <div id="duplicate_order_alert"
+              style="display: none; background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.4); padding: 12px; border-radius: 8px; margin-top: 14px; text-align: left;">
+              <i class="fa-solid fa-triangle-exclamation" style="color: #f43f5e;"></i>
+              <span style="color: #f43f5e; font-size: 13px;">Duplicate order alert! You have previously created the same
+                order.
+                <a href="#" id="duplicate_order_link"
+                  style="color: #60a5fa; font-weight: bold; text-decoration: underline;">Track Order</a>
+              </span>
+            </div>
+
             <button type="submit" class="btn-primary-gradient" style="margin-top: 14px;">
               <i class="fa-solid fa-bolt"></i> <span data-i18n="submit_booking">Run Spoilage Optimization & Book
                 Multimodal Route</span>
@@ -3079,9 +3275,12 @@
               <i class="fa-solid fa-pause"></i> Pause Trip
             </button>
             <div style="display: flex; gap: 10px; margin-left: auto;">
-              <div style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--border-card); padding: 4px 12px; border-radius: 8px; background: rgba(0,0,0,0.2);">
-                <label for="driver_pod_input" style="font-size: 12px; color: var(--text-muted); font-weight: 600;">POD</label>
-                <input type="text" id="driver_pod_input" maxlength="4" placeholder="Code" oninput="validatePodCode()" style="width: 50px; background: transparent; border: none; border-bottom: 1px solid var(--border-subtle); color: #fff; font-size: 14px; text-align: center; outline: none; padding: 2px;">
+              <div
+                style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--border-card); padding: 4px 12px; border-radius: 8px; background: rgba(0,0,0,0.2);">
+                <label for="driver_pod_input"
+                  style="font-size: 12px; color: var(--text-muted); font-weight: 600;">POD</label>
+                <input type="text" id="driver_pod_input" maxlength="4" placeholder="Code" oninput="validatePodCode()"
+                  style="width: 50px; background: transparent; border: none; border-bottom: 1px solid var(--border-subtle); color: #fff; font-size: 14px; text-align: center; outline: none; padding: 2px;">
               </div>
               <button id="btn_end_trip" class="btn-emergency-breakdown" onclick="endTrip()" disabled>
                 <i class="fa-solid fa-flag-checkered"></i> End Trip
@@ -3134,7 +3333,12 @@
             </button>
             <button class="btn-glass" onclick="simulateDataUpdate()"><i class="fa-solid fa-arrows-rotate"></i> <span
                 data-i18n="sync_telemetry_btn">Sync Telemetry</span></button>
-            <button class="perf-metrics-btn" onclick="openPerformanceMetrics()"><i class="fa-solid fa-chart-column"></i> Performance Metrics</button>
+            <button id="btn_cancel_order" class="btn-emergency-breakdown" onclick="cancelOrder()"
+              style="background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);">
+              <i class="fa-solid fa-ban"></i> <span data-i18n="cancel_order_btn">Cancel Order</span>
+            </button>
+            <button class="perf-metrics-btn" onclick="openPerformanceMetrics()"><i class="fa-solid fa-chart-column"></i>
+              Performance Metrics</button>
           </div>
         </div>
 
@@ -3245,6 +3449,7 @@
     // ASTRA-COLD AI • TELEMETRY CONTROLLER (ALARM ONLY ON COMPRESSOR FAILURE)
     // ==========================================================================
 
+    let pastOrders = [];
     let spoilageChartInstance = null;
     let tempChartInstance = null;
     let activeLanguage = 'en';
@@ -3488,6 +3693,18 @@
       const startBtn = document.getElementById('btn_start_trip');
       const pauseBtn = document.getElementById('btn_pause_trip');
       const endBtn = document.getElementById('btn_end_trip');
+      const cancelBtn = document.getElementById('btn_cancel_order');
+
+      if (cancelBtn) {
+        if (tripState !== 'not_started') {
+          cancelBtn.style.opacity = '0.5';
+          cancelBtn.style.cursor = 'not-allowed';
+        } else {
+          cancelBtn.style.opacity = '1';
+          cancelBtn.style.cursor = 'pointer';
+        }
+      }
+
       if (!startBtn || !pauseBtn || !endBtn) return;
 
       if (tripState === 'not_started' || tripState === 'ended') {
@@ -4412,8 +4629,37 @@
       const sla = document.getElementById('f_sla')?.value || '';
       window.currentUniqueCode = document.getElementById('f_unique_code')?.value || '';
 
+      // Check for duplicate orders
+      const currentOrderKey = `${phone}|${crop}|${origin}|${destination}|${sla}`;
+      const duplicateOrder = pastOrders.find(o => o.key === currentOrderKey);
+
+      const alertBox = document.getElementById('duplicate_order_alert');
+      const alertLink = document.getElementById('duplicate_order_link');
+
+      if (duplicateOrder) {
+        if (alertBox && alertLink) {
+          alertBox.style.display = 'block';
+          alertLink.innerText = 'Track Order ' + duplicateOrder.orderId;
+          alertLink.onclick = function (ev) {
+            ev.preventDefault();
+            loadFarmerDashboard(duplicateOrder.orderId);
+          };
+        }
+        return; // Stop the execution, don't proceed to next UI
+      }
+
+      if (alertBox) {
+        alertBox.style.display = 'none';
+      }
+
       // CHANGED: a real, unique order ID instead of the same hardcoded demo one
       const orderId = 'ORD-' + Date.now().toString().slice(-8);
+
+      // Save current order
+      pastOrders.push({
+        key: currentOrderKey,
+        orderId: orderId
+      });
 
       const dashTitle = document.getElementById('dash_title');
       const dashOrderId = document.getElementById('dash_order_id');
@@ -4456,15 +4702,15 @@
         // engine sees each product individually (compatibility, routing, etc.)
         const shipments = (shipment.products && shipment.products.length > 0)
           ? shipment.products.map((p, idx) => ({
-              order_id: shipment.products.length === 1 ? orderId : `${orderId}-P${idx + 1}`,
-              farmer_name: shipment.farmer_name,
-              phone: shipment.phone,
-              product: p.product,
-              origin: shipment.origin,
-              destination: shipment.destination,
-              weight_kg: p.weight_kg,
-              expected_delivery_date: shipment.expected_delivery_date,
-            }))
+            order_id: shipment.products.length === 1 ? orderId : `${orderId}-P${idx + 1}`,
+            farmer_name: shipment.farmer_name,
+            phone: shipment.phone,
+            product: p.product,
+            origin: shipment.origin,
+            destination: shipment.destination,
+            weight_kg: p.weight_kg,
+            expected_delivery_date: shipment.expected_delivery_date,
+          }))
           : [{ order_id: orderId, ...shipment }];
 
         const res = await fetch('/api/shipments/plan', {
@@ -4756,9 +5002,9 @@
           <div class="sr-section">
             <div class="sr-section-title"><i class="fa-solid fa-indian-rupee-sign" style="margin-right:6px;"></i>Cost</div>
             <div class="sr-detail-grid">
-              <div class="sr-detail-row"><span class="sr-label">Gross transport cost</span><span class="sr-value">INR ${grossCost.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span></div>
-              <div class="sr-detail-row"><span class="sr-label">Kisan Rail subsidy</span><span class="sr-value"${subsidy > 0 ? ' style="color:#22c55e;"' : ''}>INR ${subsidy.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span></div>
-              <div class="sr-detail-row"><span class="sr-label"><strong>Farmer Pays</strong></span><span class="sr-value cost-val" style="font-size:16px;"><strong>INR ${netCost.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</strong></span></div>
+              <div class="sr-detail-row"><span class="sr-label">Gross transport cost</span><span class="sr-value">INR ${grossCost.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+              <div class="sr-detail-row"><span class="sr-label">Kisan Rail subsidy</span><span class="sr-value"${subsidy > 0 ? ' style="color:#22c55e;"' : ''}>INR ${subsidy.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
+              <div class="sr-detail-row"><span class="sr-label"><strong>Farmer Pays</strong></span><span class="sr-value cost-val" style="font-size:16px;"><strong>INR ${netCost.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></span></div>
             </div>
           </div>
 
@@ -5452,7 +5698,7 @@
             legend: { labels: { color: '#cbd5e1', font: { size: 11 } } },
             tooltip: {
               callbacks: {
-                afterBody: function(tooltipItems) {
+                afterBody: function (tooltipItems) {
                   const idx = tooltipItems[0].dataIndex;
                   const c = candidates[idx];
                   const isBest = (idx === costs.indexOf(Math.min(...costs)));
@@ -5518,7 +5764,7 @@
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: function(ctx) {
+                label: function (ctx) {
                   const v = ctx.raw;
                   if (v < 0) return 'Subsidy: -₹' + Math.abs(v).toLocaleString('en-IN');
                   return '₹' + v.toLocaleString('en-IN');
@@ -5609,7 +5855,7 @@
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: function(ctx) { return ctx.raw + ' kg CO₂'; }
+                label: function (ctx) { return ctx.raw + ' kg CO₂'; }
               }
             }
           },
@@ -5624,6 +5870,32 @@
           }
         }
       });
+    }
+
+    async function cancelOrder() {
+      if (tripState !== 'not_started') {
+        alert("Your consignment order is already on the way and you cannot cancel it now.");
+        return;
+      }
+      if (!currentOrder || !currentOrder.orderId) {
+        alert("No active order to cancel.");
+        return;
+      }
+
+      if (!confirm("Are you sure you want to cancel this order? The vehicle capacity will be freed.")) return;
+
+      try {
+        const res = await fetch(`/api/shipments/${currentOrder.orderId}/cancel`, { method: 'POST' });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText);
+        }
+        alert("Order cancelled successfully.");
+        // Return to hub
+        showView('view_roles');
+      } catch (err) {
+        alert("Error cancelling order: " + err.message);
+      }
     }
   </script>
 
@@ -5643,22 +5915,26 @@
       <div id="perfChartsArea">
         <!-- Chart 1: Decision Matrix -->
         <div class="perf-chart-card">
-          <h3><i class="fa-solid fa-scale-balanced" style="color:#818cf8;"></i> Decision Matrix — Candidate Routes Comparison</h3>
-          <p class="chart-subtitle">Why did the AI choose this route? Comparing Net Cost, Transit Time, and Spoilage Risk across all evaluated strategies.</p>
+          <h3><i class="fa-solid fa-scale-balanced" style="color:#818cf8;"></i> Decision Matrix — Candidate Routes
+            Comparison</h3>
+          <p class="chart-subtitle">Why did the AI choose this route? Comparing Net Cost, Transit Time, and Spoilage
+            Risk across all evaluated strategies.</p>
           <div class="perf-chart-canvas-wrap" style="height:280px;"><canvas id="chartDecisionMatrix"></canvas></div>
         </div>
 
         <!-- Chart 2: Cost & Subsidy Waterfall -->
         <div class="perf-chart-card">
           <h3><i class="fa-solid fa-indian-rupee-sign" style="color:#22c55e;"></i> Cost & Subsidy Waterfall</h3>
-          <p class="chart-subtitle">Transparent breakdown: Gross transport cost → 50% MoFPI Kisan Rail subsidy deduction → Final net payable by farmer.</p>
+          <p class="chart-subtitle">Transparent breakdown: Gross transport cost → 50% MoFPI Kisan Rail subsidy deduction
+            → Final net payable by farmer.</p>
           <div class="perf-chart-canvas-wrap" style="height:220px;"><canvas id="chartCostWaterfall"></canvas></div>
         </div>
 
         <!-- Chart 3: CO₂ Emissions -->
         <div class="perf-chart-card">
           <h3><i class="fa-solid fa-leaf" style="color:#22c55e;"></i> CO₂ Emissions Comparison</h3>
-          <p class="chart-subtitle">Environmental impact: Pure diesel road transport vs AI-optimized multimodal (electric rail + road).</p>
+          <p class="chart-subtitle">Environmental impact: Pure diesel road transport vs AI-optimized multimodal
+            (electric rail + road).</p>
           <div class="perf-chart-canvas-wrap" style="height:250px;"><canvas id="chartCO2Emissions"></canvas></div>
           <p id="co2SummaryText" style="margin-top:12px;font-size:13px;color:var(--text-body);"></p>
         </div>

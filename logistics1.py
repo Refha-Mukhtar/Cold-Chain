@@ -86,6 +86,13 @@ def consume_vehicle_capacity(vehicles_df: pd.DataFrame, vehicle_no: str, weight_
         vehicles_df.loc[mask, "remaining_capacity_kg"] - weight_kg
     ).clip(lower=0)
 
+def restore_vehicle_capacity(vehicles_df: pd.DataFrame, vehicle_no: str, weight_kg: float) -> None:
+    mask = vehicles_df["vehicle_no"].astype(str) == str(vehicle_no)
+    full_capacity = float(vehicles_df.loc[mask, "weight_capacity_kg"].iloc[0])
+    vehicles_df.loc[mask, "remaining_capacity_kg"] = (
+        vehicles_df.loc[mask, "remaining_capacity_kg"] + weight_kg
+    ).clip(upper=full_capacity)
+
 def save_vehicle_capacity(vehicles_df: pd.DataFrame, data_dir: Path = DATA_DIR) -> None:
     """Saves the fleet back to 03_vehicles.csv. Previously this silently fell
     back to writing a SECOND, different copy of the file if the primary save
