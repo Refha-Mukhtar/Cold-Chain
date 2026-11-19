@@ -1,0 +1,151 @@
+shipment_id,product,origin,destination,weight_kg,max_price_per_kg_INR
+F0001,Mango,Rayagada,Jajpur,905,5.36
+F0002,Mango,Kendrapara,Berhampur,233,5.89
+F0003,Cauliflower,Rayagada,Kendrapara,1582,2.08
+F0004,Rice,Jharsuguda,Angul,773,5.67
+F0005,Brinjal,Jajpur,Bhadrak,1654,3.5
+F0006,Sapota,Sambalpur,Cuttack,1131,1.79
+F0007,Rice,Balangir,Puri,1281,4.91
+F0008,Carrot,Bhadrak,Cuttack,1942,5.52
+F0009,Cabbage,Rayagada,Koraput,429,3.6
+F0010,Tomato,Bhubaneswar,Dhenkanal,350,4.57
+F0011,Fabric,Koraput,Balasore,1936,2.97
+F0012,Wheat,Bhadrak,Cuttack,965,2.35
+F0013,Tomato,Rourkela,Koraput,977,2.52
+F0014,Potato,Kendrapara,Jeypore,902,5.25
+F0015,Leafy Greens,Koraput,Cuttack,659,5.25
+F0016,Sapota,Balangir,Rayagada,805,2.8
+F0017,Grapes,Kendrapara,Jajpur,322,2.4
+F0018,Brinjal,Bhubaneswar,Balangir,1584,4.49
+F0019,Tomato,Koraput,Puri,1572,3.57
+F0020,Onion,Dhenkanal,Bhubaneswar,322,2.02
+F0021,Sapota,Kendrapara,Jajpur,968,4.04
+F0022,Mango,Rayagada,Angul,1287,3.99
+F0023,Mango,Dhenkanal,Balangir,642,1.64
+F0024,Pomegranate,Baripada,Paradip,468,3.34
+F0025,Dairy Products,Bhawanipatna,Bhubaneswar,506,1.76
+F0026,Rice,Puri,Jeypore,622,4.48
+F0027,Apple,Dhenkanal,Jharsuguda,1578,4.49
+F0028,Sapota,Baripada,Bhadrak,1637,2.25
+F0029,Pomegranate,Bhubaneswar,Berhampur,225,4.75
+F0030,Carrot,Jharsuguda,Koraput,364,3.75
+F0031,Fabric,Berhampur,Angul,1407,3.51
+F0032,Papaya,Bhadrak,Sambalpur,637,4.34
+F0033,Leafy Greens,Bhadrak,Paradip,220,2.03
+F0034,Pomegranate,Paradip,Balasore,1821,4.65
+F0035,Tomato,Puri,Rayagada,1939,5.0
+F0036,Grapes,Koraput,Rayagada,926,2.73
+F0037,Mango,Cuttack,Jharsuguda,1810,3.55
+F0038,Carrot,Sambalpur,Koraput,646,4.11
+F0039,Potato,Berhampur,Jharsuguda,1720,4.91
+F0040,Tomato,Koraput,Jajpur,892,4.32
+F0041,Papaya,Dhenkanal,Cuttack,1317,1.88
+F0042,Cauliflower,Baripada,Rayagada,131,3.72
+F0043,Guava,Balasore,Kendrapara,331,1.97
+F0044,Papaya,Dhenkanal,Balangir,382,5.66
+F0045,Dairy Products,Dhenkanal,Baripada,726,4.16
+F0046,Orange,Bhubaneswar,Berhampur,1919,3.67
+F0047,Tomato,Rayagada,Cuttack,211,3.69
+F0048,Cabbage,Jharsuguda,Baripada,1878,4.07
+F0049,Onion,Jharsuguda,Balangir,570,2.99
+F0050,Onion,Angul,Bhawanipatna,905,1.6
+F0051,Watermelon,Balangir,Bhubaneswar,1797,2.13
+F0052,Orange,Dhenkanal,Puri,261,4.53
+F0053,Apple,Puri,Sambalpur,1335,4.77
+F0054,Fabric,Rayagada,Balasore,260,5.62
+F0055,Dairy Products,Sambalpur,Puri,122,4.0
+F0056,Potato,Bhadrak,Puri,1668,5.14
+F0057,Dairy Products,Balasore,Berhampur,1908,2.81
+F0058,Leafy Greens,Angul,Jeypore,549,5.71
+F0059,Papaya,Berhampur,Dhenkanal,137,3.46
+F0060,Dairy Products,Paradip,Rourkela,1788,4.87
+F0061,Rice,Bhawanipatna,Sambalpur,1792,3.83
+F0062,Tomato,Balasore,Bhubaneswar,1555,4.48
+F0063,Sapota,Bhadrak,Bhawanipatna,234,4.86
+F0064,Watermelon,Puri,Bhubaneswar,1876,2.58
+F0065,Banana,Rourkela,Cuttack,1670,2.19
+F0066,Cauliflower,Berhampur,Bhadrak,1218,5.44
+F0067,Banana,Berhampur,Balasore,655,5.0
+F0068,Pomegranate,Paradip,Jharsuguda,1026,2.15
+F0069,Fabric,Bhubaneswar,Sambalpur,497,2.09
+F0070,Banana,Kendrapara,Paradip,287,3.78
+F0071,Fabric,Kendrapara,Rayagada,1183,2.4
+F0072,Wheat,Balangir,Bhubaneswar,1445,4.83
+F0073,Rice,Rourkela,Jharsuguda,291,5.67
+F0074,Mango,Bhadrak,Paradip,636,3.7
+F0075,Onion,Kendrapara,Puri,1913,2.79
+F0076,Dairy Products,Jeypore,Jharsuguda,98,4.0
+F0077,Papaya,Jajpur,Balangir,256,2.13
+F0078,Cauliflower,Baripada,Bhubaneswar,1934,4.18
+F0079,Papaya,Jeypore,Koraput,1618,3.6
+F0080,Leafy Greens,Rayagada,Bhawanipatna,84,1.99
+F0081,Orange,Balangir,Sambalpur,1603,2.55
+F0082,Pomegranate,Angul,Rayagada,1231,5.4
+F0083,Cauliflower,Jajpur,Puri,854,3.18
+F0084,Fabric,Baripada,Rourkela,1321,5.4
+F0085,Orange,Jharsuguda,Dhenkanal,533,2.56
+F0086,Dairy Products,Koraput,Balangir,1642,1.97
+F0087,Wheat,Cuttack,Angul,1209,2.16
+F0088,Guava,Balangir,Balasore,655,2.15
+F0089,Fabric,Jeypore,Dhenkanal,372,2.78
+F0090,Potato,Berhampur,Jharsuguda,275,1.6
+F0091,Carrot,Cuttack,Sambalpur,390,1.74
+F0092,Sapota,Dhenkanal,Jharsuguda,1377,3.27
+F0093,Rice,Balasore,Paradip,1033,5.44
+F0094,Brinjal,Bhawanipatna,Angul,134,2.32
+F0095,Wheat,Sambalpur,Puri,536,4.07
+F0096,Fabric,Baripada,Puri,146,3.18
+F0097,Fabric,Angul,Bhawanipatna,248,5.25
+F0098,Apple,Cuttack,Baripada,1853,1.95
+F0099,Rice,Balangir,Rayagada,1810,5.91
+F0100,Pomegranate,Balangir,Dhenkanal,1569,4.39
+F0101,Leafy Greens,Rayagada,Koraput,312,3.91
+F0102,Pomegranate,Angul,Paradip,1722,3.58
+F0103,Brinjal,Bhadrak,Koraput,1297,2.7
+F0104,Mango,Rourkela,Jharsuguda,981,3.38
+F0105,Leafy Greens,Sambalpur,Bhadrak,766,3.15
+F0106,Cauliflower,Balasore,Jharsuguda,789,4.59
+F0107,Grapes,Puri,Balangir,1900,5.62
+F0108,Rice,Jharsuguda,Rayagada,690,3.91
+F0109,Dairy Products,Balangir,Jharsuguda,1322,5.12
+F0110,Potato,Angul,Rayagada,1284,2.8
+F0111,Papaya,Koraput,Bhubaneswar,444,4.63
+F0112,Onion,Bhawanipatna,Jeypore,307,4.26
+F0113,Leafy Greens,Cuttack,Jajpur,1465,1.88
+F0114,Onion,Jeypore,Kendrapara,317,5.81
+F0115,Papaya,Balangir,Bhadrak,1207,5.02
+F0116,Dairy Products,Rayagada,Jeypore,1894,2.64
+F0117,Carrot,Dhenkanal,Bhubaneswar,235,4.27
+F0118,Papaya,Berhampur,Rourkela,1151,4.08
+F0119,Tomato,Jharsuguda,Kendrapara,1069,4.94
+F0120,Fabric,Rayagada,Jharsuguda,1009,4.2
+F0121,Papaya,Jeypore,Balangir,283,2.03
+F0122,Carrot,Cuttack,Angul,1332,3.38
+F0123,Fabric,Rayagada,Berhampur,1358,3.0
+F0124,Cauliflower,Bhawanipatna,Rayagada,1536,2.72
+F0125,Brinjal,Bhadrak,Dhenkanal,663,2.21
+F0126,Dairy Products,Rourkela,Cuttack,1875,3.47
+F0127,Cauliflower,Bhadrak,Rourkela,1472,3.99
+F0128,Fabric,Jeypore,Balasore,1571,3.66
+F0129,Papaya,Bhadrak,Kendrapara,1973,4.73
+F0130,Rice,Paradip,Baripada,281,5.33
+F0131,Wheat,Jajpur,Rourkela,287,4.15
+F0132,Banana,Kendrapara,Angul,73,3.54
+F0133,Carrot,Balangir,Baripada,625,3.56
+F0134,Orange,Baripada,Bhubaneswar,638,5.63
+F0135,Cauliflower,Rayagada,Angul,265,5.99
+F0136,Banana,Bhawanipatna,Kendrapara,603,5.27
+F0137,Banana,Rourkela,Kendrapara,1998,4.5
+F0138,Papaya,Kendrapara,Dhenkanal,226,5.54
+F0139,Rice,Bhubaneswar,Puri,519,2.14
+F0140,Rice,Rayagada,Balangir,436,5.6
+F0141,Orange,Kendrapara,Jeypore,120,1.52
+F0142,Papaya,Cuttack,Balangir,1231,5.11
+F0143,Dairy Products,Sambalpur,Balasore,1706,1.76
+F0144,Cabbage,Balangir,Paradip,1859,4.97
+F0145,Rice,Kendrapara,Balangir,1684,1.68
+F0146,Tomato,Sambalpur,Rourkela,293,3.77
+F0147,Onion,Koraput,Angul,1278,5.33
+F0148,Sapota,Berhampur,Balangir,1482,2.37
+F0149,Banana,Puri,Cuttack,1434,5.91
+F0150,Cauliflower,Jajpur,Jharsuguda,156,4.27

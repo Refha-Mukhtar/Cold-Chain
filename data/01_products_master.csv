@@ -1,0 +1,50 @@
+product_id,product,category,min_temp_C,max_temp_C,humidity_min_pct,humidity_max_pct,produces_ethylene,ethylene_sensitive,chilling_sensitive,odour_risk,odour_sensitive,packaging_type,fragility,shelf_life_hours
+P01,Banana,Fruit,13,15,90,95,Y,Y,Y,Low,N,Produce/crate,Low,336
+P02,Mango,Fruit,10,13,85,90,Y,Y,Y,Low,N,Produce/crate,Low,288
+P03,Apple,Fruit,0,4,90,95,Y,N,N,Low,Y,Produce/crate,Low,2160
+P04,Papaya,Fruit,10,13,85,90,Y,Y,Y,Low,N,Fragile/soft,High,240
+P05,Guava,Fruit,5,10,85,90,Y,N,Y,Low,N,Produce/crate,Low,336
+P06,Grapes,Fruit,-1,0,90,95,N,Y,N,Low,Y,Fragile/soft,High,720
+P07,Orange,Fruit,3,8,85,90,N,N,N,Low,N,Produce/crate,Low,720
+P08,Pomegranate,Fruit,5,8,90,95,N,N,N,Low,N,Fragile/soft,High,1440
+P09,Watermelon,Fruit,10,15,90,95,N,N,Y,Low,N,Produce/crate,Low,504
+P10,Sapota,Fruit,15,18,85,90,Y,Y,Y,Low,N,Produce/crate,Low,192
+P11,Tomato,Vegetable,10,13,85,90,Y,Y,Y,Low,N,Fragile/soft,High,240
+P12,Onion,Vegetable,0,4,65,70,N,N,N,High,N,Dry/rigid,Low,2160
+P13,Potato,Vegetable,4,7,90,95,N,N,N,Low,N,Dry/rigid,Low,1440
+P14,Leafy Greens,Vegetable,0,2,95,98,N,Y,N,Low,Y,Fragile/soft,High,120
+P15,Cabbage,Vegetable,0,2,95,98,N,Y,N,Low,Y,Produce/crate,Low,720
+P16,Carrot,Vegetable,0,2,95,98,N,Y,N,Low,N,Produce/crate,Low,720
+P17,Cauliflower,Vegetable,0,2,90,95,N,Y,N,Low,Y,Fragile/soft,High,336
+P18,Brinjal,Vegetable,10,12,90,95,N,Y,Y,Low,N,Fragile/soft,High,240
+P19,Rice,Grain,15,25,55,65,N,N,N,Low,N,Dry/rigid,Low,8760
+P20,Wheat,Grain,15,25,55,65,N,N,N,Low,N,Dry/rigid,Low,8760
+P21,Fabric,Textile,10,30,40,60,N,N,N,Low,N,Dry/boxed,Low,87600
+P22,Dairy Products,Dairy,2,5,80,85,N,N,N,Low,Y,Sealed/cold,Low,120
+P23,Kiwi,Fruit,0,4,90,95,N,Y,N,Low,N,Produce/crate,Low,720
+P24,Litchi,Fruit,1,4,90,95,N,Y,N,Low,Y,Fragile/soft,High,120
+P25,Mousambi,Fruit,3,8,85,90,N,N,N,Low,N,Produce/crate,Low,720
+P26,Kinnow,Fruit,3,8,85,90,N,N,N,Low,N,Produce/crate,Low,720
+P27,Lime,Fruit,3,8,85,90,N,N,N,Low,N,Produce/crate,Low,720
+P28,Lemon,Fruit,3,8,85,90,N,N,N,Low,N,Produce/crate,Low,720
+P29,Pineapple,Fruit,10,13,85,90,N,N,Y,Low,N,Produce/crate,Low,336
+P30,Jackfruit,Fruit,10,15,85,90,Y,Y,Y,Low,N,Produce/crate,Low,168
+P31,Almond,Fruit,0,5,60,70,N,N,N,Low,N,Dry/rigid,Low,8760
+P32,Aonla,Fruit,0,5,90,95,N,N,N,Low,N,Produce/crate,Low,720
+P33,Passion fruit,Fruit,5,10,85,90,N,Y,Y,Low,N,Fragile/soft,High,336
+P34,Pear,Fruit,0,4,90,95,Y,Y,N,Low,Y,Produce/crate,Low,720
+P35,Sweet Potato,Fruit,12,16,85,90,N,Y,Y,Low,N,Produce/crate,Low,336
+P36,Chikoo,Fruit,10,15,85,90,Y,Y,Y,Low,N,Fragile/soft,High,168
+P37,French beans,Vegetable,5,7,90,95,N,Y,N,Low,N,Fragile/soft,High,168
+P38,Bitter Gourd,Vegetable,10,13,85,90,N,Y,Y,Low,N,Produce/crate,Low,168
+P39,Capsicum,Vegetable,7,10,90,95,N,Y,Y,Low,N,Produce/crate,Low,336
+P40,Chillies (Green),Vegetable,7,10,90,95,N,Y,Y,Low,N,Produce/crate,Low,240
+P41,Okra,Vegetable,7,10,90,95,N,Y,Y,Low,N,Fragile/soft,High,120
+P42,Cucumber,Vegetable,10,13,90,95,N,Y,Y,Low,N,Produce/crate,Low,168
+P43,Peas,Vegetable,0,4,90,95,N,Y,N,Low,N,Fragile/soft,High,240
+P44,Garlic,Vegetable,0,4,65,70,N,N,N,High,N,Dry/rigid,Low,2160
+P45,Large Cardamom,Vegetable,15,25,55,65,N,N,N,High,N,Dry/rigid,Low,8760
+P46,Pumpkin,Vegetable,10,15,50,70,N,Y,Y,Low,N,Dry/rigid,Low,720
+P47,Ginger,Vegetable,10,13,65,75,N,Y,Y,High,N,Produce/crate,Low,720
+P48,Squash,Vegetable,10,13,85,90,N,Y,Y,Low,N,Produce/crate,Low,168
+P49,Turmeric (dry),Vegetable,15,25,55,65,N,N,N,High,N,Dry/rigid,Low,8760

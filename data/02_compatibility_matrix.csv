@@ -1,0 +1,232 @@
+product_id_a,product_a,product_id_b,product_b,compatible
+P01,Banana,P02,Mango,N
+P01,Banana,P03,Apple,N
+P01,Banana,P04,Papaya,N
+P01,Banana,P05,Guava,N
+P01,Banana,P06,Grapes,N
+P01,Banana,P07,Orange,N
+P01,Banana,P08,Pomegranate,N
+P01,Banana,P09,Watermelon,N
+P01,Banana,P10,Sapota,N
+P01,Banana,P11,Tomato,N
+P01,Banana,P12,Onion,N
+P01,Banana,P13,Potato,N
+P01,Banana,P14,Leafy Greens,N
+P01,Banana,P15,Cabbage,N
+P01,Banana,P16,Carrot,N
+P01,Banana,P17,Cauliflower,N
+P01,Banana,P18,Brinjal,N
+P01,Banana,P19,Rice,N
+P01,Banana,P20,Wheat,N
+P01,Banana,P21,Fabric,N
+P01,Banana,P22,Dairy Products,N
+P02,Mango,P03,Apple,N
+P02,Mango,P04,Papaya,Y
+P02,Mango,P05,Guava,Y
+P02,Mango,P06,Grapes,N
+P02,Mango,P07,Orange,N
+P02,Mango,P08,Pomegranate,N
+P02,Mango,P09,Watermelon,N
+P02,Mango,P10,Sapota,N
+P02,Mango,P11,Tomato,Y
+P02,Mango,P12,Onion,N
+P02,Mango,P13,Potato,N
+P02,Mango,P14,Leafy Greens,N
+P02,Mango,P15,Cabbage,N
+P02,Mango,P16,Carrot,N
+P02,Mango,P17,Cauliflower,N
+P02,Mango,P18,Brinjal,N
+P02,Mango,P19,Rice,N
+P02,Mango,P20,Wheat,N
+P02,Mango,P21,Fabric,N
+P02,Mango,P22,Dairy Products,N
+P03,Apple,P04,Papaya,N
+P03,Apple,P05,Guava,N
+P03,Apple,P06,Grapes,N
+P03,Apple,P07,Orange,N
+P03,Apple,P08,Pomegranate,N
+P03,Apple,P09,Watermelon,N
+P03,Apple,P10,Sapota,N
+P03,Apple,P11,Tomato,N
+P03,Apple,P12,Onion,N
+P03,Apple,P13,Potato,N
+P03,Apple,P14,Leafy Greens,N
+P03,Apple,P15,Cabbage,N
+P03,Apple,P16,Carrot,N
+P03,Apple,P17,Cauliflower,N
+P03,Apple,P18,Brinjal,N
+P03,Apple,P19,Rice,N
+P03,Apple,P20,Wheat,N
+P03,Apple,P21,Fabric,N
+P03,Apple,P22,Dairy Products,N
+P04,Papaya,P05,Guava,Y
+P04,Papaya,P06,Grapes,N
+P04,Papaya,P07,Orange,N
+P04,Papaya,P08,Pomegranate,N
+P04,Papaya,P09,Watermelon,N
+P04,Papaya,P10,Sapota,N
+P04,Papaya,P11,Tomato,Y
+P04,Papaya,P12,Onion,N
+P04,Papaya,P13,Potato,N
+P04,Papaya,P14,Leafy Greens,N
+P04,Papaya,P15,Cabbage,N
+P04,Papaya,P16,Carrot,N
+P04,Papaya,P17,Cauliflower,N
+P04,Papaya,P18,Brinjal,N
+P04,Papaya,P19,Rice,N
+P04,Papaya,P20,Wheat,N
+P04,Papaya,P21,Fabric,N
+P04,Papaya,P22,Dairy Products,N
+P05,Guava,P06,Grapes,N
+P05,Guava,P07,Orange,N
+P05,Guava,P08,Pomegranate,N
+P05,Guava,P09,Watermelon,N
+P05,Guava,P10,Sapota,N
+P05,Guava,P11,Tomato,Y
+P05,Guava,P12,Onion,N
+P05,Guava,P13,Potato,N
+P05,Guava,P14,Leafy Greens,N
+P05,Guava,P15,Cabbage,N
+P05,Guava,P16,Carrot,N
+P05,Guava,P17,Cauliflower,N
+P05,Guava,P18,Brinjal,N
+P05,Guava,P19,Rice,N
+P05,Guava,P20,Wheat,N
+P05,Guava,P21,Fabric,N
+P05,Guava,P22,Dairy Products,N
+P06,Grapes,P07,Orange,N
+P06,Grapes,P08,Pomegranate,N
+P06,Grapes,P09,Watermelon,N
+P06,Grapes,P10,Sapota,N
+P06,Grapes,P11,Tomato,N
+P06,Grapes,P12,Onion,N
+P06,Grapes,P13,Potato,N
+P06,Grapes,P14,Leafy Greens,N
+P06,Grapes,P15,Cabbage,N
+P06,Grapes,P16,Carrot,N
+P06,Grapes,P17,Cauliflower,Y
+P06,Grapes,P18,Brinjal,N
+P06,Grapes,P19,Rice,N
+P06,Grapes,P20,Wheat,N
+P06,Grapes,P21,Fabric,N
+P06,Grapes,P22,Dairy Products,N
+P07,Orange,P08,Pomegranate,N
+P07,Orange,P09,Watermelon,N
+P07,Orange,P10,Sapota,N
+P07,Orange,P11,Tomato,N
+P07,Orange,P12,Onion,N
+P07,Orange,P13,Potato,N
+P07,Orange,P14,Leafy Greens,N
+P07,Orange,P15,Cabbage,N
+P07,Orange,P16,Carrot,N
+P07,Orange,P17,Cauliflower,N
+P07,Orange,P18,Brinjal,N
+P07,Orange,P19,Rice,N
+P07,Orange,P20,Wheat,N
+P07,Orange,P21,Fabric,N
+P07,Orange,P22,Dairy Products,N
+P08,Pomegranate,P09,Watermelon,N
+P08,Pomegranate,P10,Sapota,N
+P08,Pomegranate,P11,Tomato,N
+P08,Pomegranate,P12,Onion,N
+P08,Pomegranate,P13,Potato,Y
+P08,Pomegranate,P14,Leafy Greens,N
+P08,Pomegranate,P15,Cabbage,N
+P08,Pomegranate,P16,Carrot,N
+P08,Pomegranate,P17,Cauliflower,N
+P08,Pomegranate,P18,Brinjal,N
+P08,Pomegranate,P19,Rice,N
+P08,Pomegranate,P20,Wheat,N
+P08,Pomegranate,P21,Fabric,N
+P08,Pomegranate,P22,Dairy Products,N
+P09,Watermelon,P10,Sapota,N
+P09,Watermelon,P11,Tomato,N
+P09,Watermelon,P12,Onion,N
+P09,Watermelon,P13,Potato,N
+P09,Watermelon,P14,Leafy Greens,N
+P09,Watermelon,P15,Cabbage,N
+P09,Watermelon,P16,Carrot,N
+P09,Watermelon,P17,Cauliflower,N
+P09,Watermelon,P18,Brinjal,Y
+P09,Watermelon,P19,Rice,N
+P09,Watermelon,P20,Wheat,N
+P09,Watermelon,P21,Fabric,N
+P09,Watermelon,P22,Dairy Products,N
+P10,Sapota,P11,Tomato,N
+P10,Sapota,P12,Onion,N
+P10,Sapota,P13,Potato,N
+P10,Sapota,P14,Leafy Greens,N
+P10,Sapota,P15,Cabbage,N
+P10,Sapota,P16,Carrot,N
+P10,Sapota,P17,Cauliflower,N
+P10,Sapota,P18,Brinjal,N
+P10,Sapota,P19,Rice,N
+P10,Sapota,P20,Wheat,N
+P10,Sapota,P21,Fabric,N
+P10,Sapota,P22,Dairy Products,N
+P11,Tomato,P12,Onion,N
+P11,Tomato,P13,Potato,N
+P11,Tomato,P14,Leafy Greens,N
+P11,Tomato,P15,Cabbage,N
+P11,Tomato,P16,Carrot,N
+P11,Tomato,P17,Cauliflower,N
+P11,Tomato,P18,Brinjal,N
+P11,Tomato,P19,Rice,N
+P11,Tomato,P20,Wheat,N
+P11,Tomato,P21,Fabric,N
+P11,Tomato,P22,Dairy Products,N
+P12,Onion,P13,Potato,N
+P12,Onion,P14,Leafy Greens,N
+P12,Onion,P15,Cabbage,N
+P12,Onion,P16,Carrot,N
+P12,Onion,P17,Cauliflower,N
+P12,Onion,P18,Brinjal,N
+P12,Onion,P19,Rice,N
+P12,Onion,P20,Wheat,N
+P12,Onion,P21,Fabric,N
+P12,Onion,P22,Dairy Products,N
+P13,Potato,P14,Leafy Greens,N
+P13,Potato,P15,Cabbage,N
+P13,Potato,P16,Carrot,N
+P13,Potato,P17,Cauliflower,N
+P13,Potato,P18,Brinjal,N
+P13,Potato,P19,Rice,N
+P13,Potato,P20,Wheat,N
+P13,Potato,P21,Fabric,N
+P13,Potato,P22,Dairy Products,N
+P14,Leafy Greens,P15,Cabbage,N
+P14,Leafy Greens,P16,Carrot,N
+P14,Leafy Greens,P17,Cauliflower,N
+P14,Leafy Greens,P18,Brinjal,N
+P14,Leafy Greens,P19,Rice,N
+P14,Leafy Greens,P20,Wheat,N
+P14,Leafy Greens,P21,Fabric,N
+P14,Leafy Greens,P22,Dairy Products,N
+P15,Cabbage,P16,Carrot,N
+P15,Cabbage,P17,Cauliflower,N
+P15,Cabbage,P18,Brinjal,N
+P15,Cabbage,P19,Rice,N
+P15,Cabbage,P20,Wheat,N
+P15,Cabbage,P21,Fabric,N
+P15,Cabbage,P22,Dairy Products,N
+P16,Carrot,P17,Cauliflower,N
+P16,Carrot,P18,Brinjal,N
+P16,Carrot,P19,Rice,N
+P16,Carrot,P20,Wheat,N
+P16,Carrot,P21,Fabric,N
+P16,Carrot,P22,Dairy Products,N
+P17,Cauliflower,P18,Brinjal,N
+P17,Cauliflower,P19,Rice,N
+P17,Cauliflower,P20,Wheat,N
+P17,Cauliflower,P21,Fabric,N
+P17,Cauliflower,P22,Dairy Products,N
+P18,Brinjal,P19,Rice,N
+P18,Brinjal,P20,Wheat,N
+P18,Brinjal,P21,Fabric,N
+P18,Brinjal,P22,Dairy Products,N
+P19,Rice,P20,Wheat,Y
+P19,Rice,P21,Fabric,Y
+P19,Rice,P22,Dairy Products,N
+P20,Wheat,P21,Fabric,Y
+P20,Wheat,P22,Dairy Products,N
+P21,Fabric,P22,Dairy Products,N
